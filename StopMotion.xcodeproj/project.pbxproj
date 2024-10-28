@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B1D595722CD00C5B00A5E183 /* StopMotionEditor in Frameworks */ = {isa = PBXBuildFile; productRef = B1D595712CD00C5B00A5E183 /* StopMotionEditor */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		B14336372CCFFA210030142A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1D595722CD00C5B00A5E183 /* StopMotionEditor in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 				B14336282CCFFA200030142A /* StopMotion */,
 				B14336392CCFFA210030142A /* StopMotionTests */,
 				B14336432CCFFA210030142A /* StopMotionUITests */,
+				B1D595702CD00C5B00A5E183 /* Frameworks */,
 				B14336272CCFFA200030142A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +96,13 @@
 				B14336402CCFFA210030142A /* StopMotionUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B1D595702CD00C5B00A5E183 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +125,7 @@
 			);
 			name = StopMotion;
 			packageProductDependencies = (
+				B1D595712CD00C5B00A5E183 /* StopMotionEditor */,
 			);
 			productName = StopMotion;
 			productReference = B14336262CCFFA200030142A /* StopMotion.app */;
@@ -195,6 +209,9 @@
 			);
 			mainGroup = B143361D2CCFFA200030142A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B14336532CD000160030142A /* XCLocalSwiftPackageReference "Packages/stop-motion-package" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B14336272CCFFA200030142A /* Products */;
 			projectDirPath = "";
@@ -321,7 +338,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -378,7 +395,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -395,7 +412,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"StopMotion/Preview Content\"";
 				DEVELOPMENT_TEAM = Q33SM559S3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -404,6 +420,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -424,7 +441,6 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"StopMotion/Preview Content\"";
 				DEVELOPMENT_TEAM = Q33SM559S3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -433,6 +449,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -454,7 +471,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q33SM559S3;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ultra.StopMotionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -473,7 +490,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q33SM559S3;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ultra.StopMotionTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -491,6 +508,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q33SM559S3;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ultra.StopMotionUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -508,6 +526,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Q33SM559S3;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ultra.StopMotionUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -558,6 +577,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		B14336532CD000160030142A /* XCLocalSwiftPackageReference "Packages/stop-motion-package" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Packages/stop-motion-package";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B1D595712CD00C5B00A5E183 /* StopMotionEditor */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B14336532CD000160030142A /* XCLocalSwiftPackageReference "Packages/stop-motion-package" */;
+			productName = StopMotionEditor;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B143361E2CCFFA200030142A /* Project object */;
 }
