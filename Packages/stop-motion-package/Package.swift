@@ -27,7 +27,10 @@ let package = Package(
         ),
         .target(
             name: "StopMotionEditor",
-            dependencies: ["StopMotionToolbox"],
+            dependencies: [
+                "StopMotionAssets",
+                "StopMotionToolbox"
+            ],
             path: "StopMotionEditor",
             sources: [
                 "Sources"

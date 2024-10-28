@@ -24,7 +24,8 @@ extension Color {
         public static let solidWhite = Color("solid-white", bundle: .module)
         public static let solidBlue = Color("solid-blue", bundle: .module)
         public static let solidRed = Color("solid-red", bundle: .module)
-        public static let accent = Color("accent", bundle: .module)
+        public static let tintAccent = Color("tint-accent", bundle: .module)
+        public static let tintPrimary = Color("tint-primary", bundle: .module)
     }
     
 }
