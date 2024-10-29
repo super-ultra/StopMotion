@@ -14,7 +14,7 @@ public struct EditorView: View {
     
     public var body: some View {
         VStack {
-            ControlView(model: controlModel)
+            ControlView(model: model.controlModel)
             
             Spacer().frame(height: 16)
 
@@ -23,7 +23,7 @@ public struct EditorView: View {
             Spacer()
                 .frame(height: 22)
             
-            ToolView(model: toolModel)
+            ToolView(model: model.toolModel)
         }
         .padding(.top, 20)
         .padding([.leading, .trailing], 16)
@@ -37,10 +37,7 @@ public struct EditorView: View {
     }
     
     @State
-    private var controlModel = ControlViewModelImpl()
-    
-    @State
-    private var toolModel = ToolViewModelImpl()
+    private var model = EditorModelImpl()
     
 }
 
