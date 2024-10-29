@@ -8,7 +8,7 @@
 import Observation
 import SwiftUI
 
-import StopMotionToolbox
+import StopMotionDrawing
 
 enum ToolViewMode: Equatable {
     case tool(DrawingTool)

@@ -26,9 +26,17 @@ let package = Package(
             ]
         ),
         .target(
+            name: "StopMotionDrawing",
+            path: "StopMotionDrawing",
+            sources: [
+                "Sources"
+            ]
+        ),
+        .target(
             name: "StopMotionEditor",
             dependencies: [
                 "StopMotionAssets",
+                "StopMotionDrawing",
                 "StopMotionToolbox"
             ],
             path: "StopMotionEditor",
@@ -42,6 +50,6 @@ let package = Package(
             sources: [
                 "Sources"
             ]
-        ),
+        )
     ]
 )

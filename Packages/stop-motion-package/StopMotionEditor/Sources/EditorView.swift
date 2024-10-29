@@ -1,5 +1,7 @@
 import SwiftUI
 
+import StopMotionToolbox
+
 public struct EditorView: View {
     
     
@@ -12,13 +14,37 @@ public struct EditorView: View {
     
     public var body: some View {
         VStack {
+            ControlView(model: controlModel)
+            
+            Spacer().frame(height: 16)
+
+            CanvasView()
+            
             Spacer()
-            ToolView(model: model)
+                .frame(height: 22)
+            
+            ToolView(model: toolModel)
         }
+        .padding(.top, 20)
+        .padding([.leading, .trailing], 16)
+        .safeAreaBottomPadding()
     }
     
     // MARK: - Private
     
+    private enum Guides {
+        static let padding: CGFloat = 16
+    }
+    
     @State
-    var model = ToolViewModelImpl()
+    private var controlModel = ControlViewModelImpl()
+    
+    @State
+    private var toolModel = ToolViewModelImpl()
+    
+}
+
+
+#Preview {
+    EditorView()
 }

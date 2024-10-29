@@ -8,8 +8,8 @@
 import Observation
 import SwiftUI
 
-import StopMotionToolbox
 import StopMotionAssets
+import StopMotionDrawing
 
 
 @MainActor
