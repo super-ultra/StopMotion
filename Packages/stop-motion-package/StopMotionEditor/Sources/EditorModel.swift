@@ -8,5 +8,6 @@
 @MainActor
 protocol EditorModel {
     var controlModel: ControlViewModel { get }
+    var canvasModel: CanvasViewModel { get }
     var toolModel: ToolViewModel { get }
 }

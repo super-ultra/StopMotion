@@ -8,6 +8,7 @@
 import SwiftUI
 
 @MainActor
+@Observable // TODO: Think about it
 public final class Studio {
     public private(set) var layer: Layer
     public var tool: DrawingTool

@@ -11,31 +11,25 @@ import StopMotionAssets
 import StopMotionDrawing
 
 
-protocol CanvasViewModel: Observable {
-    var layer: Layer { get }
-    
-    func drag(_ point: CGPoint)
-    func endDragging(_ point: CGPoint)
-}
-
 
 struct CanvasView: View {
     
-    @State var studio = Studio(tool: .pencil, color: .red)
+    @State
+    var model: CanvasViewModel
     
     var body: some View {
         Canvas { context, size in
-            for stroke in studio.layer.strokes {
+            for stroke in model.layer.strokes {
                 context.draw(stroke)
             }
         }
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { value in
-                    studio.drag(value.location)
+                    model.drag(value.location)
                 }
                 .onEnded { value in
-                    studio.endDragging(value.location)
+                    model.endDragging(value.location)
                 }
         )
         .background {
@@ -50,7 +44,15 @@ struct CanvasView: View {
 
 extension GraphicsContext {
     
-    func draw(_ stroke: Stroke) {
-        self.stroke(stroke.path, with: .color(stroke.color), lineWidth: 4)
+    fileprivate func draw(_ stroke: Stroke) {
+        let shading: GraphicsContext.Shading = switch stroke.tool {
+        case .eraser:
+            .color(.white)
+        case .pencil:
+            .color(stroke.color)
+        }
+        
+        self.stroke(stroke.path, with: shading, lineWidth: 4)
     }
+    
 }

@@ -16,22 +16,26 @@ import StopMotionDrawing
 @Observable
 final class ToolViewModelImpl: ToolViewModel {
     
-    init() {
-        color = .Assets.solidBlue
+    init(studio: Studio) {
+        self.studio = studio
+        self.mode = .tool(studio.tool)
     }
     
     // MARK: ToolViewModel
     
-    private(set) var color: Color
+    var color: Color {
+        studio.color
+    }
     
     private(set) var mode: ToolViewMode?
     
     func selectTool(_ tool: DrawingTool) {
+        studio.tool = tool
         mode = .tool(tool)
     }
     
     func selectColor(_ color: Color) {
-        self.color = color
+        studio.color = color
     }
     
     func pickColor() {
@@ -39,4 +43,7 @@ final class ToolViewModelImpl: ToolViewModel {
         // TODO: Implement
     }
     
+    // MARK: - Private
+    
+    private let studio: Studio
 }

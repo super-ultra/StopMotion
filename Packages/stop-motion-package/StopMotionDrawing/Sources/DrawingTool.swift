@@ -6,7 +6,7 @@
 //
 
 
-public enum DrawingTool {
+public enum DrawingTool: Sendable {
     case pencil
     case eraser
 }

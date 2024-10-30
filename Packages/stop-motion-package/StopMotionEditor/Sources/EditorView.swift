@@ -18,7 +18,7 @@ public struct EditorView: View {
             
             Spacer().frame(height: 16)
 
-            CanvasView()
+            CanvasView(model: model.canvasModel)
             
             Spacer()
                 .frame(height: 22)
