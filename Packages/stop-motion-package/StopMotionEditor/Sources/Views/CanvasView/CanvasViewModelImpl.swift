@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import Observation
+import SwiftUI
 
 import StopMotionDrawing
 
@@ -22,6 +23,14 @@ final class CanvasViewModelImpl: CanvasViewModel {
     
     var layer: Layer {
         studio.layer
+    }
+    
+    var tool: DrawingTool {
+        studio.tool
+    }
+    
+    var toolColor: Color {
+        studio.toolColor
     }
     
     func drag(_ point: CGPoint) {

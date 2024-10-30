@@ -22,13 +22,19 @@ struct CanvasView: View {
             for stroke in model.layer.strokes {
                 context.draw(stroke)
             }
+            
+            if let cursorLocation {
+                context.drawCursor(for: model.tool, color: model.toolColor, location: cursorLocation)
+            }
         }
         .simultaneousGesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { value in
+                    cursorLocation = value.location
                     model.drag(value.location)
                 }
                 .onEnded { value in
+                    cursorLocation = nil
                     model.endDragging(value.location)
                 }
         )
@@ -39,20 +45,10 @@ struct CanvasView: View {
         }
         .cornerRadius(20)
     }
+    
+    // MARK: - Private
+    
+    @State
+    private var cursorLocation: CGPoint? = nil
 }
 
-
-extension GraphicsContext {
-    
-    fileprivate func draw(_ stroke: Stroke) {
-        let shading: GraphicsContext.Shading = switch stroke.tool {
-        case .eraser:
-            .color(.white)
-        case .pencil:
-            .color(stroke.color)
-        }
-        
-        self.stroke(stroke.path, with: shading, lineWidth: 4)
-    }
-    
-}

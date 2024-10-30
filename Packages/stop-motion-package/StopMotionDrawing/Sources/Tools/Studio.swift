@@ -12,12 +12,12 @@ import SwiftUI
 public final class Studio {
     public private(set) var layer: Layer
     public var tool: DrawingTool
-    public var color: Color
+    public var toolColor: Color
     
     public init(layer: Layer = Layer(), tool: DrawingTool, color: Color) {
         self.layer = layer
         self.tool = tool
-        self.color = color
+        self.toolColor = color
     }
     
     public func drag(_ point: CGPoint) {
@@ -34,7 +34,7 @@ public final class Studio {
             let path = Path {
                 $0.move(to: point)
             }
-            let newStroke = Stroke(path: path, color: color, tool: tool)
+            let newStroke = Stroke(path: path, color: toolColor, tool: tool)
             layer.strokes.append(newStroke)
         }
     }

@@ -7,6 +7,7 @@
 
 import CoreGraphics
 import Observation
+import SwiftUI
 
 import StopMotionDrawing
 
@@ -14,6 +15,8 @@ import StopMotionDrawing
 @MainActor
 protocol CanvasViewModel: Observable {
     var layer: Layer { get }
+    var tool: DrawingTool { get }
+    var toolColor: Color { get }
     
     func drag(_ point: CGPoint)
     func endDragging(_ point: CGPoint)

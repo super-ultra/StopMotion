@@ -24,7 +24,7 @@ final class ToolViewModelImpl: ToolViewModel {
     // MARK: ToolViewModel
     
     var color: Color {
-        studio.color
+        studio.toolColor
     }
     
     private(set) var mode: ToolViewMode?
@@ -35,7 +35,7 @@ final class ToolViewModelImpl: ToolViewModel {
     }
     
     func selectColor(_ color: Color) {
-        studio.color = color
+        studio.toolColor = color
         mode = .tool(studio.tool)
     }
     
