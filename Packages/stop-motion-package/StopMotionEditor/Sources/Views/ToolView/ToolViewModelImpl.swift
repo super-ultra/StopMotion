@@ -36,6 +36,7 @@ final class ToolViewModelImpl: ToolViewModel {
     
     func selectColor(_ color: Color) {
         studio.color = color
+        mode = .tool(studio.tool)
     }
     
     func pickColor() {

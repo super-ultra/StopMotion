@@ -23,7 +23,7 @@ struct ToolViewColorButton: View {
             action: model.action,
             label: {
                 Circle()
-                    .stroke(model.isSelected ? Color.Assets.tintAccent : Color.clear, lineWidth: 1.5)
+                    .stroke(model.isSelected ? Color.Assets.tintAccent : Color.Assets.solidGrey, lineWidth: 1.5)
                     .fill(model.color)
                     .frame(width: 28, height: 28)
             }

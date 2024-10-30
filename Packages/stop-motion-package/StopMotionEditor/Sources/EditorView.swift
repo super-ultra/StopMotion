@@ -27,6 +27,17 @@ public struct EditorView: View {
         }
         .padding(.top, 20)
         .padding([.leading, .trailing], 16)
+        .overlay {
+            if model.toolModel.mode == .colorPicking {
+                VStack {
+                    Spacer()
+                    SmallColorPicker { color in
+                        model.toolModel.selectColor(color)
+                    }
+                    .padding(.bottom, 48)
+                }
+            }
+        }
         .safeAreaBottomPadding()
     }
     
