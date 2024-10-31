@@ -33,6 +33,10 @@ final class CanvasViewModelImpl: CanvasViewModel {
         }
     }
     
+    var layers: [Layer] {
+        studio.layers
+    }
+    
     var tool: DrawingTool {
         studio.tool
     }

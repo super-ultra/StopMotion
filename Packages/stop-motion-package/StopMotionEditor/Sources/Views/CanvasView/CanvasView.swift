@@ -11,13 +11,53 @@ import StopMotionAssets
 import StopMotionDrawing
 
 
-
 struct CanvasView: View {
     
     @State
     var model: CanvasViewModel
     
+    let isAnimating: Bool
+    
     var body: some View {
+        Group {
+            if isAnimating {
+                animatingCanvas()
+            } else {
+                drawingCanvas()
+            }
+        }
+        .background {
+            Image.Assets.canvas
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
+        .cornerRadius(20)
+    }
+    
+    // MARK: - Private
+    
+    private enum Static {
+        static let fps: Double = 20.0
+    }
+    
+    @State
+    private var cursorLocation: CGPoint? = nil
+    
+    @ViewBuilder
+    private func animatingCanvas() -> some View {
+        let initialDate = Date()
+        let interval: TimeInterval = 1.0 / Static.fps
+        
+        TimelineView(.periodic(from: initialDate, by: interval)) { timeContext in
+            Canvas { context, size in
+                let index = Int(timeContext.date.timeIntervalSince(initialDate) / interval) % model.layers.count
+                context.draw(model.layers[index])
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func drawingCanvas() -> some View {
         Canvas { context, size in
             if let previousLayer = model.previousLayer {
                 context.opacity = 0.3
@@ -42,17 +82,6 @@ struct CanvasView: View {
                     model.endDragging(value.location)
                 }
         )
-        .background {
-            Image.Assets.canvas
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-        }
-        .cornerRadius(20)
     }
-    
-    // MARK: - Private
-    
-    @State
-    private var cursorLocation: CGPoint? = nil
 }
 

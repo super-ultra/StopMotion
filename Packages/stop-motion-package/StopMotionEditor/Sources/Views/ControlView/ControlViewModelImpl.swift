@@ -15,17 +15,20 @@ final class ControlViewModelImpl: ControlViewModel {
     init(studio: Studio) {
         self.studio = studio
         isDeleteAvailable = true
-        isPlayAvailable = true
-        isPauseAvailable = true
+        isPlaying = false
     }
     
     // MARK: - ControlViewModel
     
     var isUndoAvailable: Bool { studio.isUndoAvailable }
+    
     var isRedoAvailable: Bool { studio.isRedoAvailable }
+    
     var isDeleteAvailable: Bool
-    var isPlayAvailable: Bool
-    var isPauseAvailable: Bool
+    
+    var isPlayAvailable: Bool { studio.layers.count > 1 }
+    
+    var isPlaying: Bool
     
     func undo() {
         studio.undo()
@@ -45,9 +48,19 @@ final class ControlViewModelImpl: ControlViewModel {
     
     func showAllLayers() {}
     
-    func play() {}
+    func play() {
+        guard isPlayAvailable, !isPlaying else {
+            return
+        }
+        isPlaying = true
+    }
     
-    func pause() {}
+    func pause() {
+        guard isPlaying else {
+            return
+        }
+        isPlaying = false
+    }
     
     // MARK: - Private
     

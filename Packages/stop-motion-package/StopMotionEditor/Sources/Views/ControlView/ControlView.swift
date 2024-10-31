@@ -32,6 +32,7 @@ struct ControlView: View {
                     }
                 ))
             }
+            .opacity(model.isPlaying ? 0.0 : 1.0)
             
             Spacer()
             
@@ -58,20 +59,21 @@ struct ControlView: View {
                     }
                 ))
             }
+            .opacity(model.isPlaying ? 0.0 : 1.0)
             
             Spacer()
             
             HStack(spacing: 16) {
                 ControlButton(model: ControlButtonModel(
                     icon: .Assets.controlPause,
-                    isAvailable: model.isPauseAvailable,
+                    isAvailable: model.isPlaying,
                     action: {
                         model.pause()
                     }
                 ))
                 ControlButton(model: ControlButtonModel(
                     icon: .Assets.controlPlay,
-                    isAvailable: model.isPlayAvailable,
+                    isAvailable: model.isPlayAvailable && !model.isPlaying,
                     action: {
                         model.play()
                     }
@@ -90,7 +92,7 @@ struct ControlView: View {
             isRedoAvailable: false,
             isDeleteAvailable: true,
             isPlayAvailable: true,
-            isPauseAvailable: true
+            isPlaying: false
         ))
         
         ControlView(model: ControlViewModelMock(
@@ -98,7 +100,15 @@ struct ControlView: View {
             isRedoAvailable: false,
             isDeleteAvailable: false,
             isPlayAvailable: false,
-            isPauseAvailable: false
+            isPlaying: false
+        ))
+        
+        ControlView(model: ControlViewModelMock(
+            isUndoAvailable: false,
+            isRedoAvailable: false,
+            isDeleteAvailable: false,
+            isPlayAvailable: true,
+            isPlaying: true
         ))
     }
     .frame(width: 350)

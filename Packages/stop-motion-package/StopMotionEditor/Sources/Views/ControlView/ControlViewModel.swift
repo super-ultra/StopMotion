@@ -15,7 +15,7 @@ protocol ControlViewModel: Observable {
     var isRedoAvailable: Bool { get }
     var isDeleteAvailable: Bool { get }
     var isPlayAvailable: Bool { get }
-    var isPauseAvailable: Bool { get }
+    var isPlaying: Bool { get }
     
     func undo()
     func redo()
@@ -32,7 +32,7 @@ struct ControlViewModelMock: ControlViewModel {
     var isRedoAvailable: Bool
     var isDeleteAvailable: Bool
     var isPlayAvailable: Bool
-    var isPauseAvailable: Bool
+    var isPlaying: Bool
     
     func undo() {}
     func redo() {}

@@ -16,6 +16,8 @@ import StopMotionDrawing
 protocol CanvasViewModel: Observable {
     var currentLayer: Layer { get }
     var previousLayer: Layer? { get }
+    var layers: [Layer] { get }
+    
     var tool: DrawingTool { get }
     var toolColor: Color { get }
     
