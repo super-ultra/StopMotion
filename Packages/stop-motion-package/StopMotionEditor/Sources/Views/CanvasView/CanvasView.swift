@@ -19,7 +19,13 @@ struct CanvasView: View {
     
     var body: some View {
         Canvas { context, size in
-            context.draw(model.layer)
+            if let previousLayer = model.previousLayer {
+                context.opacity = 0.3
+                context.draw(previousLayer)
+                context.opacity = 1.0
+            }
+            
+            context.draw(model.currentLayer)
             
             if let cursorLocation {
                 context.drawCursor(for: model.tool, color: model.toolColor, location: cursorLocation)

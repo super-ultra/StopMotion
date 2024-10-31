@@ -21,8 +21,16 @@ final class CanvasViewModelImpl: CanvasViewModel {
     
     // MARK: - CanvasViewModel
     
-    var layer: Layer {
-        studio.layer
+    var currentLayer: Layer {
+        studio.currentLayer
+    }
+    
+    var previousLayer: Layer? {
+        if studio.layers.count > 1 {
+            return studio.layers[studio.layers.count - 2]
+        } else {
+            return nil
+        }
     }
     
     var tool: DrawingTool {

@@ -14,7 +14,8 @@ import StopMotionDrawing
 
 @MainActor
 protocol CanvasViewModel: Observable {
-    var layer: Layer { get }
+    var currentLayer: Layer { get }
+    var previousLayer: Layer? { get }
     var tool: DrawingTool { get }
     var toolColor: Color { get }
     
