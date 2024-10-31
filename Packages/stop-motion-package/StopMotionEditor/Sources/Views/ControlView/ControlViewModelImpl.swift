@@ -6,14 +6,14 @@
 //
 
 import Observation
+import StopMotionDrawing
 
 @MainActor
 @Observable
 final class ControlViewModelImpl: ControlViewModel {
     
-    init() {
-        isUndoAvailable = true
-        isRedoAvailable = true
+    init(studio: Studio) {
+        self.studio = studio
         isDeleteAvailable = true
         isPlayAvailable = true
         isPauseAvailable = true
@@ -21,17 +21,31 @@ final class ControlViewModelImpl: ControlViewModel {
     
     // MARK: - ControlViewModel
     
-    var isUndoAvailable: Bool
-    var isRedoAvailable: Bool
+    var isUndoAvailable: Bool { studio.isUndoAvailable }
+    var isRedoAvailable: Bool { studio.isRedoAvailable }
     var isDeleteAvailable: Bool
     var isPlayAvailable: Bool
     var isPauseAvailable: Bool
     
-    func undo() {}
-    func redo() {}
+    func undo() {
+        studio.undo()
+    }
+    
+    func redo() {
+        studio.redo()
+    }
+    
     func deleteLayer() {}
+    
     func makeNewLayer() {}
+    
     func showAllLayers() {}
+    
     func play() {}
+    
     func pause() {}
+    
+    // MARK: - Private
+    
+    private let studio: Studio
 }

@@ -15,7 +15,7 @@ import Observation
 final class EditorModelImpl: EditorModel {
     
     init() {
-        controlModel = ControlViewModelImpl()
+        controlModel = ControlViewModelImpl(studio: studio)
         canvasModel = CanvasViewModelImpl(studio: studio)
         toolModel = ToolViewModelImpl(studio: studio)
     }
@@ -35,7 +35,7 @@ final class EditorModelImpl: EditorModel {
         static let initialColor: Color = .Assets.solidBlue
     }
     
-    private let studio = Studio(tool: Static.initialTool, color: Static.initialColor)
+    private let studio: Studio = StudioImpl(tool: Static.initialTool, color: Static.initialColor)
     
 }
 

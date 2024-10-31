@@ -28,7 +28,7 @@ struct ControlButton: View {
         )
         .foregroundStyle(
             Color.Assets.tintPrimary
-                .opacity(model.isAvailable ? 1.0 : 0.5)
+                .opacity(model.isAvailable ? 1.0 : 0.3)
         )
         .disabled(!model.isAvailable)
     }

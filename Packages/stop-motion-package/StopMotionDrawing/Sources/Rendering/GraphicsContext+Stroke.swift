@@ -9,6 +9,12 @@ import SwiftUI
 
 extension GraphicsContext {
     
+    public mutating func draw(_ layer: Layer) {
+        for stroke in layer.strokes {
+            draw(stroke)
+        }
+    }
+    
     public mutating func draw(_ stroke: Stroke) {
         let shading: GraphicsContext.Shading
         
@@ -25,7 +31,7 @@ extension GraphicsContext {
     }
     
     public mutating func drawCursor(for tool: DrawingTool, color: Color, location: CGPoint) {
-        let size = CGSize(width: 16, height: 16) // TODO: Fix 
+        let size = CGSize(width: 16, height: 16) // TODO: Fix
         let rect = CGRect(origin: location, size: size)
             .offsetBy(dx: -size.width / 2, dy: -size.height / 2)
                     

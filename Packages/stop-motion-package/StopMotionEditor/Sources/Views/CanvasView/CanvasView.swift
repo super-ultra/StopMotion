@@ -19,9 +19,7 @@ struct CanvasView: View {
     
     var body: some View {
         Canvas { context, size in
-            for stroke in model.layer.strokes {
-                context.draw(stroke)
-            }
+            context.draw(model.layer)
             
             if let cursorLocation {
                 context.drawCursor(for: model.tool, color: model.toolColor, location: cursorLocation)
