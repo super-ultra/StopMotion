@@ -36,7 +36,7 @@ struct ControlView: View {
             
             Spacer()
             
-            HStack(spacing: 16) {
+            HStack(spacing: 12) {
                 ControlButton(model: ControlButtonModel(
                     icon: .Assets.controlBin,
                     isAvailable: model.isDeleteAvailable,
@@ -49,6 +49,13 @@ struct ControlView: View {
                     isAvailable: true,
                     action: {
                         model.makeNewLayer()
+                    }
+                ))
+                ControlButton(model: ControlButtonModel(
+                    icon: .Assets.controlGenerateLayers,
+                    isAvailable: true,
+                    action: {
+                        model.generateLayers()
                     }
                 ))
                 ControlButton(model: ControlButtonModel(

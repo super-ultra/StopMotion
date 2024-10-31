@@ -46,6 +46,10 @@ final class ControlViewModelImpl: ControlViewModel {
         studio.makeNewLayer()
     }
     
+    func generateLayers() {
+        
+    }
+    
     func showAllLayers() {}
     
     func play() {
