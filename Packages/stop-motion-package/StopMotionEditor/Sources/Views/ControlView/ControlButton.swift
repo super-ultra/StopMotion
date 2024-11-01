@@ -22,16 +22,16 @@ struct ControlButton: View {
     
     var body: some View {
         Button(
-            action: model.action,
+            action: {},
             label: {
                 model.icon
+                    .onTapGesture {
+                        model.action()
+                    }
+                    .onLongPressGesture(minimumDuration: 0.1) {
+                        model.onLongPress?()
+                    }
             }
-        )
-        .simultaneousGesture(
-            LongPressGesture(minimumDuration: 2)
-                .onEnded { _ in
-                    model.onLongPress?()
-                }
         )
         .foregroundStyle(
             Color.Assets.tintPrimary

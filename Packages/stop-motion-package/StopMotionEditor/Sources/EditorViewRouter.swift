@@ -25,10 +25,11 @@ enum EditorViewDestination: Identifiable {
 protocol EditorViewRouter: ControlViewRouter, Observable {
     var destination: EditorViewDestination? { get set }
     
-    func view(for destination: EditorViewDestination) -> LayerCollectionView
+    func view(for destination: EditorViewDestination) -> AnyView
 }
 
 @Observable
+@MainActor
 final class EditorViewRouterImpl: EditorViewRouter {
     
     init(studio: Studio) {
@@ -43,10 +44,12 @@ final class EditorViewRouterImpl: EditorViewRouter {
         destination = .allLayers
     }
     
-    func view(for destination: EditorViewDestination) -> LayerCollectionView {
+    func view(for destination: EditorViewDestination) -> AnyView {
         switch destination {
         case .allLayers:
-            return LayerCollectionView(model: LayerCollectionViewModelImpl(studio: studio))
+            return AnyView(NavigationView {
+                LayerCollectionView(model: LayerCollectionViewModelImpl(studio: studio))
+            })
         }
         
     }

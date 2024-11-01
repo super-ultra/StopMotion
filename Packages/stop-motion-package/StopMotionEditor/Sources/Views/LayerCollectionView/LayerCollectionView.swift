@@ -32,6 +32,15 @@ struct LayerCollectionView: View {
             }
             .padding()
         }
+        .navigationTitle(Strings.LayersCollectionView.allLayers)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(Strings.Common.close) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+        }
     }
     
     // MARK: - Private

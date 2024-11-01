@@ -12,6 +12,7 @@ enum Strings {
     enum Common {
         static let ok = String(localized: "Ok")
         static let cancel = String(localized: "Cancel")
+        static let close = String(localized: "Close")
     }
     
     enum ControlView {
@@ -22,5 +23,9 @@ enum Strings {
     enum DeleteAllLayersAlert {
         static let message = String(localized: "Are you sure you want to delete all layers?")
         static let deleteAll = String(localized: "Delete All Layers")
+    }
+    
+    enum LayersCollectionView {
+        static let allLayers = String(localized: "All Layers")
     }
 }
