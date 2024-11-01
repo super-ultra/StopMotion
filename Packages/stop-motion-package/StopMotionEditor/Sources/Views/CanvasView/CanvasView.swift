@@ -18,6 +18,8 @@ struct CanvasView: View {
     
     let isAnimating: Bool
     
+    let onDraw: () -> Void
+    
     var body: some View {
         Group {
             if isAnimating {
@@ -76,10 +78,12 @@ struct CanvasView: View {
                 .onChanged { value in
                     cursorLocation = value.location
                     model.drag(value.location)
+                    onDraw()
                 }
                 .onEnded { value in
                     cursorLocation = nil
                     model.endDragging(value.location)
+                    onDraw()
                 }
         )
     }

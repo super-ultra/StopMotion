@@ -18,20 +18,22 @@ public struct EditorView: View {
             
             Spacer().frame(height: 16)
 
-            CanvasView(model: model.canvasModel, isAnimating: model.controlModel.isPlaying)
+            CanvasView(
+                model: model.canvasModel,
+                isAnimating: model.controlModel.isPlaying,
+                onDraw: {
+                    model.toolModel.dropToToolModeIfNeeded()
+                }
+            )
             
             Spacer()
-                .frame(height: 22)
-            
-            ToolView(model: model.toolModel)
-                .opacity(model.controlModel.isPlaying ? 0.0 : 1.0)
+                .frame(height: 54)
         }
         .padding(.top, 20)
         .padding([.leading, .trailing], 16)
         .overlay {
-            if !model.controlModel.isPlaying {
-                overlayView()
-            }
+            ToolView(model: model.toolModel)
+                .opacity(model.controlModel.isPlaying ? 0.0 : 1.0)
         }
         .safeAreaBottomPadding()
         .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -48,19 +50,6 @@ public struct EditorView: View {
     
     @State
     private var model = EditorViewModelImpl()
-    
-    @ViewBuilder
-    private func overlayView() -> some View {
-        if model.toolModel.mode == .colorPicking {
-            VStack {
-                Spacer()
-                SmallColorPicker { color in
-                    model.toolModel.selectColor(color)
-                }
-                .padding(.bottom, 48)
-            }
-        }
-    }
     
 }
 

@@ -35,7 +35,7 @@ final class EditorViewModelImpl: EditorViewModel {
     // MARK: - Private
     
     private enum Static {
-        static let initialTool: DrawingTool = .pencil
+        static let initialTool: DrawingTool = .default(.pencil)
         static let initialColor: Color = .Assets.solidBlue
     }
     
@@ -48,8 +48,12 @@ final class EditorViewModelImpl: EditorViewModel {
 extension ToolViewMode {
     fileprivate var currentTool: DrawingTool? {
         switch self {
-        case .tool(let tool): return tool
-        case .colorPicking: return nil
+        case .tool(let tool):
+            return tool
+        case .colorPicking:
+            return nil
+        case .sizePicking(let tool):
+            return tool
         }
     }
 }
