@@ -10,8 +10,8 @@ import SwiftUI
 @Observable
 final class LayerManager {
     
-    init() {
-        layer = Layer()
+    init(layer: Layer = Layer()) {
+        self.layer = layer
     }
     
     private(set) var layer: Layer

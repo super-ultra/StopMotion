@@ -51,13 +51,29 @@ struct ControlView: View {
                         model.makeNewLayer()
                     }
                 ))
+                
                 ControlButton(model: ControlButtonModel(
                     icon: .Assets.controlGenerateLayers,
                     isAvailable: true,
                     action: {
-                        model.generateLayers()
+                        isGenerateLayersCountPresented.toggle()
                     }
                 ))
+                .alert("New layers", isPresented: $isGenerateLayersCountPresented) {
+                    TextField("", text: $generateLayersCountText)
+                        .keyboardType(.numberPad)
+                    
+                    Button("Ok") {
+                        if let count = Int(generateLayersCountText), count > 0 {
+                            model.generateLayers(count: count)
+                        }
+                    }
+                    
+                    Button("Cancel", role: .cancel) {}
+                } message: {
+                    Text("Enter the number of layers to generate.")
+                }
+                
                 ControlButton(model: ControlButtonModel(
                     icon: .Assets.controlLayers,
                     isAvailable: true,
@@ -88,6 +104,14 @@ struct ControlView: View {
             }
         }
     }
+    
+    // MARK: - Private
+    
+    @State
+    private var generateLayersCountText: String = ""
+    
+    @State
+    private var isGenerateLayersCountPresented: Bool = false
     
 }
 

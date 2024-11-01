@@ -14,8 +14,6 @@ final class ControlViewModelImpl: ControlViewModel {
     
     init(studio: Studio) {
         self.studio = studio
-        isDeleteAvailable = true
-        isPlaying = false
     }
     
     // MARK: - ControlViewModel
@@ -24,11 +22,11 @@ final class ControlViewModelImpl: ControlViewModel {
     
     var isRedoAvailable: Bool { studio.isRedoAvailable }
     
-    var isDeleteAvailable: Bool
+    var isDeleteAvailable: Bool { studio.layers.count > 1 || !studio.currentLayer.strokes.isEmpty }
     
     var isPlayAvailable: Bool { studio.layers.count > 1 }
     
-    var isPlaying: Bool
+    private(set) var isPlaying: Bool = false
     
     func undo() {
         studio.undo()
@@ -46,8 +44,8 @@ final class ControlViewModelImpl: ControlViewModel {
         studio.makeNewLayer()
     }
     
-    func generateLayers() {
-        
+    func generateLayers(count: Int) {
+        studio.generateLayers(count: count)
     }
     
     func showAllLayers() {}

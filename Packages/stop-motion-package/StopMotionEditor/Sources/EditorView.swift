@@ -34,6 +34,7 @@ public struct EditorView: View {
             }
         }
         .safeAreaBottomPadding()
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
     
     // MARK: - Private

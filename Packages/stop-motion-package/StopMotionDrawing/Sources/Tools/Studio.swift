@@ -24,5 +24,6 @@ public protocol Studio: AnyObject, Observable {
     func redo()
     
     func makeNewLayer()
+    func generateLayers(count: Int)
     func deleteCurrentLayer()
 }

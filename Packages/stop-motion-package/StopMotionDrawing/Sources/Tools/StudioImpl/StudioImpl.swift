@@ -59,6 +59,30 @@ public final class StudioImpl: Studio {
         layerManagers.append(LayerManager())
     }
     
+    public func generateLayers(count: Int) {
+        let generator = LayerGenerator()
+        
+        let currentIndex = layers.count - 1 // TODO: Fix
+        let fromIndex: Int
+
+        var newManagers = layerManagers
+        if newManagers[currentIndex].layer.strokes.isEmpty {
+            newManagers.remove(at: currentIndex)
+            fromIndex = max(currentIndex - 1, 0)
+        } else {
+            fromIndex = currentIndex
+        }
+        
+        let generatedManagers = generator
+            .generateLayers(basedOn: newManagers.map { $0.layer }, fromIndex: fromIndex, count: count)
+            .map { LayerManager(layer: $0) }
+        
+        if !generatedManagers.isEmpty {
+            newManagers.insert(contentsOf: generatedManagers, at: fromIndex)
+            layerManagers = newManagers
+        }
+    }
+    
     public func deleteCurrentLayer() {
         layerManagers.removeLast()
         
