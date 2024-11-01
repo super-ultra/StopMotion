@@ -11,16 +11,20 @@ import StopMotionAssets
 import SwiftUI
 import Observation
 
+
 @MainActor
-final class EditorModelImpl: EditorModel {
+final class EditorViewModelImpl: EditorViewModel {
     
     init() {
-        controlModel = ControlViewModelImpl(studio: studio)
+        router = EditorViewRouterImpl(studio: studio)
+        controlModel = ControlViewModelImpl(studio: studio, router: router)
         canvasModel = CanvasViewModelImpl(studio: studio)
         toolModel = ToolViewModelImpl(studio: studio)
     }
     
     // MARK: - EditorModel
+    
+    var router: EditorViewRouter
     
     let controlModel: ControlViewModel
     
@@ -36,7 +40,6 @@ final class EditorModelImpl: EditorModel {
     }
     
     private let studio: Studio = StudioImpl(tool: Static.initialTool, color: Static.initialColor)
-    
 }
 
 

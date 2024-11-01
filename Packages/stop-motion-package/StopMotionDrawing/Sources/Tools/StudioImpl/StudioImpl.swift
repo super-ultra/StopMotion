@@ -13,6 +13,7 @@ public final class StudioImpl: Studio {
     
     public init(tool: DrawingTool, color: Color) {
         self.layerManagers = [LayerManager()]
+        self.currentLayerIndex = 0
         self.tool = tool
         self.toolColor = color
     }
@@ -22,6 +23,8 @@ public final class StudioImpl: Studio {
     public var layers: [Layer] {
         layerManagers.map { $0.layer }
     }
+    
+    public private(set) var currentLayerIndex: Int
     
     public var currentLayer: Layer {
         currentLayerManager.layer
@@ -56,13 +59,14 @@ public final class StudioImpl: Studio {
     }
     
     public func makeNewLayer() {
-        layerManagers.append(LayerManager())
+        layerManagers.insert(LayerManager(), at: currentLayerIndex + 1)
+        currentLayerIndex += 1
     }
     
     public func generateLayers(count: Int) {
         let generator = LayerGenerator()
         
-        let currentIndex = layers.count - 1 // TODO: Fix
+        let currentIndex = currentLayerIndex
         let fromIndex: Int
 
         var newManagers = layerManagers
@@ -84,11 +88,22 @@ public final class StudioImpl: Studio {
     }
     
     public func deleteCurrentLayer() {
-        layerManagers.removeLast()
+        layerManagers.remove(at: currentLayerIndex)
+        currentLayerIndex -= 1
         
         if layerManagers.isEmpty {
             layerManagers = [LayerManager()]
+            currentLayerIndex = 0
         }
+    }
+    
+    public func selectLayer(at index: Int) {
+        guard index >= 0, index < layerManagers.count else {
+            assertionFailure()
+            return
+        }
+        
+        currentLayerIndex = index
     }
     
     // MARK: - Private
@@ -98,14 +113,6 @@ public final class StudioImpl: Studio {
     private var layerManagers: [LayerManager]
     
     private var currentLayerManager: LayerManager {
-        guard let topLayerManager = layerManagers.last else {
-            assertionFailure()
-            
-            let newLayerManager = LayerManager()
-            layerManagers = [newLayerManager]
-            return newLayerManager
-        }
-        
-        return topLayerManager
+        return layerManagers[currentLayerIndex]
     }
 }

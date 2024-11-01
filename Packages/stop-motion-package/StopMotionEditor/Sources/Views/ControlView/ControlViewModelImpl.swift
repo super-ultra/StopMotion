@@ -6,14 +6,22 @@
 //
 
 import Observation
+import SwiftUI
 import StopMotionDrawing
+
+@MainActor
+protocol ControlViewRouter {
+    func presentAllLayers()
+}
+
 
 @MainActor
 @Observable
 final class ControlViewModelImpl: ControlViewModel {
     
-    init(studio: Studio) {
+    init(studio: Studio, router: ControlViewRouter) {
         self.studio = studio
+        self.router = router
     }
     
     // MARK: - ControlViewModel
@@ -27,6 +35,10 @@ final class ControlViewModelImpl: ControlViewModel {
     var isPlayAvailable: Bool { studio.layers.count > 1 }
     
     private(set) var isPlaying: Bool = false
+    
+    var layerCounter: String {
+        return "\(studio.currentLayerIndex + 1) / \(studio.layers.count)"
+    }
     
     func undo() {
         studio.undo()
@@ -48,7 +60,9 @@ final class ControlViewModelImpl: ControlViewModel {
         studio.generateLayers(count: count)
     }
     
-    func showAllLayers() {}
+    func presentAllLayers() {
+        router.presentAllLayers()
+    }
     
     func play() {
         guard isPlayAvailable, !isPlaying else {
@@ -67,4 +81,5 @@ final class ControlViewModelImpl: ControlViewModel {
     // MARK: - Private
     
     private let studio: Studio
+    private let router: ControlViewRouter
 }

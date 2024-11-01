@@ -35,6 +35,9 @@ public struct EditorView: View {
         }
         .safeAreaBottomPadding()
         .ignoresSafeArea(.keyboard, edges: .bottom)
+        .sheet(item: $model.router.destination) { destination in
+            model.router.view(for: destination)
+        }
     }
     
     // MARK: - Private
@@ -44,7 +47,7 @@ public struct EditorView: View {
     }
     
     @State
-    private var model = EditorModelImpl()
+    private var model = EditorViewModelImpl()
     
     @ViewBuilder
     private func overlayView() -> some View {

@@ -16,13 +16,14 @@ protocol ControlViewModel: Observable {
     var isDeleteAvailable: Bool { get }
     var isPlayAvailable: Bool { get }
     var isPlaying: Bool { get }
+    var layerCounter: String { get }
     
     func undo()
     func redo()
     func deleteLayer()
     func makeNewLayer()
     func generateLayers(count: Int)
-    func showAllLayers()
+    func presentAllLayers()
     func play()
     func pause()
 }
@@ -34,13 +35,14 @@ struct ControlViewModelMock: ControlViewModel {
     var isDeleteAvailable: Bool
     var isPlayAvailable: Bool
     var isPlaying: Bool
+    var layerCounter: String
     
     func undo() {}
     func redo() {}
     func deleteLayer() {}
     func makeNewLayer() {}
     func generateLayers(count: Int) {}
-    func showAllLayers() {}
+    func presentAllLayers() {}
     func play() {}
     func pause() {}
 }

@@ -9,8 +9,9 @@ import SwiftUI
 
 @MainActor
 public protocol Studio: AnyObject, Observable {
-    /// Top layer always exists
+    /// Current layer always exists
     var currentLayer: Layer { get }
+    var currentLayerIndex: Int { get }
     var layers: [Layer] { get }
     var tool: DrawingTool { get set }
     var toolColor: Color { get set }
@@ -26,4 +27,5 @@ public protocol Studio: AnyObject, Observable {
     func makeNewLayer()
     func generateLayers(count: Int)
     func deleteCurrentLayer()
+    func selectLayer(at index: Int)
 }

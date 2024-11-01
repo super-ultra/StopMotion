@@ -26,8 +26,8 @@ final class CanvasViewModelImpl: CanvasViewModel {
     }
     
     var previousLayer: Layer? {
-        if studio.layers.count > 1 {
-            return studio.layers[studio.layers.count - 2]
+        if studio.currentLayerIndex > 0 {
+            return studio.layers[studio.currentLayerIndex - 1]
         } else {
             return nil
         }

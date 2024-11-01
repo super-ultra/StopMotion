@@ -6,7 +6,9 @@
 //
 
 @MainActor
-protocol EditorModel {
+protocol EditorViewModel: AnyObject {
+    var router: EditorViewRouter { get }
+    
     var controlModel: ControlViewModel { get }
     var toolModel: ToolViewModel { get }
     var canvasModel: CanvasViewModel { get }
