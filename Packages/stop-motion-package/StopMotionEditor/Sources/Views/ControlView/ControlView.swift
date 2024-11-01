@@ -65,7 +65,7 @@ struct ControlView: View {
     
     @ViewBuilder
     private func layerControls() -> some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 8) {
             ControlButton(model: ControlButtonModel(
                 icon: .Assets.controlBin,
                 isAvailable: model.isDeleteAvailable,
@@ -73,11 +73,20 @@ struct ControlView: View {
                     model.deleteLayer()
                 }
             ))
+           
             ControlButton(model: ControlButtonModel(
                 icon: .Assets.controlNewLayer,
                 isAvailable: true,
                 action: {
                     model.makeNewLayer()
+                }
+            ))
+            
+            ControlButton(model: ControlButtonModel(
+                icon: .Assets.controlDuplicate,
+                isAvailable: true,
+                action: {
+                    model.duplicateLayer()
                 }
             ))
             
@@ -116,7 +125,7 @@ struct ControlView: View {
     
     @ViewBuilder
     private func playbackControls() -> some View {
-        HStack(spacing: 16) {
+        HStack(spacing: 8) {
             ControlButton(model: ControlButtonModel(
                 icon: .Assets.controlPause,
                 isAvailable: model.isPlaying,

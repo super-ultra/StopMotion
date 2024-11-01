@@ -9,11 +9,6 @@ import Observation
 import SwiftUI
 import StopMotionDrawing
 
-@MainActor
-protocol ControlViewRouter {
-    func presentAllLayers()
-}
-
 
 @MainActor
 @Observable
@@ -54,6 +49,10 @@ final class ControlViewModelImpl: ControlViewModel {
     
     func makeNewLayer() {
         studio.makeNewLayer()
+    }
+    
+    func duplicateLayer() {
+        studio.duplicateLayer()
     }
     
     func generateLayers(count: Int) {

@@ -63,6 +63,11 @@ public final class StudioImpl: Studio {
         currentLayerIndex += 1
     }
     
+    public func duplicateLayer() {
+        layerManagers.insert(LayerManager(layer: currentLayer), at: currentLayerIndex + 1)
+        currentLayerIndex += 1
+    }
+    
     public func generateLayers(count: Int) {
         let generator = LayerGenerator()
         

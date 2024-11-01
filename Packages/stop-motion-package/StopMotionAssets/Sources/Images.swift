@@ -7,6 +7,7 @@ extension Image {
         public static let controlPause = Image("control-pause", bundle: .module)
         public static let controlBin = Image("control-bin", bundle: .module)
         public static let controlNewLayer = Image("control-new-layer", bundle: .module)
+        public static let controlDuplicate = Image("control-duplicate", bundle: .module)
         public static let controlGenerateLayers = Image("control-generate-layers", bundle: .module)
         public static let controlPlay = Image("control-play", bundle: .module)
         public static let controlUndo = Image("control-undo", bundle: .module)
