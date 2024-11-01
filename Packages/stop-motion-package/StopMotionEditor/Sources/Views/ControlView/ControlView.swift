@@ -38,9 +38,9 @@ struct ControlView: View {
     
     @State
     private var isGenerateLayersCountPresented: Bool = false
-    
+        
     @State
-    private var isAllLayersPresented: Bool = false
+    private var isDeleteAllLayersPresented: Bool = false
     
     @ViewBuilder
     private func actionControls() -> some View {
@@ -71,8 +71,16 @@ struct ControlView: View {
                 isAvailable: model.isDeleteAvailable,
                 action: {
                     model.deleteLayer()
+                },
+                onLongPress: {
+                    isDeleteAllLayersPresented = true
                 }
             ))
+            .confirmationDialog(Strings.DeleteAllLayersAlert.message, isPresented: $isDeleteAllLayersPresented, titleVisibility: .visible) {
+                Button(Strings.DeleteAllLayersAlert.deleteAll, role: .destructive) {
+                    model.deleteAllLayers()
+                }
+            }
            
             ControlButton(model: ControlButtonModel(
                 icon: .Assets.controlNewLayer,
@@ -97,19 +105,19 @@ struct ControlView: View {
                     isGenerateLayersCountPresented.toggle()
                 }
             ))
-            .alert("New layers", isPresented: $isGenerateLayersCountPresented) {
+            .alert(Strings.ControlView.generateLayersTitle, isPresented: $isGenerateLayersCountPresented) {
                 TextField("", text: $generateLayersCountText)
                     .keyboardType(.numberPad)
                 
-                Button("Ok") {
+                Button(Strings.Common.ok) {
                     if let count = Int(generateLayersCountText), count > 0 {
                         model.generateLayers(count: count)
                     }
                 }
                 
-                Button("Cancel", role: .cancel) {}
+                Button(Strings.Common.cancel, role: .cancel) {}
             } message: {
-                Text("Enter the number of layers to generate.")
+                Text(Strings.ControlView.generateLayersMessage)
             }
             
             ControlButton(model: ControlButtonModel(

@@ -21,6 +21,7 @@ protocol ControlViewModel: Observable {
     func undo()
     func redo()
     func deleteLayer()
+    func deleteAllLayers()
     func makeNewLayer()
     func duplicateLayer()
     func generateLayers(count: Int)
@@ -41,6 +42,7 @@ struct ControlViewModelMock: ControlViewModel {
     func undo() {}
     func redo() {}
     func deleteLayer() {}
+    func deleteAllLayers() {}
     func makeNewLayer() {}
     func duplicateLayer() {}
     func generateLayers(count: Int) {}

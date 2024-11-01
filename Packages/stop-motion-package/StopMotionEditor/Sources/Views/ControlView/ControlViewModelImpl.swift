@@ -47,6 +47,10 @@ final class ControlViewModelImpl: ControlViewModel {
         studio.deleteCurrentLayer()
     }
     
+    func deleteAllLayers() {
+        studio.deleteAllLayers()
+    }
+    
     func makeNewLayer() {
         studio.makeNewLayer()
     }

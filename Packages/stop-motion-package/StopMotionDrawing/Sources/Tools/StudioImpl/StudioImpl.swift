@@ -97,9 +97,12 @@ public final class StudioImpl: Studio {
         currentLayerIndex -= 1
         
         if layerManagers.isEmpty {
-            layerManagers = [LayerManager()]
-            currentLayerIndex = 0
+            resetState()
         }
+    }
+    
+    public func deleteAllLayers() {
+        resetState()
     }
     
     public func selectLayer(at index: Int) {
@@ -119,5 +122,10 @@ public final class StudioImpl: Studio {
     
     private var currentLayerManager: LayerManager {
         return layerManagers[currentLayerIndex]
+    }
+    
+    private func resetState() {
+        layerManagers = [LayerManager()]
+        currentLayerIndex = 0
     }
 }

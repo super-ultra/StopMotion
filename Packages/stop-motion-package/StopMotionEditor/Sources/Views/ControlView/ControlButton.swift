@@ -10,9 +10,10 @@ import StopMotionAssets
 
 
 struct ControlButtonModel {
-    let icon: Image
-    let isAvailable: Bool
-    let action: () -> Void
+    var icon: Image
+    var isAvailable: Bool
+    var action: () -> Void
+    var onLongPress: (() -> Void)? = nil
 }
 
 struct ControlButton: View {
@@ -25,6 +26,12 @@ struct ControlButton: View {
             label: {
                 model.icon
             }
+        )
+        .simultaneousGesture(
+            LongPressGesture(minimumDuration: 2)
+                .onEnded { _ in
+                    model.onLongPress?()
+                }
         )
         .foregroundStyle(
             Color.Assets.tintPrimary
