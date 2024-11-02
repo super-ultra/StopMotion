@@ -27,7 +27,9 @@ extension GraphicsContext {
             shading = .color(stroke.color)
         }
         
-        self.stroke(stroke.path, with: shading, lineWidth: stroke.tool.size)
+        let style = StrokeStyle(lineWidth: stroke.tool.size, lineCap: .round, lineJoin: .round)
+        
+        self.stroke(stroke.path, with: shading, style: style)
     }
     
     public mutating func drawCursor(for tool: DrawingTool, color: Color, location: CGPoint) {
