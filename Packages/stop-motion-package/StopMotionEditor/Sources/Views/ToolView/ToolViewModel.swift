@@ -12,7 +12,7 @@ import StopMotionDrawing
 
 enum ToolViewMode {
     case tool(DrawingTool)
-    case colorPicking
+    case colorPicking(SmallColorPickerModel)
     case sizePicking(DrawingTool, SizeSliderModel)
 }
 

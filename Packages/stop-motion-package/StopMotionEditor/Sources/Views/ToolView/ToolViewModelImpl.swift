@@ -63,7 +63,17 @@ final class ToolViewModelImpl: ToolViewModel {
         case .colorPicking:
             dropToToolModeIfNeeded()
         default:
-            mode = .colorPicking
+            mode = .colorPicking(SmallColorPickerModel(
+                selectedColor: Binding<Color>(
+                    get: { [studio] in
+                        studio.toolColor
+                    },
+                    set: { [weak self] in
+                        self?.studio.toolColor = $0
+                    }
+                ),
+                predefinedColors: Static.defaultColors
+            ))
         }
     }
     
@@ -77,6 +87,11 @@ final class ToolViewModelImpl: ToolViewModel {
     }
     
     // MARK: - Private
+    
+    
+    private enum Static {
+        static let defaultColors: [Color] = [.Assets.solidWhite, .Assets.solidRed, .Assets.solidBlack, .Assets.solidBlue]
+    }
     
     private let studio: Studio
     private var tools: [DrawingToolType: DrawingTool] = [:]

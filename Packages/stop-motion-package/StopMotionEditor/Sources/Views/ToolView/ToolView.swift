@@ -48,10 +48,8 @@ struct ToolView: View {
     @ViewBuilder
     private func pickerViews() -> some View {
         switch model.mode {
-        case .colorPicking:
-            SmallColorPicker { color in
-                model.selectColor(color)
-            }
+        case .colorPicking(let colorModel):
+            SmallColorPicker(model: colorModel)
             .padding([.leading, .trailing], 24)
         case .sizePicking(let tool, let sliderModel):
             SizeSlider(model: sliderModel)
@@ -74,7 +72,10 @@ struct ToolView: View {
         
         ToolView(model: ToolViewModelMock(
             color: .Assets.solidBlue,
-            mode: .colorPicking
+            mode: .colorPicking(SmallColorPickerModel(
+                selectedColor: .constant(.red),
+                predefinedColors: [.red, .green, .blue])
+            )
         ))
         .background(.gray)
         

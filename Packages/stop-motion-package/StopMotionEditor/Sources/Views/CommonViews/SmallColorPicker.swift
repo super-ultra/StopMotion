@@ -9,22 +9,32 @@ import SwiftUI
 
 import StopMotionAssets
 
+
+struct SmallColorPickerModel {
+    let selectedColor: Binding<Color>
+    let predefinedColors: [Color]
+}
+
 struct SmallColorPicker: View {
-    
-    var colors: [Color] = Static.defaultColors
-    
-    var onSelect: (Color) -> Void
+
+    var model: SmallColorPickerModel
     
     var body: some View {
         HStack(spacing: 16) {
-            ForEach(colors, id: \.self) { color in
+            ColorPicker("", selection: model.selectedColor, supportsOpacity: true)
+                .pickerStyle(.palette)
+                .labelsHidden()
+            
+            ForEach(model.predefinedColors, id: \.self) { color in
                 ToolViewColorButton(
                     model: ToolViewColorButtonModel(
                         color: color,
                         isSelected: false,
                         action: {
-                            onSelect(color)
-                        }))
+                            model.selectedColor.wrappedValue = color
+                        }
+                    )
+                )
             }
         }
         .padding(16)
@@ -36,8 +46,7 @@ struct SmallColorPicker: View {
     
     // MARK: - Private
     
-    private enum Static {
-        static let defaultColors: [Color] = [.Assets.solidWhite, .Assets.solidRed, .Assets.solidBlack, .Assets.solidBlue]
-    }
+    @State
+    private var fullPickerSelected: Bool = false
     
 }
