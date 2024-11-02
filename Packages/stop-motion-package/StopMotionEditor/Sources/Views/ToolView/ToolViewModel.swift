@@ -10,10 +10,10 @@ import SwiftUI
 
 import StopMotionDrawing
 
-enum ToolViewMode: Equatable {
+enum ToolViewMode {
     case tool(DrawingTool)
     case colorPicking
-    case sizePicking(DrawingTool)
+    case sizePicking(DrawingTool, SizeSliderModel)
 }
 
 @MainActor
@@ -43,8 +43,17 @@ extension ToolViewMode {
         switch self {
         case .colorPicking:
             return false
-        case .sizePicking(let tool), .tool(let tool):
+        case .sizePicking(let tool, _), .tool(let tool):
             return tool.type == toolType
+        }
+    }
+    
+    var isColorPicking: Bool {
+        switch self {
+        case .colorPicking:
+            return true
+        case .sizePicking, .tool:
+            return false
         }
     }
 }
@@ -52,5 +61,9 @@ extension ToolViewMode {
 extension ToolViewModel {
     func isToolSelected(_ toolType: DrawingToolType) -> Bool {
         mode?.isTool(toolType) ?? false
+    }
+    
+    var isColorPicking: Bool {
+        mode?.isColorPicking ?? false
     }
 }

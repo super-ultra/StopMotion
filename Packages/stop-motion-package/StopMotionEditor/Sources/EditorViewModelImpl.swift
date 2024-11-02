@@ -41,19 +41,3 @@ final class EditorViewModelImpl: EditorViewModel {
     
     private let studio: Studio = StudioImpl(tool: Static.initialTool, color: Static.initialColor)
 }
-
-
-// MARK: - Private Utils
-
-extension ToolViewMode {
-    fileprivate var currentTool: DrawingTool? {
-        switch self {
-        case .tool(let tool):
-            return tool
-        case .colorPicking:
-            return nil
-        case .sizePicking(let tool):
-            return tool
-        }
-    }
-}

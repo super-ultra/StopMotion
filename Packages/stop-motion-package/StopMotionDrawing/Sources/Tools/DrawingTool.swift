@@ -30,4 +30,8 @@ public struct DrawingTool: Sendable, Equatable {
         }
     }
     
+    public static var defaultSizeRange: ClosedRange<CGFloat> {
+        1...32
+    }
+    
 }

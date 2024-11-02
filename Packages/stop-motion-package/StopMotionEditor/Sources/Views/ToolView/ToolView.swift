@@ -8,6 +8,7 @@
 import SwiftUI
 
 import StopMotionAssets
+import StopMotionDrawing
 
 
 struct ToolView: View {
@@ -35,7 +36,7 @@ struct ToolView: View {
                 
                 ToolViewColorButton(model: ToolViewColorButtonModel(
                     color: model.color,
-                    isSelected: model.mode == .colorPicking,
+                    isSelected: model.isColorPicking,
                     action: { model.pickColor() }
                 ))
             }
@@ -51,8 +52,10 @@ struct ToolView: View {
             SmallColorPicker { color in
                 model.selectColor(color)
             }
-        case .sizePicking(let tool):
-            EmptyView()
+            .padding([.leading, .trailing], 24)
+        case .sizePicking(let tool, let sliderModel):
+            SizeSlider(model: sliderModel)
+                .padding([.leading, .trailing], 24)
         case .tool, .none:
             EmptyView()
         }

@@ -30,7 +30,7 @@ struct SmallColorPicker: View {
         .padding(16)
         .background(
             .ultraThinMaterial,
-            in: RoundedRectangle(cornerRadius: 8, style: .continuous)
+            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
         )
     }
     

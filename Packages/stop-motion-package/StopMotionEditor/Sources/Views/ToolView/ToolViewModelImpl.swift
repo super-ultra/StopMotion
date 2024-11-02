@@ -35,7 +35,17 @@ final class ToolViewModelImpl: ToolViewModel {
     
     func selectTool(_ toolType: DrawingToolType) {
         if case .tool(let currentTool) = mode, currentTool.type == toolType {
-            mode = .sizePicking(currentTool)
+            mode = .sizePicking(currentTool, SizeSliderModel(
+                value: Binding(
+                    get: { [weak self] in
+                        self?.studio.tool.size ?? DrawingTool.defaultSizeRange.lowerBound
+                    },
+                    set: { [weak self] value in
+                        self?.selectToolSize(value)
+                    }),
+                range: DrawingTool.defaultSizeRange,
+                step: 1
+            ))
         } else {
             let tool = tool(toolType)
             studio.tool = tool
@@ -49,9 +59,10 @@ final class ToolViewModelImpl: ToolViewModel {
     }
     
     func pickColor() {
-        if mode == .colorPicking {
+        switch mode {
+        case .colorPicking:
             dropToToolModeIfNeeded()
-        } else {
+        default:
             mode = .colorPicking
         }
     }
@@ -76,5 +87,12 @@ final class ToolViewModelImpl: ToolViewModel {
             return .default(type)
         }
         return tool
+    }
+    
+    
+    private func selectToolSize(_ size: CGFloat) {
+        var tool = studio.tool
+        tool.size = size
+        studio.tool = tool
     }
 }
