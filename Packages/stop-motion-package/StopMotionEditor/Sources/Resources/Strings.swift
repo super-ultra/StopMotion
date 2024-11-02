@@ -18,6 +18,7 @@ enum Strings {
     enum ControlView {
         static let generateLayersTitle = String(localized: "Generate layers")
         static let generateLayersMessage = String(localized: "Enter the number of layers to generate..")
+        static let fps = String(localized: "FPS")
     }
     
     enum DeleteAllLayersAlert {

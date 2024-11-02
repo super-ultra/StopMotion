@@ -17,15 +17,21 @@ struct ControlView: View {
     var body: some View {
         VStack(spacing: 4) {
             HStack {
-                actionControls()
+                if !model.isPlaying {
+                    HStack {
+                        actionControls()
+                        Spacer()
+                    }
+                    
+                    layerControls()
+                } else {
+                    playbackSettingsControls()
+                }
                 
-                Spacer()
-                
-                layerControls()
-                
-                Spacer()
-                
-                playbackControls()
+                HStack {
+                    Spacer()
+                    playbackControls()
+                }
             }
             layerInfoView()
         }
@@ -72,7 +78,7 @@ struct ControlView: View {
                 action: {
                     model.deleteLayer()
                 },
-                onLongPress: {
+                longPressAction: {
                     isDeleteAllLayersPresented = true
                 }
             ))
@@ -134,20 +140,31 @@ struct ControlView: View {
     @ViewBuilder
     private func playbackControls() -> some View {
         HStack(spacing: 8) {
-            ControlButton(model: ControlButtonModel(
-                icon: .Assets.controlPause,
-                isAvailable: model.isPlaying,
-                action: {
-                    model.pause()
-                }
-            ))
-            ControlButton(model: ControlButtonModel(
-                icon: .Assets.controlPlay,
-                isAvailable: model.isPlayAvailable && !model.isPlaying,
-                action: {
-                    model.play()
-                }
-            ))
+            if model.isPlaying {
+                ControlButton(model: ControlButtonModel(
+                    icon: .Assets.controlPause,
+                    isAvailable: true,
+                    action: {
+                        model.pause()
+                    }
+                ))
+            } else {
+                ControlButton(model: ControlButtonModel(
+                    icon: .Assets.controlPlay,
+                    isAvailable: model.isPlayAvailable,
+                    action: {
+                        model.play()
+                    }
+                ))
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func playbackSettingsControls() -> some View {
+        HStack(spacing: 8) {
+            Text(Strings.ControlView.fps)
+            SliderView(model: model.fpsSliderModel)
         }
     }
     
@@ -170,7 +187,8 @@ struct ControlView: View {
             isDeleteAvailable: true,
             isPlayAvailable: true,
             isPlaying: false,
-            layerCounter: "1 / 10"
+            layerCounter: "1 / 10",
+            fpsSliderModel: SliderViewModel(value: .constant(12), range: 1...100, step: 1)
         ))
         
         ControlView(model: ControlViewModelMock(
@@ -179,7 +197,8 @@ struct ControlView: View {
             isDeleteAvailable: false,
             isPlayAvailable: false,
             isPlaying: false,
-            layerCounter: "1 / 10"
+            layerCounter: "1 / 10",
+            fpsSliderModel: SliderViewModel(value: .constant(12), range: 1...100, step: 1)
         ))
         
         ControlView(model: ControlViewModelMock(
@@ -188,7 +207,8 @@ struct ControlView: View {
             isDeleteAvailable: false,
             isPlayAvailable: true,
             isPlaying: true,
-            layerCounter: "1 / 10"
+            layerCounter: "1 / 10",
+            fpsSliderModel: SliderViewModel(value: .constant(12), range: 1...100, step: 1)
         ))
     }
     .frame(width: 350)

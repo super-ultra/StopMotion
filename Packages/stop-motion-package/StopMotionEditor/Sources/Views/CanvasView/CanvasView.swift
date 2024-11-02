@@ -38,17 +38,13 @@ struct CanvasView: View {
     
     // MARK: - Private
     
-    private enum Static {
-        static let fps: Double = 20.0
-    }
-    
     @State
     private var cursorLocation: CGPoint? = nil
     
     @ViewBuilder
     private func animatingCanvas() -> some View {
         let initialDate = Date()
-        let interval: TimeInterval = 1.0 / Static.fps
+        let interval: TimeInterval = 1.0 / Double(model.animationFPS)
         
         TimelineView(.periodic(from: initialDate, by: interval)) { timeContext in
             Canvas { context, size in

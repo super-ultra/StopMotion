@@ -21,6 +21,8 @@ protocol CanvasViewModel: Observable {
     var tool: DrawingTool { get }
     var toolColor: Color { get }
     
+    var animationFPS: Int { get }
+    
     func drag(_ point: CGPoint)
     func endDragging(_ point: CGPoint)
 }

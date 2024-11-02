@@ -15,8 +15,9 @@ import StopMotionDrawing
 @Observable
 final class CanvasViewModelImpl: CanvasViewModel {
     
-    init(studio: Studio) {
+    init(studio: Studio, settings: EditorSettings) {
         self.studio = studio
+        self.settings = settings
     }
     
     // MARK: - CanvasViewModel
@@ -45,6 +46,10 @@ final class CanvasViewModelImpl: CanvasViewModel {
         studio.toolColor
     }
     
+    var animationFPS: Int {
+        settings.animationFPS
+    }
+    
     func drag(_ point: CGPoint) {
         studio.drag(point)
     }
@@ -56,5 +61,6 @@ final class CanvasViewModelImpl: CanvasViewModel {
     // MARK: - Private
     
     private let studio: Studio
+    private let settings: EditorSettings
     
 }

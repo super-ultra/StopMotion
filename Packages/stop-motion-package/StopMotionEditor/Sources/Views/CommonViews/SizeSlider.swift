@@ -28,6 +28,7 @@ struct SizeSlider: View {
     var body: some View {
         HStack(spacing: 8) {
             Slider(value: $value, in: model.range, step: model.step)
+                .accentColor(.Assets.tintAccent)
             Group {
                 Circle()
                     .frame(width: value)

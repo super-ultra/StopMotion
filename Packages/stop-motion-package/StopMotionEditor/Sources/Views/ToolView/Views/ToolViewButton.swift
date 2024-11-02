@@ -10,9 +10,9 @@ import StopMotionAssets
 
 
 struct ToolViewButtonModel {
-    let icon: Image
-    let isSelected: Bool
-    let action: () -> Void
+    var icon: Image
+    var isSelected: Bool = false
+    var action: () -> Void
 }
 
 
@@ -27,6 +27,9 @@ struct ToolViewButton: View {
                 model.icon
             }
         )
+        .buttonStyle(.scale)
+        .font(.system(size: 24))
+        .frame(width: 32, height: 32)
         .foregroundStyle(model.isSelected ? Color.Assets.tintAccent : Color.Assets.tintPrimary)
     }
 }

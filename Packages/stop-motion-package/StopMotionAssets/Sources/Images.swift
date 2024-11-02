@@ -24,6 +24,9 @@ extension Image {
         public static let toolFigure = Image("tool-figure", bundle: .module)
         public static let toolPencil = Image("tool-pencil", bundle: .module)
         
+        public static let systemShare = Image(systemName: "square.and.arrow.up")
+        public static let systemSettings = Image(systemName: "gear")
+        
         public static let canvas = Image("canvas", bundle: .module)
     }
     

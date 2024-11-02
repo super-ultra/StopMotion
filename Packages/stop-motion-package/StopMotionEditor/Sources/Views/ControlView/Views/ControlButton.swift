@@ -13,7 +13,7 @@ struct ControlButtonModel {
     var icon: Image
     var isAvailable: Bool
     var action: () -> Void
-    var onLongPress: (() -> Void)? = nil
+    var longPressAction: (() -> Void)? = nil
 }
 
 struct ControlButton: View {
@@ -22,17 +22,23 @@ struct ControlButton: View {
     
     var body: some View {
         Button(
-            action: {},
+            action: {
+            },
             label: {
                 model.icon
-                    .onTapGesture {
-                        model.action()
-                    }
-                    .onLongPressGesture(minimumDuration: 0.1) {
-                        model.onLongPress?()
-                    }
             }
         )
+        .simultaneousGesture(
+            LongPressGesture().onEnded { _ in
+                model.longPressAction?()
+            }
+        )
+        .simultaneousGesture(
+            TapGesture().onEnded {
+                model.action()
+            }
+        )
+        .buttonStyle(.scale)
         .foregroundStyle(
             Color.Assets.tintPrimary
                 .opacity(model.isAvailable ? 1.0 : 0.3)

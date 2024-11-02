@@ -17,8 +17,8 @@ final class EditorViewModelImpl: EditorViewModel {
     
     init() {
         router = EditorViewRouterImpl(studio: studio)
-        controlModel = ControlViewModelImpl(studio: studio, router: router)
-        canvasModel = CanvasViewModelImpl(studio: studio)
+        controlModel = ControlViewModelImpl(studio: studio, settings: settings, router: router)
+        canvasModel = CanvasViewModelImpl(studio: studio, settings: settings)
         toolModel = ToolViewModelImpl(studio: studio)
     }
     
@@ -40,4 +40,5 @@ final class EditorViewModelImpl: EditorViewModel {
     }
     
     private let studio: Studio = StudioImpl(tool: Static.initialTool, color: Static.initialColor)
+    private let settings: EditorSettings = EditorSettingsApp()
 }

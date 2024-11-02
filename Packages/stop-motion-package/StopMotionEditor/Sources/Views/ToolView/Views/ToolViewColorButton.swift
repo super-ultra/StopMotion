@@ -28,5 +28,6 @@ struct ToolViewColorButton: View {
                     .frame(width: 28, height: 28)
             }
         )
+        .buttonStyle(.scale)
     }
 }

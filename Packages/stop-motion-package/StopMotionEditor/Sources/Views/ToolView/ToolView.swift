@@ -13,7 +13,8 @@ import StopMotionDrawing
 
 struct ToolView: View {
     
-    let model: ToolViewModel
+    @State
+    var model: ToolViewModel
     
     var body: some View {
         VStack(spacing: 16) {
@@ -68,7 +69,7 @@ struct ToolView: View {
             color: .Assets.solidBlue,
             mode: .tool(.default(.eraser))
         ))
-        .background(.gray)
+        .frame(height: 60)
         
         ToolView(model: ToolViewModelMock(
             color: .Assets.solidBlue,
@@ -77,12 +78,12 @@ struct ToolView: View {
                 predefinedColors: [.red, .green, .blue])
             )
         ))
-        .background(.gray)
+        .frame(height: 60)
         
         ToolView(model: ToolViewModelMock(
             color: .Assets.solidBlue,
             mode: nil
         ))
-        .background(.gray)
+        .frame(height: 60)
     }.padding(16)
 }
