@@ -31,7 +31,7 @@ extension GraphicsContext {
         blendMode = .normal
         switch tool.type {
         case .eraser:
-            stroke(path, with: .color(.gray), lineWidth: 1)
+            stroke(path, with: .color(.black), lineWidth: 2)
         case .brush, .pencil:
             fill(path, with: .color(color))
         }
