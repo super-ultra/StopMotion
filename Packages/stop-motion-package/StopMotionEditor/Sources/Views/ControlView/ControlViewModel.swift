@@ -17,7 +17,6 @@ protocol ControlViewModel: Observable {
     var isPlayAvailable: Bool { get }
     var isPlaying: Bool { get }
     var layerCounter: String { get }
-    var fpsSliderModel: SliderViewModel { get }
     
     func undo()
     func redo()
@@ -39,7 +38,6 @@ struct ControlViewModelMock: ControlViewModel {
     var isPlayAvailable: Bool
     var isPlaying: Bool
     var layerCounter: String
-    var fpsSliderModel: SliderViewModel
     
     func undo() {}
     func redo() {}

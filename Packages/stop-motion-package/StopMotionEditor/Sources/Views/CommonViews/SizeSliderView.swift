@@ -27,7 +27,7 @@ struct SizeSliderView: View {
                     .frame(width: value)
             }
             .frame(width: model.range.upperBound, height: model.range.upperBound)
-            .padding([.leading, .trailing], 8)
+            .padding(.horizontal, 8)
         }
         .padding(16)
         .background(

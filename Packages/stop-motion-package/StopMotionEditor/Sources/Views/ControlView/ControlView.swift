@@ -27,9 +27,6 @@ struct ControlView: View {
                 }
                 
                 HStack {
-                    if model.isPlaying {
-                       playbackSettingsControls()
-                    }
                     Spacer()
                     playbackControls()
                 }
@@ -67,7 +64,6 @@ struct ControlView: View {
                 }
             ))
         }
-        .opacity(model.isPlaying ? 0.0 : 1.0)
     }
     
     @ViewBuilder
@@ -135,7 +131,6 @@ struct ControlView: View {
                 }
             ))
         }
-        .opacity(model.isPlaying ? 0.0 : 1.0)
     }
     
     @ViewBuilder
@@ -162,11 +157,6 @@ struct ControlView: View {
     }
     
     @ViewBuilder
-    private func playbackSettingsControls() -> some View {
-        FpsSliderView(model: model.fpsSliderModel)
-    }
-    
-    @ViewBuilder
     private func layerInfoView() -> some View {
         Text(model.layerCounter)
             .font(.caption2)
@@ -186,8 +176,7 @@ struct ControlView: View {
             isDeleteAvailable: true,
             isPlayAvailable: true,
             isPlaying: false,
-            layerCounter: "1 / 10",
-            fpsSliderModel: SliderViewModel(value: .constant(12), range: 1...100, step: 1)
+            layerCounter: "1 / 10"
         ))
         
         ControlView(model: ControlViewModelMock(
@@ -196,8 +185,7 @@ struct ControlView: View {
             isDeleteAvailable: false,
             isPlayAvailable: false,
             isPlaying: false,
-            layerCounter: "1 / 10",
-            fpsSliderModel: SliderViewModel(value: .constant(12), range: 1...100, step: 1)
+            layerCounter: "1 / 10"
         ))
         
         ControlView(model: ControlViewModelMock(
@@ -206,8 +194,7 @@ struct ControlView: View {
             isDeleteAvailable: false,
             isPlayAvailable: true,
             isPlaying: true,
-            layerCounter: "1 / 10",
-            fpsSliderModel: SliderViewModel(value: .constant(12), range: 1...100, step: 1)
+            layerCounter: "1 / 10"
         ))
     }
     .frame(width: 350)

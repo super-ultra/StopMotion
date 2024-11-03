@@ -30,10 +30,14 @@ public struct EditorView: View {
                 .frame(height: 54)
         }
         .padding(.top, 20)
-        .padding([.leading, .trailing], 16)
+        .padding(.horizontal, 16)
         .overlay {
-            ToolView(model: model.toolModel)
-                .opacity(model.controlModel.isPlaying ? 0.0 : 1.0)
+            if model.controlModel.isPlaying {
+                PlaybackSettingsView(model: model.playbackSettingsModel)
+            } else {
+                ToolView(model: model.toolModel)
+                    .opacity(model.controlModel.isPlaying ? 0.0 : 1.0)
+            }
         }
         .safeAreaBottomPadding()
         .ignoresSafeArea(.keyboard, edges: .bottom)

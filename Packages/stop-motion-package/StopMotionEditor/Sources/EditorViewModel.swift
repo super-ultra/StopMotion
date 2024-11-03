@@ -12,4 +12,5 @@ protocol EditorViewModel: AnyObject {
     var controlModel: ControlViewModel { get }
     var toolModel: ToolViewModel { get }
     var canvasModel: CanvasViewModel { get }
+    var playbackSettingsModel: PlaybackSettingsViewModel { get }
 }

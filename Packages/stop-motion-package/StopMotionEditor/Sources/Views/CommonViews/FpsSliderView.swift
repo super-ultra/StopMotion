@@ -22,6 +22,7 @@ struct FpsSliderView: View {
     
     var body: some View {
         HStack(spacing: 8) {
+            Spacer().frame(width: 8)
             Text(Strings.FpsSliderView.fps(Int(value)))
                 .font(.body)
                 .fontWeight(.medium)

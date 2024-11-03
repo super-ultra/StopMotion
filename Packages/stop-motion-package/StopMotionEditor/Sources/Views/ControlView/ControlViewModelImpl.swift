@@ -14,16 +14,9 @@ import StopMotionDrawing
 @Observable
 final class ControlViewModelImpl: ControlViewModel {
    
-    init(studio: DrawingStudio, settings: EditorSettings, router: ControlViewRouter) {
+    init(studio: DrawingStudio, router: ControlViewRouter) {
         self.studio = studio
-        self.settings = settings
         self.router = router
-        
-        self.fpsSliderModel = SliderViewModel(
-            value: Binding(get: { CGFloat(settings.animationFPS) }, set: { settings.animationFPS = Int($0) }),
-            range: 1...60,
-            step: 1
-        )
     }
     
     // MARK: - ControlViewModel
@@ -41,8 +34,6 @@ final class ControlViewModelImpl: ControlViewModel {
     var layerCounter: String {
         return "\(studio.currentLayerIndex + 1) / \(studio.layers.count)"
     }
-    
-    let fpsSliderModel: SliderViewModel
     
     func undo() {
         studio.undo()
@@ -93,6 +84,5 @@ final class ControlViewModelImpl: ControlViewModel {
     // MARK: - Private
     
     private let studio: DrawingStudio
-    private let settings: EditorSettings
     private let router: ControlViewRouter
 }
