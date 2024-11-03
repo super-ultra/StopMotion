@@ -17,7 +17,9 @@ struct ControlView: View {
     var body: some View {
         VStack(spacing: 4) {
             HStack {
-                if !model.isPlaying {
+                if model.isPlaying {
+                    additionalPlaybackControls()
+                } else {
                     HStack {
                         actionControls()
                         Spacer()
@@ -87,7 +89,6 @@ struct ControlView: View {
            
             ControlButton(model: ControlButtonModel(
                 icon: .Assets.controlNewLayer,
-                isAvailable: true,
                 action: {
                     model.makeNewLayer()
                 }
@@ -95,7 +96,6 @@ struct ControlView: View {
             
             ControlButton(model: ControlButtonModel(
                 icon: .Assets.controlDuplicate,
-                isAvailable: true,
                 action: {
                     model.duplicateLayer()
                 }
@@ -103,7 +103,6 @@ struct ControlView: View {
             
             ControlButton(model: ControlButtonModel(
                 icon: .Assets.controlGenerateLayers,
-                isAvailable: true,
                 action: {
                     isGenerateLayersCountPresented.toggle()
                 }
@@ -125,7 +124,6 @@ struct ControlView: View {
             
             ControlButton(model: ControlButtonModel(
                 icon: .Assets.controlLayers,
-                isAvailable: true,
                 action: {
                     model.presentAllLayers()
                 }
@@ -139,7 +137,6 @@ struct ControlView: View {
             if model.isPlaying {
                 ControlButton(model: ControlButtonModel(
                     icon: .Assets.controlPause,
-                    isAvailable: true,
                     action: {
                         model.pause()
                     }
@@ -154,6 +151,16 @@ struct ControlView: View {
                 ))
             }
         }
+    }
+    
+    @ViewBuilder
+    private func additionalPlaybackControls() -> some View {
+        ControlButton(model: ControlButtonModel(
+            icon: .Assets.systemShare,
+            action: {
+                model.share()
+            }
+        ))
     }
     
     @ViewBuilder

@@ -9,9 +9,11 @@ import SwiftUI
 import Observation
 
 import StopMotionDrawing
+import StopMotionToolbox
 
-enum EditorViewDestination: Identifiable {
+enum EditorViewDestination: Hashable, Identifiable {
     case allLayers
+    case sharing(url: URL)
     
     // MARK: - Identifiable
     
@@ -44,14 +46,20 @@ final class EditorViewRouterImpl: EditorViewRouter {
         destination = .allLayers
     }
     
+    func share(url: URL) {
+        destination = .sharing(url: url)
+    }
+    
     func view(for destination: EditorViewDestination) -> AnyView {
         switch destination {
         case .allLayers:
             return AnyView(NavigationView {
                 LayerCollectionView(model: LayerCollectionViewModelImpl(studio: studio))
             })
+        case .sharing(let url):
+            // ActivityView is used due to lazy initialization
+            return AnyView(ActivityView(activityItems: [url]))
         }
-        
     }
     
     // MARK: - Private

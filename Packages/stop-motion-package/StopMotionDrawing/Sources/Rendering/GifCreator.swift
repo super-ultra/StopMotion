@@ -12,15 +12,18 @@ import UniformTypeIdentifiers
 import SwiftUI
 
 
-enum GifCreatorErrors: Error {
+public enum GifCreatorErrors: Error {
     case createFile
     case noLayers
     case negativeFps
 }
 
-struct GifCreator {
+public struct GifCreator {
+    
+    public init() {}
 
-    @MainActor func generateGif(for layers: [Layer], size: CGSize, fps: Int) throws -> URL {
+    @MainActor
+    public func generateGif(for layers: [Layer], size: CGSize, fps: Int) throws -> URL {
         guard !layers.isEmpty else {
             throw GifCreatorErrors.noLayers
         }

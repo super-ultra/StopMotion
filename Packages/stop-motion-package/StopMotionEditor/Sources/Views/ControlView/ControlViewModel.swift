@@ -28,6 +28,7 @@ protocol ControlViewModel: Observable {
     func presentAllLayers()
     func play()
     func pause()
+    func share()
 }
 
 
@@ -49,4 +50,5 @@ struct ControlViewModelMock: ControlViewModel {
     func presentAllLayers() {}
     func play() {}
     func pause() {}
+    func share() {}
 }

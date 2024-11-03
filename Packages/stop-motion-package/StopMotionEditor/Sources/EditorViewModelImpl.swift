@@ -17,7 +17,7 @@ final class EditorViewModelImpl: EditorViewModel {
     
     init() {
         router = EditorViewRouterImpl(studio: studio)
-        controlModel = ControlViewModelImpl(studio: studio, router: router)
+        controlModel = ControlViewModelImpl(studio: studio, settings: settings, router: router)
         canvasModel = CanvasViewModelImpl(studio: studio, settings: settings)
         toolModel = ToolViewModelImpl(studio: studio)
         playbackSettingsModel = PlaybackSettingsViewModelImpl(settings: settings)

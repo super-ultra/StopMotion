@@ -11,7 +11,7 @@ import StopMotionAssets
 
 struct ControlButtonModel {
     var icon: Image
-    var isAvailable: Bool
+    var isAvailable: Bool = true
     var action: () -> Void
     var longPressAction: (() -> Void)? = nil
 }
@@ -39,6 +39,8 @@ struct ControlButton: View {
             }
         )
         .buttonStyle(.scale)
+        .font(.system(size: 24))
+        .frame(width: 32, height: 32)
         .foregroundStyle(
             Color.Assets.tintPrimary
                 .opacity(model.isAvailable ? 1.0 : 0.3)

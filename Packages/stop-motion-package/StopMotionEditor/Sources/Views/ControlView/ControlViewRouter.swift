@@ -11,4 +11,5 @@ import Foundation
 @MainActor
 protocol ControlViewRouter {
     func presentAllLayers()
+    func share(url: URL)
 }

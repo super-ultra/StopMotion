@@ -13,9 +13,10 @@ import StopMotionDrawing
 @MainActor
 @Observable
 final class ControlViewModelImpl: ControlViewModel {
-   
-    init(studio: DrawingStudio, router: ControlViewRouter) {
+    
+    init(studio: DrawingStudio, settings: EditorSettings, router: ControlViewRouter) {
         self.studio = studio
+        self.settings = settings
         self.router = router
     }
     
@@ -81,8 +82,19 @@ final class ControlViewModelImpl: ControlViewModel {
         isPlaying = false
     }
     
+    func share() {
+        let generator = GifCreator()
+        do {
+            let url = try generator.generateGif(for: studio.layers, size: CGSize(width: 400, height: 750), fps: settings.animationFPS)
+            router.share(url: url)
+        } catch {
+            print(error)
+        }
+    }
+    
     // MARK: - Private
     
     private let studio: DrawingStudio
+    private let settings: EditorSettings
     private let router: ControlViewRouter
 }
