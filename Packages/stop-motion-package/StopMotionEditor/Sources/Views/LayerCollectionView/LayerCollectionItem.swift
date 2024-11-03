@@ -42,7 +42,7 @@ struct LayerCollectionItem: View {
                     Spacer()
                     Text(model.index)
                         .font(.caption)
-                        .bold()
+                        .fontWeight(.medium)
                         .foregroundStyle(Color.Assets.tintPrimary)
                         .padding(4)
                         .background(.regularMaterial)

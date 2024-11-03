@@ -53,7 +53,7 @@ struct ToolView: View {
             SmallColorPicker(model: colorModel)
             .padding([.leading, .trailing], 24)
         case .sizePicking(let tool, let sliderModel):
-            SizeSlider(model: sliderModel)
+            SizeSliderView(model: sliderModel)
                 .padding([.leading, .trailing], 24)
         case .tool, .none:
             EmptyView()

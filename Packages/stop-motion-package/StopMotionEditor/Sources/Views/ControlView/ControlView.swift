@@ -24,11 +24,12 @@ struct ControlView: View {
                     }
                     
                     layerControls()
-                } else {
-                    playbackSettingsControls()
                 }
                 
                 HStack {
+                    if model.isPlaying {
+                       playbackSettingsControls()
+                    }
                     Spacer()
                     playbackControls()
                 }
@@ -162,16 +163,14 @@ struct ControlView: View {
     
     @ViewBuilder
     private func playbackSettingsControls() -> some View {
-        HStack(spacing: 8) {
-            Text(Strings.ControlView.fps)
-            SliderView(model: model.fpsSliderModel)
-        }
+        FpsSliderView(model: model.fpsSliderModel)
     }
     
     @ViewBuilder
     private func layerInfoView() -> some View {
         Text(model.layerCounter)
             .font(.caption2)
+            .fontWeight(.medium)
             .foregroundStyle(.secondary)
             .opacity(model.isPlaying ? 0.0 : 1.0)
     }

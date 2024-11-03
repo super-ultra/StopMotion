@@ -35,7 +35,7 @@ final class ToolViewModelImpl: ToolViewModel {
     
     func selectTool(_ toolType: DrawingToolType) {
         if case .tool(let currentTool) = mode, currentTool.type == toolType {
-            mode = .sizePicking(currentTool, SizeSliderModel(
+            mode = .sizePicking(currentTool, SliderViewModel(
                 value: Binding(
                     get: { [weak self] in
                         self?.studio.tool.size ?? DrawingTool.defaultSizeRange.lowerBound

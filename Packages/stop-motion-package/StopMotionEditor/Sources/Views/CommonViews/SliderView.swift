@@ -23,27 +23,16 @@ struct SliderView: View {
     
     init(model: SliderViewModel) {
         self.model = model
-        _value = model.value
     }
      
     var body: some View {
         HStack {
             Slider(
-                value: $value,
+                value: model.value,
                 in: model.range,
                 step: model.step
             )
             .accentColor(.Assets.tintAccent)
-            
-            Text("\(Int(value))")
-                .font(.caption)
-                .bold()
-                .frame(width: 20)
         }
     }
-    
-    // MARK: - Private
-    
-    @Binding
-    private var value: CGFloat
 }
