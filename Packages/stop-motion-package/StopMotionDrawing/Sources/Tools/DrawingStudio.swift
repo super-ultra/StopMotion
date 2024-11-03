@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-public protocol Studio: AnyObject, Observable {
+public protocol DrawingStudio: AnyObject, Observable {
     /// Current layer always exists
     var currentLayer: Layer { get }
     var currentLayerIndex: Int { get }

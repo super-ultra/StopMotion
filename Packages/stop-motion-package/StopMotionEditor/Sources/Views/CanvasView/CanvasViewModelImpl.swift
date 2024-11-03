@@ -15,7 +15,7 @@ import StopMotionDrawing
 @Observable
 final class CanvasViewModelImpl: CanvasViewModel {
     
-    init(studio: Studio, settings: EditorSettings) {
+    init(studio: DrawingStudio, settings: EditorSettings) {
         self.studio = studio
         self.settings = settings
     }
@@ -60,7 +60,7 @@ final class CanvasViewModelImpl: CanvasViewModel {
     
     // MARK: - Private
     
-    private let studio: Studio
+    private let studio: DrawingStudio
     private let settings: EditorSettings
     
 }

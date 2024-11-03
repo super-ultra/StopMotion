@@ -39,6 +39,6 @@ final class EditorViewModelImpl: EditorViewModel {
         static let initialColor: Color = .Assets.solidBlue
     }
     
-    private let studio: Studio = StudioImpl(tool: Static.initialTool, color: Static.initialColor)
+    private let studio: DrawingStudio = DrawingStudioImpl(tool: Static.initialTool, color: Static.initialColor)
     private let settings: EditorSettings = EditorSettingsApp()
 }

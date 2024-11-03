@@ -11,7 +11,7 @@ import StopMotionDrawing
 @Observable
 final class LayerCollectionViewModelImpl: LayerCollectionViewModel {
     
-    init(studio: Studio) {
+    init(studio: DrawingStudio) {
         self.studio = studio
         self.items = studio.layers.enumerated().map { index, layer in
             LayerCollectionItemModel(
@@ -30,6 +30,6 @@ final class LayerCollectionViewModelImpl: LayerCollectionViewModel {
         
     // MARK: - Private
     
-    private let studio: Studio
+    private let studio: DrawingStudio
     
 }

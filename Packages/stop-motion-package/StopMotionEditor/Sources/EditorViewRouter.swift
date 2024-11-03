@@ -32,7 +32,7 @@ protocol EditorViewRouter: ControlViewRouter, Observable {
 @MainActor
 final class EditorViewRouterImpl: EditorViewRouter {
     
-    init(studio: Studio) {
+    init(studio: DrawingStudio) {
         self.studio = studio
     }
     
@@ -56,5 +56,5 @@ final class EditorViewRouterImpl: EditorViewRouter {
     
     // MARK: - Private
     
-    private let studio: Studio
+    private let studio: DrawingStudio
 }

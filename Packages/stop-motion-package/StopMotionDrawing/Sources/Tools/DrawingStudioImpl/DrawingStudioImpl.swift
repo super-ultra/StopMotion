@@ -8,8 +8,8 @@
 import SwiftUI
 
 @MainActor
-@Observable // TODO: Think about it
-public final class StudioImpl: Studio {
+@Observable
+public final class DrawingStudioImpl: DrawingStudio {
     
     public init(tool: DrawingTool, color: Color) {
         self.layerManagers = [LayerManager()]

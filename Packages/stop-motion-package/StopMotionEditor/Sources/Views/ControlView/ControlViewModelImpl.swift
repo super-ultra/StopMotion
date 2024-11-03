@@ -14,7 +14,7 @@ import StopMotionDrawing
 @Observable
 final class ControlViewModelImpl: ControlViewModel {
    
-    init(studio: Studio, settings: EditorSettings, router: ControlViewRouter) {
+    init(studio: DrawingStudio, settings: EditorSettings, router: ControlViewRouter) {
         self.studio = studio
         self.settings = settings
         self.router = router
@@ -92,7 +92,7 @@ final class ControlViewModelImpl: ControlViewModel {
     
     // MARK: - Private
     
-    private let studio: Studio
+    private let studio: DrawingStudio
     private let settings: EditorSettings
     private let router: ControlViewRouter
 }
