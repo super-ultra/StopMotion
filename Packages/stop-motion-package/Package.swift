@@ -42,6 +42,9 @@ let package = Package(
             path: "StopMotionEditor",
             sources: [
                 "Sources"
+            ],
+            resources: [
+                .process("Resources")
             ]
         ),
         .target(
