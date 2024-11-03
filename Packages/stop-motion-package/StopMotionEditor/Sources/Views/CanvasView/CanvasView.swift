@@ -9,15 +9,14 @@ import SwiftUI
 
 import StopMotionAssets
 import StopMotionDrawing
+import StopMotionToolbox
 
 
 struct CanvasView: View {
     
     @State
     var model: CanvasViewModel
-    
     let isAnimating: Bool
-    
     let onDraw: () -> Void
     
     var body: some View {
@@ -28,11 +27,6 @@ struct CanvasView: View {
                 drawingCanvas()
             }
         }
-        .background {
-            Image.Assets.canvas
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-        }
         .cornerRadius(20)
     }
     
@@ -40,7 +34,7 @@ struct CanvasView: View {
     
     @State
     private var cursorLocation: CGPoint? = nil
-    
+
     @ViewBuilder
     private func animatingCanvas() -> some View {
         let initialDate = Date()
@@ -52,17 +46,21 @@ struct CanvasView: View {
                 context.draw(model.layer(at: index))
             }
         }
+        .background {
+            canvasBackground()
+        }
     }
     
     @ViewBuilder
     private func drawingCanvas() -> some View {
-        Canvas { context, size in
-            if let previousLayer = model.previousLayer {
-                context.opacity = 0.3
-                context.draw(previousLayer)
-                context.opacity = 1.0
+        ZoomView(
+            minZoom: 1,
+            maxZoom: 10,
+            bounces: false,
+            onGesture: {
+                cursorLocation = nil
             }
-        }.overlay {
+        ) {
             Canvas { context, size in
                 context.draw(model.currentLayer)
                 
@@ -70,8 +68,8 @@ struct CanvasView: View {
                     context.drawCursor(for: model.tool, color: model.toolColor, location: cursorLocation)
                 }
             }
-            .simultaneousGesture(
-                DragGesture(minimumDistance: 0)
+            .highPriorityGesture(
+                DragGesture(minimumDistance: 2)
                     .onChanged { value in
                         cursorLocation = value.location
                         model.drag(value.location)
@@ -83,7 +81,24 @@ struct CanvasView: View {
                         onDraw()
                     }
             )
+            .background {
+                Canvas { context, size in
+                    guard let previousLayer = model.previousLayer else { return }
+                    context.opacity = 0.3
+                    context.draw(previousLayer)
+                    context.opacity = 1.0
+                }
+            }
+            .background {
+                canvasBackground()
+            }
         }
     }
+    
+    @ViewBuilder
+    private func canvasBackground() -> some View {
+        Image.Assets.canvas
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+    }
 }
-
