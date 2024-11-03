@@ -27,7 +27,14 @@ extension Image {
         public static let systemShare = Image(systemName: "square.and.arrow.up")
         public static let systemSettings = Image(systemName: "gear")
         
-        public static let canvas = Image("canvas", bundle: .module)
+        public static let canvas = Image("canvas-texture", bundle: .module)
     }
     
+}
+
+extension UIImage {
+    
+    public enum Assets {
+        public static let canvas = UIImage(named: "canvas-texture", in: .module, with: nil)!
+    }
 }

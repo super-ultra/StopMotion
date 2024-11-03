@@ -8,6 +8,7 @@
 import Observation
 import SwiftUI
 import StopMotionDrawing
+import StopMotionAssets
 
 
 @MainActor
@@ -85,8 +86,19 @@ final class ControlViewModelImpl: ControlViewModel {
     func share() {
         let generator = GifCreator()
         do {
-            let url = try generator.generateGif(for: studio.layers, size: CGSize(width: 400, height: 750), fps: settings.animationFPS)
-            router.share(url: url)
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd--HH-mm-ss"
+            
+            Task {   
+                let url = try await generator.generateGif(
+                    for: studio.layers,
+                    background: UIImage.Assets.canvas.cgImage,
+                    size: CGSize(width: 400, height: 750),
+                    fps: settings.animationFPS,
+                    filename: "animation-\(formatter.string(from: .now))"
+                )
+                router.share(url: url)
+            }
         } catch {
             print(error)
         }

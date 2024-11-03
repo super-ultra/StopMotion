@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct Stroke {
+public struct Stroke: Sendable {
     public var path: Path
     public var color: Color
     public var tool: DrawingTool

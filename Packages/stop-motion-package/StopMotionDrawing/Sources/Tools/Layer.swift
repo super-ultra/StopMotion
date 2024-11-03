@@ -5,7 +5,7 @@
 //  Created by Ilya Lobanov on 30.10.2024.
 //
 
-public struct Layer {
+public struct Layer: Sendable {
     public var strokes: [Stroke]
     
     public init(strokes: [Stroke] = []) {

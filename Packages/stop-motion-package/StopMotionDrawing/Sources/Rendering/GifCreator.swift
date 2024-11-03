@@ -9,8 +9,7 @@
 import Foundation
 import ImageIO
 import UniformTypeIdentifiers
-import SwiftUI
-
+import UIKit
 
 public enum GifCreatorErrors: Error {
     case createFile
@@ -22,8 +21,7 @@ public struct GifCreator {
     
     public init() {}
 
-    @MainActor
-    public func generateGif(for layers: [Layer], size: CGSize, fps: Int) throws -> URL {
+    public func generateGif(for layers: [Layer], background: CGImage? = nil, size: CGSize, fps: Int, filename: String) async throws -> URL {
         guard !layers.isEmpty else {
             throw GifCreatorErrors.noLayers
         }
@@ -31,21 +29,25 @@ public struct GifCreator {
             throw GifCreatorErrors.negativeFps
         }
         
-        let destinationURL = generateUrl()
+        let destinationURL = generateUrl(filename: filename)
         let animatedGifFile = try makeFile(at: destinationURL, layers: layers)
         
         // Render layers
-        let properties = [kCGImagePropertyGIFDictionary: [kCGImagePropertyGIFDelayTime: 1.0 / CGFloat(fps)]]
+        let gifProperties = [kCGImagePropertyGIFDictionary: [kCGImagePropertyGIFDelayTime: 1.0 / CGFloat(fps)]]
+        
+        let imageFormat = UIGraphicsImageRendererFormat()
+        imageFormat.scale = 2.0
+        imageFormat.opaque = false
         
         for layer in layers {
-            let image = ImageRenderer(
-                content: Canvas { context, size in
-                    context.draw(layer)
-                }.frame(width: size.width, height: size.height)
-            ).cgImage
+            let renderer = UIGraphicsImageRenderer(size: size, format: imageFormat)
             
+            let image = renderer.image {
+                $0.cgContext.draw(layer, background: background)
+            }.cgImage
+
             if let image {
-                CGImageDestinationAddImage(animatedGifFile, image, properties as CFDictionary)
+                CGImageDestinationAddImage(animatedGifFile, image, gifProperties as CFDictionary)
             }
         }
         
@@ -57,9 +59,10 @@ public struct GifCreator {
     
     // MARK: - Private
     
-    private func generateUrl() -> URL {
-        let destinationFilename = String(UUID().uuidString + ".gif")
-        return URL.temporaryDirectory.appendingPathComponent(destinationFilename)
+    private func generateUrl(filename: String) -> URL {
+        return URL.temporaryDirectory
+            .appendingPathComponent(filename)
+            .appendingPathExtension(UTType.gif.identifier)
     }
     
     private func makeFile(at url: URL, layers: [Layer]) throws -> CGImageDestination {

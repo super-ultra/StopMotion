@@ -16,6 +16,9 @@ extension GraphicsContext {
     }
     
     public mutating func draw(_ stroke: Stroke) {
+//        withCGContext { context in
+//            context.draw(stroke)
+//        }
         let shading: GraphicsContext.Shading
         
         switch stroke.tool.type {
