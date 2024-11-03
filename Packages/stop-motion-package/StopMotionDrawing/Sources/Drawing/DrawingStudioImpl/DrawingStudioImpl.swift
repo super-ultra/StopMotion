@@ -97,6 +97,7 @@ public final class DrawingStudioImpl: DrawingStudio {
         if !generatedManagers.isEmpty {
             newManagers.insert(contentsOf: generatedManagers, at: fromIndex)
             layerManagers = newManagers
+            currentLayerIndex = currentLayerIndex + count
         }
     }
     

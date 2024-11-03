@@ -10,8 +10,9 @@ import SwiftUI
 @Observable
 final class LayerManager {
     
-    init(layer: Layer = Layer()) {
+    init(layer: Layer = Layer(), undoStrokes: [Stroke] = []) {
         self.layer = layer
+        self.undoStrokes = undoStrokes
     }
     
     private(set) var layer: Layer
@@ -68,5 +69,5 @@ final class LayerManager {
     
     private var isDragging = false
     
-    private var undoStrokes: [Stroke] = []
+    private var undoStrokes: [Stroke]
 }
