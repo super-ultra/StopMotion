@@ -20,7 +20,7 @@ final class ToolViewModelImpl: ToolViewModel {
         self.studio = studio
         self.mode = .tool(studio.tool)
         self.tools = [
-            .pencil: .default(.pencil),
+            .brush: .default(.brush),
             .eraser: .default(.eraser),
         ]
     }

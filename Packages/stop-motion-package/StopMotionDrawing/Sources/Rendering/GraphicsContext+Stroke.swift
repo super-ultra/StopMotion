@@ -25,7 +25,7 @@ extension GraphicsContext {
         case .eraser:
             blendMode = .clear
             shading = .color(.white)
-        case .pencil:
+        case .brush:
             blendMode = .normal
             shading = .color(stroke.color)
         }
@@ -46,7 +46,7 @@ extension GraphicsContext {
         switch tool.type {
         case .eraser:
             stroke(path, with: .color(.gray), lineWidth: 1)
-        case .pencil:
+        case .brush:
             fill(path, with: .color(color))
         }
     }

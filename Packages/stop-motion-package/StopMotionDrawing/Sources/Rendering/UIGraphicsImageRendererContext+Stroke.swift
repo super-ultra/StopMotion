@@ -29,7 +29,7 @@ extension CGContext {
         case .eraser:
             setBlendMode(.clear)
             setStrokeColor(CGColor(red: 1, green: 1, blue: 1, alpha: 1))
-        case .pencil:
+        case .brush:
             setBlendMode(.normal)
             setStrokeColor(UIColor(stroke.color).cgColor)
         }

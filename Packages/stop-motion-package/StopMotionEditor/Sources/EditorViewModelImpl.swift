@@ -38,7 +38,7 @@ final class EditorViewModelImpl: EditorViewModel {
     // MARK: - Private
     
     private enum Static {
-        static let initialTool: DrawingTool = .default(.pencil)
+        static let initialTool: DrawingTool = .default(.brush)
         static let initialColor: Color = .Assets.solidBlue
     }
     

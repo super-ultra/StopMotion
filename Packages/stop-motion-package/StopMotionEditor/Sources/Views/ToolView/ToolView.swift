@@ -24,9 +24,9 @@ struct ToolView: View {
             
             HStack(spacing: 16) {
                 ToolViewButton(model: ToolViewButtonModel(
-                    icon: .Assets.toolPencil,
-                    isSelected: model.isToolSelected(.pencil),
-                    action: { model.selectTool(.pencil) }
+                    icon: .Assets.toolBrush,
+                    isSelected: model.isToolSelected(.brush),
+                    action: { model.selectTool(.brush) }
                 ))
                 
                 ToolViewButton(model: ToolViewButtonModel(
