@@ -9,24 +9,30 @@ import SwiftUI
 
 import StopMotionAssets
 
+struct SizeSliderViewModel {
+    var sliderModel: SliderViewModel
+    var color: Color
+}
+
 
 struct SizeSliderView: View {
     
-    var model: SliderViewModel
+    var model: SizeSliderViewModel
     
-    init(model: SliderViewModel) {
+    init(model: SizeSliderViewModel) {
         self.model = model
-        _value = model.value
+        _value = model.sliderModel.value
     }
     
     var body: some View {
         HStack(spacing: 8) {
-            SliderView(model: model)
+            SliderView(model: model.sliderModel)
             Group {
                 Circle()
                     .frame(width: value)
+                    .foregroundStyle(model.color)
             }
-            .frame(width: model.range.upperBound, height: model.range.upperBound)
+            .frame(width: model.sliderModel.range.upperBound, height: model.sliderModel.range.upperBound)
             .padding(.horizontal, 8)
         }
         .padding(16)
@@ -40,10 +46,12 @@ struct SizeSliderView: View {
     
     @Binding
     private var value: CGFloat
-    
 }
 
 
 #Preview(traits: .sizeThatFitsLayout) {
-    SizeSliderView(model: SliderViewModel(value: .constant(5), range: 0.0...10.0, step: 1.0))
+    SizeSliderView(model: SizeSliderViewModel(
+        sliderModel: SliderViewModel(value: .constant(5), range: 0.0...10.0, step: 1.0),
+        color: .red
+    ))
 }

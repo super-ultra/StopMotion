@@ -34,21 +34,27 @@ final class ToolViewModelImpl: ToolViewModel {
     
     func selectTool(_ toolType: DrawingToolType) {
         if case .tool(let currentTool) = mode, currentTool.type == toolType {
-            mode = .sizePicking(currentTool, SliderViewModel(
-                value: Binding(
-                    get: { [weak self] in
-                        self?.studio.tool.size ?? DrawingTool.defaultSizeRange.lowerBound
-                    },
-                    set: { [weak self] value in
-                        self?.selectToolSize(value)
-                    }),
-                range: DrawingTool.defaultSizeRange,
-                step: 1
-            ))
+            let model = SizeSliderViewModel(
+                sliderModel: SliderViewModel(
+                    value: Binding(
+                        get: { [weak self] in
+                            self?.studio.tool.size ?? DrawingTool.defaultSizeRange.lowerBound
+                        },
+                        set: { [weak self] value in
+                            self?.selectToolSize(value)
+                        }),
+                    range: DrawingTool.defaultSizeRange,
+                    step: 1
+                ),
+                color: toolType == .eraser ? .white : color
+            )
+            
+            mode = .sizePicking(currentTool, model)
         } else {
             let tool = tool(toolType)
             studio.tool = tool
             mode = .tool(tool)
+            dropToToolModeIfNeeded()
         }
     }
     
@@ -111,5 +117,7 @@ final class ToolViewModelImpl: ToolViewModel {
         var tool = studio.tool
         tool.size = size
         studio.tool = tool
+
+        tools[tool.type] = tool
     }
 }
