@@ -38,8 +38,8 @@ final class EditorViewModelImpl: EditorViewModel {
     // MARK: - Private
     
     private enum Static {
-        static let initialTool: DrawingTool = .default(.brush)
-        static let initialColor: Color = .Assets.solidBlue
+        static let initialTool: DrawingTool = .default(.pencil)
+        static let initialColor: Color = .Assets.solidRed
     }
     
     private let studio: DrawingStudio = DrawingStudioImpl(tool: Static.initialTool, color: Static.initialColor)

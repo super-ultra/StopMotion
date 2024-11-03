@@ -20,17 +20,24 @@ extension GraphicsContext {
 //            context.draw(stroke)
 //        }
         let shading: GraphicsContext.Shading
+        let lineJoin: CGLineJoin
         
         switch stroke.tool.type {
         case .eraser:
             blendMode = .clear
+            lineJoin = .round
             shading = .color(.white)
         case .brush:
             blendMode = .normal
+            lineJoin = .round
+            shading = .color(stroke.color)
+        case .pencil:
+            blendMode = .normal
+            lineJoin = .bevel
             shading = .color(stroke.color)
         }
         
-        let style = StrokeStyle(lineWidth: stroke.tool.size, lineCap: .round, lineJoin: .round)
+        let style = StrokeStyle(lineWidth: stroke.tool.size, lineCap: .round, lineJoin: lineJoin)
         
         self.stroke(stroke.path, with: shading, style: style)
     }
@@ -46,7 +53,7 @@ extension GraphicsContext {
         switch tool.type {
         case .eraser:
             stroke(path, with: .color(.gray), lineWidth: 1)
-        case .brush:
+        case .brush, .pencil:
             fill(path, with: .color(color))
         }
     }

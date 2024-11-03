@@ -7,7 +7,8 @@
 
 import CoreGraphics
 
-public enum DrawingToolType: Sendable {
+public enum DrawingToolType: CaseIterable, Sendable {
+    case pencil
     case brush
     case eraser
 }
@@ -23,6 +24,8 @@ public struct DrawingTool: Sendable, Equatable {
     
     public static func `default`(_ type: DrawingToolType) -> DrawingTool {
         switch type {
+        case .pencil:
+            return DrawingTool(type: .pencil, size: 6)
         case .brush:
             return DrawingTool(type: .brush, size: 16)
         case .eraser:

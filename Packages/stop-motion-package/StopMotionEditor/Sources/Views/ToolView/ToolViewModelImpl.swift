@@ -19,10 +19,9 @@ final class ToolViewModelImpl: ToolViewModel {
     init(studio: DrawingStudio) {
         self.studio = studio
         self.mode = .tool(studio.tool)
-        self.tools = [
-            .brush: .default(.brush),
-            .eraser: .default(.eraser),
-        ]
+        self.tools = DrawingToolType.allCases.reduce(into: [DrawingToolType: DrawingTool]()) { result, type in
+            result[type] = DrawingTool.default(type)
+        }
     }
     
     // MARK: ToolViewModel
