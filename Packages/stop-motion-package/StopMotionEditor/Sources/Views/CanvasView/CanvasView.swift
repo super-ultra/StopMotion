@@ -62,26 +62,28 @@ struct CanvasView: View {
                 context.draw(previousLayer)
                 context.opacity = 1.0
             }
-            
-            context.draw(model.currentLayer)
-            
-            if let cursorLocation {
-                context.drawCursor(for: model.tool, color: model.toolColor, location: cursorLocation)
+        }.overlay {
+            Canvas { context, size in
+                context.draw(model.currentLayer)
+                
+                if let cursorLocation {
+                    context.drawCursor(for: model.tool, color: model.toolColor, location: cursorLocation)
+                }
             }
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        cursorLocation = value.location
+                        model.drag(value.location)
+                        onDraw()
+                    }
+                    .onEnded { value in
+                        cursorLocation = nil
+                        model.endDragging(value.location)
+                        onDraw()
+                    }
+            )
         }
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 0)
-                .onChanged { value in
-                    cursorLocation = value.location
-                    model.drag(value.location)
-                    onDraw()
-                }
-                .onEnded { value in
-                    cursorLocation = nil
-                    model.endDragging(value.location)
-                    onDraw()
-                }
-        )
     }
 }
 
