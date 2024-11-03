@@ -10,7 +10,13 @@ import SwiftUI
 
 public struct ZoomView<Content: View>: UIViewRepresentable {
     
-    public init(minZoom: CGFloat, maxZoom: CGFloat, bounces: Bool = true, onGesture: (() -> Void)? = nil, @ViewBuilder content: () -> Content) {
+    public init(
+        minZoom: CGFloat,
+        maxZoom: CGFloat,
+        bounces: Bool = true,
+        onGesture: (() -> Void)? = nil,
+        @ViewBuilder content: () -> Content
+    ) {
         self.minZoom = minZoom
         self.maxZoom = maxZoom
         self.bounces = bounces

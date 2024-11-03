@@ -25,7 +25,11 @@ extension Image {
         public static let toolPencil = Image("tool-pencil", bundle: .module)
         
         public static let systemShare = Image(systemName: "square.and.arrow.up")
-        public static let systemSettings = Image(systemName: "gear")
+        
+        public static let systemShapeTriangle = Image(systemName: "triangle")
+        public static let systemShapeStar = Image(systemName: "star")
+        public static let systemShapeSquare = Image(systemName: "square")
+        public static let systemShapeCircle = Image(systemName: "circle")
         
         public static let canvas = Image("canvas-texture", bundle: .module)
     }

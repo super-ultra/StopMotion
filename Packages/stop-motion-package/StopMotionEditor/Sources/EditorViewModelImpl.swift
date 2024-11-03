@@ -19,7 +19,9 @@ final class EditorViewModelImpl: EditorViewModel {
         router = EditorViewRouterImpl(studio: studio)
         controlModel = ControlViewModelImpl(studio: studio, settings: settings, router: router)
         canvasModel = CanvasViewModelImpl(studio: studio, settings: settings)
-        toolModel = ToolViewModelImpl(studio: studio)
+        toolModel = ToolViewModelImpl(studio: studio, onSelectShape: { [canvasModel] shape in
+            canvasModel.placeShape(shape)
+        })
         playbackSettingsModel = PlaybackSettingsViewModelImpl(settings: settings)
     }
     

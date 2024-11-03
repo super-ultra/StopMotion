@@ -18,3 +18,9 @@ public struct Stroke: Sendable {
         self.tool = tool
     }
 }
+
+extension Stroke {
+    public func applying(_ transform: CGAffineTransform) -> Stroke {
+        Stroke(path: path.applying(transform), color: color, tool: tool)
+    }
+}

@@ -17,13 +17,17 @@ protocol CanvasViewModel: Observable {
     var currentLayer: Layer { get }
     var previousLayer: Layer? { get }
     var layersCount: Int { get }
-    
+        
     var tool: DrawingTool { get }
     var toolColor: Color { get }
     
     var animationFPS: Int { get }
     
+    var placingStroke: Stroke? { get }
+    
     func layer(at index: Int) -> Layer
     func drag(_ point: CGPoint)
     func endDragging(_ point: CGPoint)
+    func placeShape(_ shape: ShapeType)
+    func submitStrokePlacement(transform: CGAffineTransform)
 }

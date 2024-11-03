@@ -58,6 +58,10 @@ public final class DrawingStudioImpl: DrawingStudio {
         currentLayerManager.endDragging(point)
     }
     
+    public func addStoke(_ stroke: Stroke) {
+        currentLayerManager.addStroke(stroke)
+    }
+    
     public func undo() {
         currentLayerManager.undo()
     }

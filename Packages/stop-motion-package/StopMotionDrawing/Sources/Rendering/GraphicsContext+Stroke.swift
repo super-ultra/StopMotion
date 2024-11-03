@@ -36,4 +36,12 @@ extension GraphicsContext {
             fill(path, with: .color(color))
         }
     }
+    
+    public mutating func drawDashedBoundingRect(for stroke: Stroke, color: Color, lineWidth: CGFloat) {
+        let rect = stroke.path.boundingRect.insetBy(dx: -8, dy: -8)
+        let path = Path(roundedRect: rect, cornerRadius: 8)
+        
+        self.stroke(path, with: .color(color), style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round, dash: [4]))
+        
+    }
 }

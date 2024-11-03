@@ -15,9 +15,10 @@ import StopMotionDrawing
 @MainActor
 @Observable
 final class ToolViewModelImpl: ToolViewModel {
-    
-    init(studio: DrawingStudio) {
+        
+    init(studio: DrawingStudio, onSelectShape: @escaping (ShapeType) -> Void) {
         self.studio = studio
+        self.onSelectShape = onSelectShape
         self.mode = .tool(studio.tool)
         self.tools = DrawingToolType.allCases.reduce(into: [DrawingToolType: DrawingTool]()) { result, type in
             result[type] = DrawingTool.default(type)
@@ -85,9 +86,18 @@ final class ToolViewModelImpl: ToolViewModel {
         }
     }
     
+    func pickShape() {
+        mode = .shapePicking(
+            SmallShapePickerModel(shapes: [.circle, .square, .triangle, .star]) { [weak self] shape in
+                self?.onSelectShape(shape)
+                self?.dropToToolModeIfNeeded()
+            }
+        )
+    }
+    
     func dropToToolModeIfNeeded() {
         switch mode {
-        case .colorPicking, .sizePicking:
+        case .colorPicking, .sizePicking, .shapePicking:
             mode = .tool(studio.tool)
         case .tool, .none:
             break
@@ -102,6 +112,7 @@ final class ToolViewModelImpl: ToolViewModel {
     }
     
     private let studio: DrawingStudio
+    private let onSelectShape: (ShapeType) -> Void
     private var tools: [DrawingToolType: DrawingTool] = [:]
     
     private func tool(_ type: DrawingToolType) -> DrawingTool {

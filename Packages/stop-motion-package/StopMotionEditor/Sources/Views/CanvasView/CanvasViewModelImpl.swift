@@ -15,6 +15,7 @@ import StopMotionDrawing
 @Observable
 final class CanvasViewModelImpl: CanvasViewModel {
     
+    
     init(studio: DrawingStudio, settings: EditorSettings) {
         self.studio = studio
         self.settings = settings
@@ -50,6 +51,8 @@ final class CanvasViewModelImpl: CanvasViewModel {
         settings.animationFPS
     }
     
+    private(set) var placingStroke: Stroke?
+    
     func layer(at index: Int) -> Layer {
         studio.layer(at: index)
     }
@@ -62,9 +65,36 @@ final class CanvasViewModelImpl: CanvasViewModel {
         studio.endDragging(point)
     }
     
+    func placeShape(_ shape: ShapeType) {
+        let path = makeInitialPath(for: shape)
+        placingStroke = Stroke(path: path, color: studio.toolColor, tool: studio.tool)
+    }
+    
+    func submitStrokePlacement(transform: CGAffineTransform) {
+        if let placingStroke {
+            studio.addStoke(placingStroke.applying(transform))
+        }
+        placingStroke = nil
+    }
+    
     // MARK: - Private
     
     private let studio: DrawingStudio
     private let settings: EditorSettings
     
+    private func makeInitialPath(for shape: ShapeType) -> Path {
+        let size = CGSize(width: 120, height: 120)
+        let rect = CGRect(origin: CGPoint(x: 60, y: 60), size: size)
+        
+        switch shape {
+        case .circle:
+            return Path(ellipseIn: rect)
+        case .square:
+            return Path(roundedRect: rect, cornerRadius: 4)
+        case .triangle:
+            return Path(triangleIn: rect)
+        case .star:
+            return .star(x: rect.midX, y: rect.midY, radius: size.width / 2, sides: 5, pointiness: 2)
+        }
+    }
 }

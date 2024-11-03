@@ -41,6 +41,12 @@ struct ToolView: View {
                     action: { model.selectTool(.eraser) }
                 ))
                 
+                ToolViewButton(model: ToolViewButtonModel(
+                    icon: .Assets.systemShapeStar,
+                    isSelected: model.isShapePicking,
+                    action: { model.pickShape() }
+                ))
+                
                 ToolViewColorButton(model: ToolViewColorButtonModel(
                     color: model.color,
                     isSelected: model.isColorPicking,
@@ -61,6 +67,8 @@ struct ToolView: View {
         case .sizePicking(_, let sliderModel):
             SizeSliderView(model: sliderModel)
                 .padding(.horizontal, 24)
+        case .shapePicking(let model):
+            SmallShapePicker(model: model)
         case .tool, .none:
             EmptyView()
         }

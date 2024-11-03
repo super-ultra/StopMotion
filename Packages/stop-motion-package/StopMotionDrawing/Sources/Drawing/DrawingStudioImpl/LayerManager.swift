@@ -53,6 +53,10 @@ final class LayerManager {
         layer.strokes[layer.strokes.count - 1].path.addLine(to: point)
     }
     
+    func addStroke(_ stroke: Stroke) {
+        layer.strokes.append(stroke)
+    }
+    
     func undo() {
         guard !layer.strokes.isEmpty else { return }
         

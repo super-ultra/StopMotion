@@ -82,17 +82,36 @@ struct CanvasView: View {
                     }
             )
             .background {
-                Canvas { context, size in
-                    guard let previousLayer = model.previousLayer else { return }
-                    context.opacity = 0.3
-                    context.draw(previousLayer)
-                    context.opacity = 1.0
-                }
+                previousLayer()
             }
             .background {
                 canvasBackground()
             }
+            .allowsHitTesting(model.placingStroke != nil)
+            .overlay {
+                placingLayer()
+            }
         }
+    }
+    
+    @ViewBuilder
+    private func previousLayer() -> some View {
+        Canvas { context, size in
+            guard let previousLayer = model.previousLayer else { return }
+            context.opacity = 0.3
+            context.draw(previousLayer)
+            context.opacity = 1.0
+        }
+    }
+    
+    @ViewBuilder
+    private func placingLayer() -> some View {
+        if let stroke = model.placingStroke {
+            StrokePlacementView(stroke: stroke, onSubmit: { transform in
+                model.submitStrokePlacement(transform: transform)
+            })
+        }
+        
     }
     
     @ViewBuilder
@@ -101,4 +120,6 @@ struct CanvasView: View {
             .resizable()
             .aspectRatio(contentMode: .fill)
     }
+    
 }
+

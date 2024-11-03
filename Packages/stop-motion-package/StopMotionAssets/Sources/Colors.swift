@@ -10,7 +10,8 @@ extension UIColor {
         public static let solidWhite = UIColor(named: "solid-white", in: .module, compatibleWith: nil)!
         public static let solidBlue = UIColor(named: "solid-blue", in: .module, compatibleWith: nil)!
         public static let solidRed = UIColor(named: "solid-red", in: .module, compatibleWith: nil)!
-        public static let accent = UIColor(named: "accent", in: .module, compatibleWith: nil)!
+        public static let tintAccent = UIColor(named: "tint-accent", in: .module, compatibleWith: nil)!
+        public static let tintPrimary = UIColor(named: "tint-primary", in: .module, compatibleWith: nil)!
     }
     
 }

@@ -14,6 +14,7 @@ enum ToolViewMode {
     case tool(DrawingTool)
     case colorPicking(SmallColorPickerModel)
     case sizePicking(DrawingTool, SizeSliderViewModel)
+    case shapePicking(SmallShapePickerModel)
 }
 
 @MainActor
@@ -24,6 +25,7 @@ protocol ToolViewModel: Observable {
     func selectTool(_ toolType: DrawingToolType)
     func selectColor(_ color: Color)
     func pickColor()
+    func pickShape()
     func dropToToolModeIfNeeded()
 }
 
@@ -34,6 +36,7 @@ struct ToolViewModelMock: ToolViewModel {
     func selectTool(_ toolType: DrawingToolType) {}
     func selectColor(_ color: Color) {}
     func pickColor() {}
+    func pickShape() {}
     func dropToToolModeIfNeeded() {}
 }
 
@@ -41,7 +44,7 @@ struct ToolViewModelMock: ToolViewModel {
 extension ToolViewMode {
     func isTool(_ toolType: DrawingToolType) -> Bool {
         switch self {
-        case .colorPicking:
+        case .colorPicking, .shapePicking:
             return false
         case .sizePicking(let tool, _), .tool(let tool):
             return tool.type == toolType
@@ -52,7 +55,16 @@ extension ToolViewMode {
         switch self {
         case .colorPicking:
             return true
-        case .sizePicking, .tool:
+        case .sizePicking, .tool, .shapePicking:
+            return false
+        }
+    }
+    
+    var isShapePicking: Bool {
+        switch self {
+        case .shapePicking:
+            return true
+        case .colorPicking, .tool, .sizePicking:
             return false
         }
     }
@@ -65,5 +77,9 @@ extension ToolViewModel {
     
     var isColorPicking: Bool {
         mode?.isColorPicking ?? false
+    }
+    
+    var isShapePicking: Bool {
+        mode?.isShapePicking ?? false
     }
 }
