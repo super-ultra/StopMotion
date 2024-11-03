@@ -15,15 +15,13 @@ extension CGContext {
             draw(background, in: CGRect(origin: .zero, size: size))
         }
         
-        guard let strokesLayer = CGLayer(self, size: size, auxiliaryInfo: nil),
-              let strokesLayerContext = strokesLayer.context
-        else { return }
+        beginTransparencyLayer(auxiliaryInfo: nil)
         
         for stroke in layer.strokes {
-            strokesLayerContext.draw(stroke)
+            draw(stroke)
         }
         
-        draw(strokesLayer, at: .zero)
+        endTransparencyLayer()
     }
     
     public func draw(_ stroke: Stroke) {
