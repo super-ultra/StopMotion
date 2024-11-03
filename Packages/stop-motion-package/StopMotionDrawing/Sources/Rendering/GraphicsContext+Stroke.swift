@@ -26,7 +26,7 @@ extension GraphicsContext {
         let rect = CGRect(origin: location, size: size)
             .offsetBy(dx: -size.width / 2, dy: -size.height / 2)
                     
-        var path = Circle().path(in: rect)
+        let path = Circle().path(in: rect)
                 
         blendMode = .normal
         switch tool.type {

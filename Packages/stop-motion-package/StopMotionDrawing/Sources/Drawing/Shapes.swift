@@ -13,7 +13,7 @@ extension Path {
         let adjustment = 360 / sides / 2
         var path = Path()
         let points = polygonPointArray(sides: sides, x: x, y: y, radius: radius)
-        var cpg = points[0]
+        let cpg = points[0]
         let points2 = polygonPointArray(sides: sides, x: x, y: y, radius: radius * pointiness, adjustment: CGFloat(adjustment))
         
         var i = 0

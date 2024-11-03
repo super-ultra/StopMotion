@@ -18,7 +18,7 @@ struct LayerCollectionView: View {
             let columns = [GridItem](repeating: GridItem(.flexible(), spacing: Static.spacing), count: LayerCollectionGuides.columns)
             
             LazyVGrid(columns: columns, spacing: Static.spacing) {
-                ForEach(0..<model.itemsCount) { index in
+                ForEach(0..<model.itemsCount, id: \.self) { index in
                     Button(
                         action: {
                             model.selectItem(at: index)
