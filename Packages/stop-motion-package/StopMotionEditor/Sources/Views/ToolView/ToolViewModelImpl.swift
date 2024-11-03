@@ -67,11 +67,14 @@ final class ToolViewModelImpl: ToolViewModel {
                     get: { [studio] in
                         Color(studio.toolColor)
                     },
-                    set: { [weak self] in
-                        self?.studio.toolColor = $0.resolve(in: EnvironmentValues()).cgColor
+                    set: { [studio] in
+                        studio.toolColor = $0.resolve(in: EnvironmentValues()).cgColor
                     }
                 ),
-                predefinedColors: Static.defaultColors
+                predefinedColors: Static.defaultColors,
+                onSubmit: { [weak self] in
+                    self?.dropToToolModeIfNeeded()
+                }
             ))
         }
     }

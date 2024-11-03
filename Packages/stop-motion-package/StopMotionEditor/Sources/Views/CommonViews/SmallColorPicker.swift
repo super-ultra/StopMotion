@@ -11,8 +11,9 @@ import StopMotionAssets
 
 
 struct SmallColorPickerModel {
-    let selectedColor: Binding<Color>
-    let predefinedColors: [Color]
+    var selectedColor: Binding<Color>
+    var predefinedColors: [Color]
+    var onSubmit: (() -> Void)? = nil
 }
 
 struct SmallColorPicker: View {
@@ -32,6 +33,7 @@ struct SmallColorPicker: View {
                         isSelected: false,
                         action: {
                             model.selectedColor.wrappedValue = color
+                            model.onSubmit?()
                         }
                     )
                 )
