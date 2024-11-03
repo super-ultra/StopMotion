@@ -28,14 +28,19 @@ extension CGContext {
         switch stroke.tool.type {
         case .eraser:
             setBlendMode(.clear)
+            setLineJoin(.round)
             setStrokeColor(CGColor(red: 1, green: 1, blue: 1, alpha: 1))
-        case .brush, .pencil:
+        case .brush:
             setBlendMode(.normal)
+            setLineJoin(.round)
+            setStrokeColor(UIColor(stroke.color).cgColor)
+        case .pencil:
+            setBlendMode(.normal)
+            setLineJoin(.bevel)
             setStrokeColor(UIColor(stroke.color).cgColor)
         }
         
         setLineCap(.round)
-        setLineJoin(.round)
         setLineWidth(stroke.tool.size)
         addPath(stroke.path.cgPath)
         drawPath(using: .stroke)

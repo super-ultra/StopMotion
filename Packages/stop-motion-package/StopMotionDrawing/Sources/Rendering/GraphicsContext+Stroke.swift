@@ -16,30 +16,9 @@ extension GraphicsContext {
     }
     
     public mutating func draw(_ stroke: Stroke) {
-//        withCGContext { context in
-//            context.draw(stroke)
-//        }
-        let shading: GraphicsContext.Shading
-        let lineJoin: CGLineJoin
-        
-        switch stroke.tool.type {
-        case .eraser:
-            blendMode = .clear
-            lineJoin = .round
-            shading = .color(.white)
-        case .brush:
-            blendMode = .normal
-            lineJoin = .round
-            shading = .color(stroke.color)
-        case .pencil:
-            blendMode = .normal
-            lineJoin = .bevel
-            shading = .color(stroke.color)
+        withCGContext { context in
+            context.draw(stroke)
         }
-        
-        let style = StrokeStyle(lineWidth: stroke.tool.size, lineCap: .round, lineJoin: lineJoin)
-        
-        self.stroke(stroke.path, with: shading, style: style)
     }
     
     public mutating func drawCursor(for tool: DrawingTool, color: Color, location: CGPoint) {
