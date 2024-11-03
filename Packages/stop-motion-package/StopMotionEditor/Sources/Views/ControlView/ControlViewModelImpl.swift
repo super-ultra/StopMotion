@@ -27,14 +27,14 @@ final class ControlViewModelImpl: ControlViewModel {
     
     var isRedoAvailable: Bool { studio.isRedoAvailable }
     
-    var isDeleteAvailable: Bool { studio.layers.count > 1 || !studio.currentLayer.strokes.isEmpty }
+    var isDeleteAvailable: Bool { studio.layersCount > 1 || !studio.currentLayer.strokes.isEmpty }
     
-    var isPlayAvailable: Bool { studio.layers.count > 1 }
+    var isPlayAvailable: Bool { studio.layersCount > 1 }
     
     private(set) var isPlaying: Bool = false
     
     var layerCounter: String {
-        return "\(studio.currentLayerIndex + 1) / \(studio.layers.count)"
+        return "\(studio.currentLayerIndex + 1) / \(studio.layersCount)"
     }
     
     private(set) var sharingState: ControlViewSharingState = .available
@@ -98,7 +98,7 @@ final class ControlViewModelImpl: ControlViewModel {
         Task {
             do {
                 let url = try await generator.generateGif(
-                    for: studio.layers,
+                    for: studio.getAllLayers(),
                     background: UIImage.Assets.canvas.cgImage,
                     size: CGSize(width: 400, height: 750),
                     fps: settings.animationFPS,

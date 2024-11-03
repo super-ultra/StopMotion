@@ -13,16 +13,19 @@ final class LayerCollectionViewModelImpl: LayerCollectionViewModel {
     
     init(studio: DrawingStudio) {
         self.studio = studio
-        self.items = studio.layers.enumerated().map { index, layer in
-            LayerCollectionItemModel(
-                layer: layer, index: "\(index + 1)", isSelected: index == studio.currentLayerIndex
-            )
-        }
     }
     
     // MARK: - LayerCollectionViewModel
     
-    let items: [LayerCollectionItemModel]
+    var itemsCount: Int {
+        studio.layersCount
+    }
+    
+    func item(at index: Int) -> LayerCollectionItemModel {
+        LayerCollectionItemModel(
+            layer: studio.layer(at: index), index: "\(index + 1)", isSelected: index == studio.currentLayerIndex
+        )
+    }
     
     func selectItem(at index: Int) {
         studio.selectLayer(at: index)

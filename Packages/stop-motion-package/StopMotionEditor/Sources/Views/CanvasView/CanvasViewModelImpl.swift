@@ -28,14 +28,14 @@ final class CanvasViewModelImpl: CanvasViewModel {
     
     var previousLayer: Layer? {
         if studio.currentLayerIndex > 0 {
-            return studio.layers[studio.currentLayerIndex - 1]
+            return studio.layer(at: studio.currentLayerIndex - 1)
         } else {
             return nil
         }
     }
     
-    var layers: [Layer] {
-        studio.layers
+    var layersCount: Int {
+        studio.layersCount
     }
     
     var tool: DrawingTool {
@@ -48,6 +48,10 @@ final class CanvasViewModelImpl: CanvasViewModel {
     
     var animationFPS: Int {
         settings.animationFPS
+    }
+    
+    func layer(at index: Int) -> Layer {
+        studio.layer(at: index)
     }
     
     func drag(_ point: CGPoint) {

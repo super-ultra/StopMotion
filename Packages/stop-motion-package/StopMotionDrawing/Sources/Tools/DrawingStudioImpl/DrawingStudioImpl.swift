@@ -20,14 +20,14 @@ public final class DrawingStudioImpl: DrawingStudio {
     
     // MARK: - Studio
     
-    public var layers: [Layer] {
-        layerManagers.map { $0.layer }
-    }
-    
     public private(set) var currentLayerIndex: Int
     
     public var currentLayer: Layer {
         currentLayerManager.layer
+    }
+
+    public var layersCount: Int {
+        layerManagers.count
     }
     
     public var tool: DrawingTool
@@ -40,6 +40,14 @@ public final class DrawingStudioImpl: DrawingStudio {
     
     public var isRedoAvailable: Bool {
         currentLayerManager.isRedoAvailable
+    }
+    
+    public func layer(at index: Int) -> Layer {
+        layerManagers[index].layer
+    }
+    
+    public func getAllLayers() -> [Layer] {
+        layerManagers.map { $0.layer }
     }
     
     public func drag(_ point: CGPoint) {

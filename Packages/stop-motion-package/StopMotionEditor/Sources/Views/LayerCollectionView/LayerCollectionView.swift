@@ -18,14 +18,14 @@ struct LayerCollectionView: View {
             let columns = [GridItem](repeating: GridItem(.flexible(), spacing: Static.spacing), count: LayerCollectionGuides.columns)
             
             LazyVGrid(columns: columns, spacing: Static.spacing) {
-                ForEach(model.items.indices) { index in
+                ForEach(0..<model.itemsCount) { index in
                     Button(
                         action: {
                             model.selectItem(at: index)
                             presentationMode.wrappedValue.dismiss()
                         }
                     ) {
-                        LayerCollectionItem(model: model.items[index])
+                        LayerCollectionItem(model: model.item(at: index))
                             .aspectRatio(0.55, contentMode: .fill)
                     }
                 }

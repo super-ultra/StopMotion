@@ -48,8 +48,8 @@ struct CanvasView: View {
         
         TimelineView(.periodic(from: initialDate, by: interval)) { timeContext in
             Canvas { context, size in
-                let index = Int(timeContext.date.timeIntervalSince(initialDate) / interval) % model.layers.count
-                context.draw(model.layers[index])
+                let index = Int(timeContext.date.timeIntervalSince(initialDate) / interval) % model.layersCount
+                context.draw(model.layer(at: index))
             }
         }
     }
