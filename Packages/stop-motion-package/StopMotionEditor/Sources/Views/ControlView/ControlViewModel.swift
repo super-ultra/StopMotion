@@ -9,6 +9,17 @@ import Foundation
 import Observation
 
 
+enum ControlViewSharingState {
+    case available
+    case loading
+}
+
+
+struct ControlViewErrorState {
+    var message: String
+    var onDismiss: () -> Void
+}
+
 @MainActor
 protocol ControlViewModel: Observable {
     var isUndoAvailable: Bool { get }
@@ -17,6 +28,8 @@ protocol ControlViewModel: Observable {
     var isPlayAvailable: Bool { get }
     var isPlaying: Bool { get }
     var layerCounter: String { get }
+    var sharingState: ControlViewSharingState { get }
+    var errorState: ControlViewErrorState? { get }
     
     func undo()
     func redo()
@@ -39,6 +52,8 @@ struct ControlViewModelMock: ControlViewModel {
     var isPlayAvailable: Bool
     var isPlaying: Bool
     var layerCounter: String
+    var sharingState: ControlViewSharingState = .available
+    var errorState: ControlViewErrorState? = nil
     
     func undo() {}
     func redo() {}

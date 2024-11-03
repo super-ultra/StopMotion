@@ -37,6 +37,10 @@ final class ControlViewModelImpl: ControlViewModel {
         return "\(studio.currentLayerIndex + 1) / \(studio.layers.count)"
     }
     
+    private(set) var sharingState: ControlViewSharingState = .available
+    
+    private(set) var errorState: ControlViewErrorState? = nil
+    
     func undo() {
         studio.undo()
     }
@@ -84,12 +88,15 @@ final class ControlViewModelImpl: ControlViewModel {
     }
     
     func share() {
+        sharingState = .loading
+        
         let generator = GifCreator()
-        do {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd--HH-mm-ss"
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd--HH-mm-ss"
             
-            Task {   
+        Task {
+            do {
                 let url = try await generator.generateGif(
                     for: studio.layers,
                     background: UIImage.Assets.canvas.cgImage,
@@ -98,9 +105,17 @@ final class ControlViewModelImpl: ControlViewModel {
                     filename: "animation-\(formatter.string(from: .now))"
                 )
                 router.share(url: url)
+                
+                sharingState = .available
+            } catch {
+                errorState = ControlViewErrorState(
+                    message: Strings.ControlView.sharingErrorMessage,
+                    onDismiss: { [weak self] in
+                        self?.errorState = nil
+                        self?.sharingState = .available
+                    }
+                )
             }
-        } catch {
-            print(error)
         }
     }
     

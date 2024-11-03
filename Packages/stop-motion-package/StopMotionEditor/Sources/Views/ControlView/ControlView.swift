@@ -35,6 +35,14 @@ struct ControlView: View {
             }
             layerInfoView()
         }
+        .alert(isPresented: .constant(model.errorState != nil)) {
+            Alert(
+                title: Text("\(model.errorState?.message)"),
+                dismissButton: .default(Text(Strings.Common.ok)) {
+                    model.errorState?.onDismiss()
+                }
+            )
+        }
     }
     
     // MARK: - Private
@@ -155,12 +163,18 @@ struct ControlView: View {
     
     @ViewBuilder
     private func additionalPlaybackControls() -> some View {
-        ControlButton(model: ControlButtonModel(
-            icon: .Assets.systemShare,
-            action: {
-                model.share()
-            }
-        ))
+        switch model.sharingState {
+        case .available:
+            ControlButton(model: ControlButtonModel(
+                icon: .Assets.systemShare,
+                action: {
+                    model.share()
+                }
+            ))
+        case .loading:
+            ProgressView()
+        }
+        
     }
     
     @ViewBuilder
