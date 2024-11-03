@@ -10,13 +10,20 @@ import UIKit
 
 extension CGContext {
     
-    public func draw(_ layer: Layer, background: CGImage? = nil) {
+    public func draw(_ layer: Layer, size: CGSize, background: CGImage? = nil) {
         if let background {
-            draw(background, in: CGRect(x: 0, y: 0, width: background.width, height: background.height))
+            draw(background, in: CGRect(origin: .zero, size: size))
         }
+        
+        guard let strokesLayer = CGLayer(self, size: size, auxiliaryInfo: nil),
+              let strokesLayerContext = strokesLayer.context
+        else { return }
+        
         for stroke in layer.strokes {
-            draw(stroke)
+            strokesLayerContext.draw(stroke)
         }
+        
+        draw(strokesLayer, at: .zero)
     }
     
     public func draw(_ stroke: Stroke) {
