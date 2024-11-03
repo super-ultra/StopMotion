@@ -9,10 +9,10 @@ import SwiftUI
 
 public struct Stroke: Sendable {
     public var path: Path
-    public var color: Color
+    public var color: CGColor
     public var tool: DrawingTool
     
-    public init(path: Path, color: Color, tool: DrawingTool) {
+    public init(path: Path, color: CGColor, tool: DrawingTool) {
         self.path = path
         self.color = color
         self.tool = tool

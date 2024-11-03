@@ -73,7 +73,7 @@ struct LayerCollectionItem: View {
                 strokes: [
                     Stroke(
                         path: Path(ellipseIn: CGRect(origin: .zero, size: CGSize(width: 200, height: 120))),
-                        color: .red,
+                        color: UIColor.red.cgColor,
                         tool: .default(.brush)
                     )
                 ]
@@ -88,7 +88,7 @@ struct LayerCollectionItem: View {
                 strokes: [
                     Stroke(
                         path: Path(ellipseIn: CGRect(origin: .zero, size: CGSize(width: 200, height: 120))),
-                        color: .red,
+                        color: UIColor.red.cgColor,
                         tool: .default(.brush)
                     )
                 ]

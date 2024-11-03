@@ -20,7 +20,7 @@ final class LayerManager {
     
     var isRedoAvailable: Bool { !undoStrokes.isEmpty }
     
-    func drag(_ point: CGPoint, tool: DrawingTool, toolColor: Color) {
+    func drag(_ point: CGPoint, tool: DrawingTool, toolColor: CGColor) {
         undoStrokes.removeAll()
         
         if isDragging {

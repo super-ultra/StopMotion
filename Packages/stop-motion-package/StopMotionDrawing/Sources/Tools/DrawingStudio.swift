@@ -14,7 +14,7 @@ public protocol DrawingStudio: AnyObject, Observable {
     var currentLayerIndex: Int { get }
     var layersCount: Int { get }
     var tool: DrawingTool { get set }
-    var toolColor: Color { get set }
+    var toolColor: CGColor { get set }
     
     var isUndoAvailable: Bool { get }
     var isRedoAvailable: Bool { get }

@@ -11,7 +11,7 @@ import SwiftUI
 @Observable
 public final class DrawingStudioImpl: DrawingStudio {
     
-    public init(tool: DrawingTool, color: Color) {
+    public init(tool: DrawingTool, color: CGColor) {
         self.layerManagers = [LayerManager()]
         self.currentLayerIndex = 0
         self.tool = tool
@@ -32,7 +32,7 @@ public final class DrawingStudioImpl: DrawingStudio {
     
     public var tool: DrawingTool
     
-    public var toolColor: Color
+    public var toolColor: CGColor
     
     public var isUndoAvailable: Bool {
         currentLayerManager.isUndoAvailable

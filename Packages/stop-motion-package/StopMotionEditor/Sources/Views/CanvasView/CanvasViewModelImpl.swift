@@ -43,7 +43,7 @@ final class CanvasViewModelImpl: CanvasViewModel {
     }
     
     var toolColor: Color {
-        studio.toolColor
+        Color(studio.toolColor)
     }
     
     var animationFPS: Int {

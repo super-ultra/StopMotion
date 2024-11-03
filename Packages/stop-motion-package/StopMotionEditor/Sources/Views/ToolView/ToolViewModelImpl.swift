@@ -27,7 +27,7 @@ final class ToolViewModelImpl: ToolViewModel {
     // MARK: ToolViewModel
     
     var color: Color {
-        studio.toolColor
+        Color(studio.toolColor)
     }
     
     private(set) var mode: ToolViewMode?
@@ -53,7 +53,7 @@ final class ToolViewModelImpl: ToolViewModel {
     }
     
     func selectColor(_ color: Color) {
-        studio.toolColor = color
+        studio.toolColor = color.resolve(in: EnvironmentValues()).cgColor
         mode = .tool(studio.tool)
     }
     
@@ -65,10 +65,10 @@ final class ToolViewModelImpl: ToolViewModel {
             mode = .colorPicking(SmallColorPickerModel(
                 selectedColor: Binding<Color>(
                     get: { [studio] in
-                        studio.toolColor
+                        Color(studio.toolColor)
                     },
                     set: { [weak self] in
-                        self?.studio.toolColor = $0
+                        self?.studio.toolColor = $0.resolve(in: EnvironmentValues()).cgColor
                     }
                 ),
                 predefinedColors: Static.defaultColors

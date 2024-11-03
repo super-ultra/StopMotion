@@ -33,11 +33,11 @@ extension CGContext {
         case .brush:
             setBlendMode(.normal)
             setLineJoin(.round)
-            setStrokeColor(UIColor(stroke.color).cgColor)
+            setStrokeColor(stroke.color)
         case .pencil:
             setBlendMode(.normal)
             setLineJoin(.bevel)
-            setStrokeColor(UIColor(stroke.color).cgColor)
+            setStrokeColor(stroke.color)
         }
         
         setLineCap(.round)

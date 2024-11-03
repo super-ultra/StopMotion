@@ -5,12 +5,12 @@ import UIKit
 extension UIColor {
     
     public enum Assets {
-        public static let solidBlack = UIColor(named: "solid-black", in: .module, compatibleWith: nil)
-        public static let solidGrey = UIColor(named: "solid-grey", in: .module, compatibleWith: nil)
-        public static let solidWhite = UIColor(named: "solid-white", in: .module, compatibleWith: nil)
-        public static let solidBlue = UIColor(named: "solid-blue", in: .module, compatibleWith: nil)
-        public static let solidRed = UIColor(named: "solid-red", in: .module, compatibleWith: nil)
-        public static let accent = UIColor(named: "accent", in: .module, compatibleWith: nil)
+        public static let solidBlack = UIColor(named: "solid-black", in: .module, compatibleWith: nil)!
+        public static let solidGrey = UIColor(named: "solid-grey", in: .module, compatibleWith: nil)!
+        public static let solidWhite = UIColor(named: "solid-white", in: .module, compatibleWith: nil)!
+        public static let solidBlue = UIColor(named: "solid-blue", in: .module, compatibleWith: nil)!
+        public static let solidRed = UIColor(named: "solid-red", in: .module, compatibleWith: nil)!
+        public static let accent = UIColor(named: "accent", in: .module, compatibleWith: nil)!
     }
     
 }
