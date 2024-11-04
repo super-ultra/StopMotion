@@ -46,7 +46,11 @@ struct CanvasView: View {
     
     private var zoomTransform: CGAffineTransform {
         CGAffineTransform(translationX: zoomViewOffset.x, y: zoomViewOffset.y)
-            .concatenating(CGAffineTransform(scaleX: 1.0 / zoomViewScale, y: 1.0 / zoomViewScale))
+            .concatenating(CGAffineTransform(scaleX: zoomViewScale, y: zoomViewScale).inverted())
+    }
+    
+    private var toolScale: CGFloat {
+        zoomViewScale > 0 ? 1 / zoomViewScale : 1
     }
 
     @ViewBuilder
@@ -93,19 +97,19 @@ struct CanvasView: View {
                 DragGesture(minimumDistance: 2)
                     .onChanged { value in
                         cursorLocation = value.location
-                        model.toolScale = 1 / zoomViewScale
+                        model.toolScale = toolScale
                         model.drag(value.location)
                         onDraw()
                     }
                     .onEnded { value in
                         cursorLocation = nil
-                        model.toolScale = 1 / zoomViewScale
+                        model.toolScale = toolScale
                         model.endDragging(value.location)
                         onDraw()
                     }
             )
             .onTapGesture { location in
-                model.toolScale = 1 / zoomViewScale
+                model.toolScale = toolScale
                 model.tap(location)
             }
             .background {

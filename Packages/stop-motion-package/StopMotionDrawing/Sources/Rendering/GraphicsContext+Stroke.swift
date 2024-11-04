@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+import StopMotionToolbox
+
+
 extension GraphicsContext {
     
     public mutating func draw(_ layer: Layer) {
@@ -42,17 +45,36 @@ extension GraphicsContext {
         }
     }
     
-    public mutating func drawDashedBoundingRect(for stroke: Stroke, color: Color, lineWidth: CGFloat) {
-        let inset = stroke.tool.size / 2 + 2
+    public mutating func drawBoundingRect(
+        for stroke: Stroke,
+        color: Color,
+        lineWidth: CGFloat,
+        dash: [CGFloat] = [CGFloat](),
+        dashPhase: CGFloat = 0
+    ) {
+        let inset = stroke.tool.size / 2
         let rect = stroke.path.boundingRect.insetBy(dx: -inset, dy: -inset)
-        let path = Path(roundedRect: rect, cornerRadius: 8)
+        let path = Path(rect)
         
         withTransform(stroke.transform) {
             $0.stroke(
                 path,
                 with: .color(color),
-                style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round, dash: [2, 8])
+                style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round, dash: dash, dashPhase: dashPhase)
             )
+            
+            for x in [rect.minX, rect.midX, rect.maxX] {
+                for y in [rect.minY, rect.midY, rect.maxY] {
+                    if x == rect.midX && y == rect.midY {
+                        continue
+                    }
+                    
+                    let square = Path(CGRect(center: CGPoint(x: x, y: y), size: CGSize(width: 4, height: 4)))
+                    
+                    $0.fill(square, with: .color(.white))
+                    $0.stroke(square, with: .color(.black), lineWidth: 1)
+                }
+            }
         }
     }
     
@@ -65,3 +87,5 @@ extension GraphicsContext {
     }
     
 }
+
+

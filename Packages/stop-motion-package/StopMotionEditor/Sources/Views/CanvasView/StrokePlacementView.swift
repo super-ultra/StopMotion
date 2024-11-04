@@ -19,7 +19,12 @@ struct StrokePlacementView: View {
         Group {
             Canvas { context, size in
                 context.draw(stroke)
-                context.drawDashedBoundingRect(for: stroke, color: .Assets.tintAccentRed, lineWidth: 1.5)
+                
+                context.drawBoundingRect(
+                    for: stroke,
+                    color: .Assets.tintAccent,
+                    lineWidth: 1
+                )
             }
             .transformEffect(transform)
         }
