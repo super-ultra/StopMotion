@@ -18,15 +18,15 @@ struct StrokePlacementView: View {
     var body: some View {
         Group {
             Canvas { context, size in
+                context.transform = transform
                 context.draw(stroke)
                 
                 context.drawBoundingRect(
                     for: stroke,
                     color: .Assets.tintAccent,
-                    lineWidth: 1
+                    lineWidth: transform.scaleX > 0 ? 1.5 / transform.scaleX : 1.0
                 )
             }
-            .transformEffect(transform)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onTapGesture {
@@ -35,6 +35,8 @@ struct StrokePlacementView: View {
         .simultaneousGesture(
             DragGesture()
                 .onChanged { value in
+                    guard value.translation.width.isFinite, value.translation.height.isFinite else { return }
+                    
                     let newTransform = CGAffineTransform(
                         translationX: value.translation.width,
                         y: value.translation.height
@@ -48,6 +50,8 @@ struct StrokePlacementView: View {
         .simultaneousGesture(
             MagnifyGesture()
                 .onChanged { value in
+                    guard value.magnification.isFinite, value.magnification > 0 else { return }
+                    
                     let newTransform = CGAffineTransform.anchoredScale(
                         scale: value.magnification,
                         anchor: stroke.path.boundingRect.mid
@@ -62,6 +66,8 @@ struct StrokePlacementView: View {
         .simultaneousGesture(
             RotateGesture()
                 .onChanged { value in
+                    guard value.rotation.radians.isFinite else { return }
+                    
                     let newTransform = CGAffineTransform.anchoredRotation(
                         radians: value.rotation.radians,
                         anchor: stroke.path.boundingRect.mid

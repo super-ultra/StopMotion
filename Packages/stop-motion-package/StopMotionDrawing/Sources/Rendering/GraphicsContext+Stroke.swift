@@ -69,10 +69,10 @@ extension GraphicsContext {
                         continue
                     }
                     
-                    let square = Path(CGRect(center: CGPoint(x: x, y: y), size: CGSize(width: 4, height: 4)))
+                    let square = Path(CGRect(center: CGPoint(x: x, y: y), size: CGSize(width: 4 * lineWidth, height: 4 * lineWidth)))
                     
                     $0.fill(square, with: .color(.white))
-                    $0.stroke(square, with: .color(.black), lineWidth: 1)
+                    $0.stroke(square, with: .color(.black), lineWidth: lineWidth)
                 }
             }
         }

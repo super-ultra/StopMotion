@@ -8,6 +8,15 @@
 import CoreGraphics
 
 extension CGAffineTransform {
+    
+    public var scaleX: CGFloat {
+        sqrt(a * a + c * c)
+    }
+
+    public var scaleY: CGFloat {
+        sqrt(b * b + d * d)
+    }
+    
     public static func anchoredScale(scale: CGFloat, anchor: CGPoint) -> CGAffineTransform {
         CGAffineTransform(translationX: anchor.x, y: anchor.y)
             .scaledBy(x: scale, y: scale)
@@ -19,4 +28,5 @@ extension CGAffineTransform {
             .rotated(by: radians)
             .translatedBy(x: -anchor.x, y: -anchor.y)
     }
+    
 }
