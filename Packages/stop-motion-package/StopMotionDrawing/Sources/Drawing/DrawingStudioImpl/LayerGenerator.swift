@@ -29,15 +29,38 @@ struct LayerGenerator {
     // MARK: - Private
     
     private func interpolate(from: Layer, to: Layer, count: Int, canvasSize: CGSize) -> [Layer] {
-        return [from, to]
+        return generate(basedOn: from, count: count, canvasSize: canvasSize)
     }
     
-    private func generate(basedOn layer: Layer, count: Int, canvasSize: CGSize) -> [Layer] {
-        return [Layer](repeating: layer, count: count)
+    private func generate(basedOn baseLayer: Layer, count: Int, canvasSize: CGSize) -> [Layer] {
+        var result: [Layer] = [baseLayer]
+        
+        for i in 0..<count {
+            guard let base = result.last else { break }
+            let newLayer = Layer(
+                strokes: base.strokes.map { stroke in
+                    stroke
+                        .applying(
+                            CGAffineTransform(scaleX: .random(in: 0.9...1.1), y: .random(in: 0.9...1.1))
+                        )
+                        .applying(
+                            CGAffineTransform(rotationAngle: .random(in: -(.pi/16)...(.pi/16)))
+                        )
+                        .applying(
+                            CGAffineTransform(translationX: .random(in: -16...16), y: .random(in: -16...16))
+                        )
+                }
+            )
+            
+            result.append(newLayer)
+        }
+        
+        return result
     }
     
     private func generateNew(count: Int, canvasSize: CGSize) -> [Layer] {
-        let initialLayer = Layer(strokes: [generateStroke()])
+        let initialLayer: Layer = .random(canvasSize: canvasSize)
+        
         if count == 1 {
             return [initialLayer]
         } else {
@@ -45,39 +68,86 @@ struct LayerGenerator {
         }
     }
     
-    private func generateStroke() -> Stroke {
-        Stroke(
-            path: .random(),
-            color: .random(),
-            tool: .random()
-        )
-    }
-    
 }
 
+// MARK: - Utils
+
 extension CGColor {
-    static func random() -> CGColor {
+    fileprivate static func random() -> CGColor {
         CGColor(red: .random(in: 0...1), green: .random(in: 0...1), blue: .random(in: 0...1), alpha: 1)
     }
 }
 
 extension DrawingTool {
-    static func random() -> DrawingTool {
+    fileprivate static func random() -> DrawingTool {
         DrawingTool(type: Bool.random() ? .brush : .pencil, size: .random(in: DrawingTool.defaultSizeRange))
     }
 }
     
 extension Path {
-    static func random() -> Path {
+    fileprivate static func random(canvasSize: CGSize) -> Path {
+        guard canvasSize.width > 0, canvasSize.height > 0 else {
+            assertionFailure()
+            return Path()
+        }
+        
+        let rect = CGRect(
+            x: 0,
+            y: 0,
+            width: .random(in: canvasSize.width / 4...canvasSize.width / 2),
+            height: .random(in: canvasSize.height / 4...canvasSize.width / 2)
+        )
+        
         switch ShapeType.random() {
         case .circle:
-            return Path(ellipseIn: CGRect())
+            return Path(ellipseIn: rect)
         case .square:
-            return Path(CGRect())
+            return Path(rect)
         case .triangle:
-            return Path(triangleIn: CGRect())
+            return Path(triangleIn: rect)
         case .star:
-            return .star(x: 0, y: 0, radius: 100, sides: 5, pointiness: 2)
+            return Path(starIn: rect, sides: .random(in: 3...10), pointiness: .random(in: 1.5...3))
         }
     }
+}
+
+extension CGAffineTransform {
+    
+    fileprivate static func random(canvasSize: CGSize) -> CGAffineTransform {
+        let scaleValue: CGFloat = .random(in: 0.8...1.5)
+        let scale = CGAffineTransform(scaleX: scaleValue, y: scaleValue)
+        
+        let rotation = CGAffineTransform(rotationAngle: .random(in: 0...2 * CGFloat.pi))
+        
+        let translation = CGAffineTransform(
+            translationX: .random(in: 0...canvasSize.width),
+            y: .random(in: 0...canvasSize.height)
+        )
+        
+        return scale.concatenating(rotation).concatenating(translation)
+    }
+        
+}
+
+extension Stroke {
+    
+    fileprivate static func random(canvasSize: CGSize) -> Stroke {
+        return Stroke(
+            path: .random(canvasSize: canvasSize),
+            color: .random(),
+            tool: .random(),
+            transform: .random(canvasSize: canvasSize)
+        )
+    }
+    
+}
+
+
+extension Layer {
+    
+    fileprivate static func random(canvasSize: CGSize) -> Layer {
+        let count: Int = .random(in: 1...3)
+        return Layer(strokes: (0..<count).map { _ in .random(canvasSize: canvasSize) })
+    }
+    
 }

@@ -9,6 +9,12 @@ import SwiftUI
 
 extension Path {
     
+    public init(starIn rect: CGRect, sides: Int, pointiness: CGFloat) {
+        let radius = min(rect.size.width, rect.size.height) / 2 / pointiness
+        
+        self = .star(x: rect.midX, y: rect.midY, radius: radius, sides: sides, pointiness: pointiness)
+    }
+    
     public static func star(x: CGFloat, y: CGFloat, radius: CGFloat, sides: Int, pointiness: CGFloat) -> Path {
         let adjustment = 360 / sides / 2
         var path = Path()

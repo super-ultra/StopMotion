@@ -87,12 +87,17 @@ final class ToolViewModelImpl: ToolViewModel {
     }
     
     func pickShape() {
-        mode = .shapePicking(
-            SmallShapePickerModel(shapes: [.circle, .square, .triangle, .star]) { [weak self] shape in
-                self?.onSelectShape(shape)
-                self?.dropToToolModeIfNeeded()
-            }
-        )
+        switch mode {
+        case .shapePicking:
+            dropToToolModeIfNeeded()
+        default:
+            mode = .shapePicking(
+                SmallShapePickerModel(shapes: [.circle, .square, .triangle, .star]) { [weak self] shape in
+                    self?.onSelectShape(shape)
+                    self?.dropToToolModeIfNeeded()
+                }
+            )
+        }
     }
     
     func dropToToolModeIfNeeded() {
