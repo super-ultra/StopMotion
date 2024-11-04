@@ -113,13 +113,15 @@ public final class DrawingStudioImpl: DrawingStudio {
                 .generateLayers(basedOn: newManagers.map { $0.layer }, fromIndex: fromIndex, count: count, canvasSize: canvasSize)
                 .map { LayerManager(layer: $0) }
             
-            if !generatedManagers.isEmpty {
-                newManagers.insert(contentsOf: generatedManagers, at: fromIndex + 1)
-                layerManagers = newManagers
-                currentLayerIndex = (fromIndex + generatedManagers.count).clamped(to: 0...newManagers.count - 1)
+            await MainActor.run {
+                if !generatedManagers.isEmpty {
+                    newManagers.insert(contentsOf: generatedManagers, at: fromIndex + 1)
+                    layerManagers = newManagers
+                    currentLayerIndex = (fromIndex + generatedManagers.count).clamped(to: 0...newManagers.count - 1)
+                }
+                
+                isLayersGenerating = false
             }
-            
-            isLayersGenerating = false
         }
     }
     

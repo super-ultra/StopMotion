@@ -111,9 +111,12 @@ final class ControlViewModelImpl: ControlViewModel {
                     fps: settings.animationFPS,
                     filename: "animation-\(formatter.string(from: .now))"
                 )
-                router.share(url: url)
                 
-                sharingState = .available
+                await MainActor.run {
+                    router.share(url: url)
+                    
+                    sharingState = .available
+                }
             } catch {
                 let message = Task.isCancelled ? Strings.ControlView.sharingCancelledMessage : Strings.ControlView.sharingErrorMessage
                 
