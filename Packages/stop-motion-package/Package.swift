@@ -27,6 +27,9 @@ let package = Package(
         ),
         .target(
             name: "StopMotionDrawing",
+            dependencies: [
+                "StopMotionToolbox"
+            ],
             path: "StopMotionDrawing",
             sources: [
                 "Sources"
