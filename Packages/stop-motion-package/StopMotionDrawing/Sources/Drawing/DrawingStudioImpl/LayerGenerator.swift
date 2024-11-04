@@ -40,22 +40,22 @@ struct LayerGenerator {
         }
         
         // Normalize layer to apply correct transforms
-        let normalizedBaseLayer = baseLayer.normalized()
+        let normBaseLayer = baseLayer.normalized(relativeTo: baseLayer.containsEraser() ? baseLayer.boundingRect() : nil)
         
         guard count > 1 else {
             return generateLayers(
-                basedOn: normalizedBaseLayer,
+                basedOn: normBaseLayer,
                 count: count,
-                destinations: normalizedBaseLayer.strokes.map { stroke in
+                destinations: normBaseLayer.strokes.map { stroke in
                     .random(pathBounds: stroke.path.boundingRect, canvasSize: canvasSize)
                 }
             )
         }
         
         // Add stroke if needed
-        let updatedBaseLayer = appendingNewStrokes
-            ? normalizedBaseLayer.appendingRandomStrokes(count: .random(in: 0...2), canvasSize: canvasSize)
-            : normalizedBaseLayer
+        let extendedBaseLayer = appendingNewStrokes
+            ? normBaseLayer.appendingRandomStrokes(count: .random(in: 0...2), canvasSize: canvasSize)
+            : normBaseLayer
         
         // Steps for random trajectory
         let stepThreshold = 20
@@ -65,18 +65,31 @@ struct LayerGenerator {
         var result: [Layer] = []
         
         for _ in 0..<stepsCount - 1 {
-            let stepTransforms: [CGAffineTransform] = updatedBaseLayer.strokes.map { stroke in
-                return .random(pathBounds: stroke.path.boundingRect, canvasSize: canvasSize)
+            let stepTransforms: [CGAffineTransform]
+            
+            if normBaseLayer.containsEraser() {
+                // Strokes with eraser should move together
+                stepTransforms = Array(
+                    repeating: .random(pathBounds: normBaseLayer.boundingRect(), canvasSize: canvasSize),
+                    count: normBaseLayer.strokes.count
+                )
+                + extendedBaseLayer.strokes[normBaseLayer.strokes.count..<extendedBaseLayer.strokes.count].map { stroke in
+                    .random(pathBounds: stroke.path.boundingRect, canvasSize: canvasSize)
+                }
+            } else {
+                stepTransforms = extendedBaseLayer.strokes.map { stroke in
+                    return .random(pathBounds: stroke.path.boundingRect, canvasSize: canvasSize)
+                }
             }
             
-            result += generateLayers(basedOn: result.last ?? updatedBaseLayer, count: singleStep, destinations: stepTransforms)
+            result += generateLayers(basedOn: result.last ?? extendedBaseLayer, count: singleStep, destinations: stepTransforms)
         }
         
         
         // Return to the initial position
         let countLeft = count - (stepsCount - 1) * singleStep
-        let initialTransforms: [CGAffineTransform] = updatedBaseLayer.strokes.map { $0.transform }
-        result += generateLayers(basedOn: result.last ?? updatedBaseLayer, count: countLeft, destinations: initialTransforms)
+        let initialTransforms: [CGAffineTransform] = extendedBaseLayer.strokes.map { $0.transform }
+        result += generateLayers(basedOn: result.last ?? extendedBaseLayer, count: countLeft, destinations: initialTransforms)
         
         return result
     }
@@ -84,25 +97,27 @@ struct LayerGenerator {
     private func generateLayers(basedOn baseLayer: Layer, count: Int, destinations: [CGAffineTransform]) -> [Layer] {
         var result: [Layer] = []
         
+        let randomAvailable = !baseLayer.containsEraser()
+        
         for i in 0..<count {
             let base = result.last ?? baseLayer
             let step = CGFloat(count - i)
             
             let newLayer = Layer(
                 strokes: base.strokes.enumerated().map { offset, stroke in
-                    var x = stroke.transform.tx + .random(in: -5...5)
+                    var x = stroke.transform.tx + (randomAvailable ? .random(in: -5...5) : 0)
                     x += (destinations[offset].tx - x) / step
                     
-                    var y = stroke.transform.ty + .random(in: -5...5)
+                    var y = stroke.transform.ty + (randomAvailable ? .random(in: -5...5) : 0)
                     y += (destinations[offset].ty - y) / step
                     
-                    var rotation = stroke.transform.rotation + .random(in: (-.pi / 32)...(.pi / 32))
+                    var rotation = stroke.transform.rotation + (randomAvailable ? .random(in: (-.pi / 32)...(.pi / 32)) : 0)
                     rotation += (destinations[offset].rotation - rotation) / step
                     
-                    var scaleX = stroke.transform.scaleX * .random(in: 0.95...1.05)
+                    var scaleX = stroke.transform.scaleX * (randomAvailable ? .random(in: 0.95...1.05) : 1)
                     scaleX += (destinations[offset].scaleX - scaleX) / step
                     
-                    var scaleY = stroke.transform.scaleY * .random(in: 0.95...1.05)
+                    var scaleY = stroke.transform.scaleY * (randomAvailable ? .random(in: 0.95...1.05) : 1)
                     scaleY += (destinations[offset].scaleY - scaleY) / step
                     
                     return stroke

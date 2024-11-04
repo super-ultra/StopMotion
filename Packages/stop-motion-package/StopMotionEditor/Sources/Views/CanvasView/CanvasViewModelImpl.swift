@@ -84,7 +84,11 @@ final class CanvasViewModelImpl: CanvasViewModel {
     
     func placeShape(_ shape: ShapeType) {
         let path = makeInitialPath(for: shape)
-        placingStroke = Stroke(path: path, color: studio.toolColor, tool: studio.tool)
+        placingStroke = Stroke(
+            path: path,
+            color: studio.toolColor,
+            tool: studio.tool.type != .eraser ? studio.tool : DrawingTool(type: .brush, size: studio.tool.size)
+        )
     }
     
     func submitStrokePlacement(transform: CGAffineTransform) {
