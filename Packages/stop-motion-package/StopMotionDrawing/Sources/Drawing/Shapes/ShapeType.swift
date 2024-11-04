@@ -6,9 +6,16 @@
 //
 
 
-public enum ShapeType {
+public enum ShapeType: CaseIterable {
     case circle
     case square
     case triangle
     case star
+}
+
+
+extension ShapeType {
+    public static func random() -> ShapeType {
+        allCases.randomElement() ?? .circle
+    }
 }

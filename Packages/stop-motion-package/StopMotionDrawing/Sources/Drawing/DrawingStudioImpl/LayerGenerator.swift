@@ -69,9 +69,15 @@ extension DrawingTool {
     
 extension Path {
     static func random() -> Path {
-//        switch Int.random(in: 0...2) {
-//        case 0:
-        return .star(x: 0, y: 0, radius: 100, sides: 5, pointiness: 2)
-//        }
+        switch ShapeType.random() {
+        case .circle:
+            return Path(ellipseIn: CGRect())
+        case .square:
+            return Path(CGRect())
+        case .triangle:
+            return Path(triangleIn: CGRect())
+        case .star:
+            return .star(x: 0, y: 0, radius: 100, sides: 5, pointiness: 2)
+        }
     }
 }

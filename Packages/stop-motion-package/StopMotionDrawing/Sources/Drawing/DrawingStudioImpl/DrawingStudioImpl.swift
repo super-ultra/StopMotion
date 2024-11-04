@@ -37,6 +37,8 @@ public final class DrawingStudioImpl: DrawingStudio {
     
     public var toolScale: CGFloat
     
+    public var canvasSize: CGSize = CGSize(width: 1, height: 1)
+    
     public var isUndoAvailable: Bool {
         currentLayerManager.isUndoAvailable
     }

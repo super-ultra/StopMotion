@@ -20,11 +20,16 @@ struct CanvasView: View {
     let onDraw: () -> Void
     
     var body: some View {
-        Group {
-            if isAnimating {
-                animatingCanvas()
-            } else {
-                drawingCanvas()
+        GeometryReader { geometry in
+            Group {
+                if isAnimating {
+                    animatingCanvas()
+                } else {
+                    drawingCanvas()
+                }
+            }
+            .onAppear {
+                model.updateCanvasSize(geometry.size)
             }
         }
         .overlay {

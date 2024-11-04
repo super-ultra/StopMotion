@@ -100,7 +100,7 @@ final class ControlViewModelImpl: ControlViewModel {
                 let url = try await generator.generateGif(
                     for: studio.getAllLayers(),
                     background: UIImage.Assets.canvas.cgImage,
-                    size: CGSize(width: 400, height: 750),
+                    size: studio.canvasSize,
                     fps: settings.animationFPS,
                     filename: "animation-\(formatter.string(from: .now))"
                 )

@@ -5,6 +5,7 @@
 //  Created by Ilya Lobanov on 01.11.2024.
 //
 
+import CoreGraphics
 import Observation
 import StopMotionDrawing
 
@@ -19,6 +20,10 @@ final class LayerCollectionViewModelImpl: LayerCollectionViewModel {
     
     var itemsCount: Int {
         studio.layersCount
+    }
+    
+    var itemAspectRatio: CGFloat {
+        return studio.canvasSize.width / studio.canvasSize.height
     }
     
     func item(at index: Int) -> LayerCollectionItemModel {

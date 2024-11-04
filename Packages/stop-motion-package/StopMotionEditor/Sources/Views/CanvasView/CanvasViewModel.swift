@@ -28,6 +28,8 @@ protocol CanvasViewModel: Observable {
     
     func layer(at index: Int) -> Layer
     
+    func updateCanvasSize(_ size: CGSize)
+    
     func drag(_ point: CGPoint)
     func endDragging(_ point: CGPoint)
     func tap(_ point: CGPoint)

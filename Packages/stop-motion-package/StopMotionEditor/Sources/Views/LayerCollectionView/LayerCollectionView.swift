@@ -26,7 +26,7 @@ struct LayerCollectionView: View {
                         }
                     ) {
                         LayerCollectionItem(model: model.item(at: index))
-                            .aspectRatio(0.55, contentMode: .fill)
+                            .aspectRatio(model.itemAspectRatio, contentMode: .fill)
                     }
                 }
             }

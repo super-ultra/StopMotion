@@ -66,6 +66,10 @@ final class CanvasViewModelImpl: CanvasViewModel {
         studio.layer(at: index)
     }
     
+    func updateCanvasSize(_ size: CGSize) {
+        studio.canvasSize = size
+    }
+    
     func drag(_ point: CGPoint) {
         studio.drag(point)
     }
