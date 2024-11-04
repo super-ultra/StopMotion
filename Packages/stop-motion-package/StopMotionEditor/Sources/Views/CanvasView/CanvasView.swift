@@ -31,6 +31,9 @@ struct CanvasView: View {
             .onAppear {
                 model.updateCanvasSize(geometry.size)
             }
+            .onChange(of: geometry.size) { _ in
+                model.updateCanvasSize(geometry.size)
+            }
         }
         .overlay {
             placingLayer()
