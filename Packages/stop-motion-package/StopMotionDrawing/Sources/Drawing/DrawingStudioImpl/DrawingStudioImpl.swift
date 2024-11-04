@@ -58,6 +58,10 @@ public final class DrawingStudioImpl: DrawingStudio {
         currentLayerManager.endDragging(point)
     }
     
+    public func tap(_ point: CGPoint) {
+        currentLayerManager.tap(point, tool: tool, toolColor: toolColor)
+    }
+    
     public func addStoke(_ stroke: Stroke) {
         currentLayerManager.addStroke(stroke)
     }

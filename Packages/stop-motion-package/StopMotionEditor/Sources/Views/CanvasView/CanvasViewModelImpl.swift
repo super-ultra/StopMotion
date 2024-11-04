@@ -64,6 +64,10 @@ final class CanvasViewModelImpl: CanvasViewModel {
     func endDragging(_ point: CGPoint) {
         studio.endDragging(point)
     }
+
+    func tap(_ point: CGPoint) {
+        studio.tap(point)
+    }
     
     func placeShape(_ shape: ShapeType) {
         let path = makeInitialPath(for: shape)

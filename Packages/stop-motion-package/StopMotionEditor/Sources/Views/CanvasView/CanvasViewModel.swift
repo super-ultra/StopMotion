@@ -26,8 +26,11 @@ protocol CanvasViewModel: Observable {
     var placingStroke: Stroke? { get }
     
     func layer(at index: Int) -> Layer
+    
     func drag(_ point: CGPoint)
     func endDragging(_ point: CGPoint)
+    func tap(_ point: CGPoint)
+    
     func placeShape(_ shape: ShapeType)
     func submitStrokePlacement(transform: CGAffineTransform)
 }

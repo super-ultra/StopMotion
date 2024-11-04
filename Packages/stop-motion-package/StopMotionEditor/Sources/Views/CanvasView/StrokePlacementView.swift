@@ -17,15 +17,14 @@ struct StrokePlacementView: View {
     var body: some View {
         Canvas { context, size in
             context.draw(stroke)
-            context.drawDashedBoundingRect(for: stroke, color: .Assets.tintAccent, lineWidth: 2)
+            context.drawDashedBoundingRect(for: stroke, color: .Assets.tintAccentRed, lineWidth: 1.5)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(alignment: .topLeading) {
             GeometryReader { proxy in
-                Color.clear
-                    .onAppear {
-                        contentSize = proxy.size
-                    }
+                Color.clear.onAppear {
+                    contentSize = proxy.size
+                }
             }
         }
         .transformEffect(transform)

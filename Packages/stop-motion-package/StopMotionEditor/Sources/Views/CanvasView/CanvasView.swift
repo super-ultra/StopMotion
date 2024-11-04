@@ -27,6 +27,9 @@ struct CanvasView: View {
                 drawingCanvas()
             }
         }
+        .overlay {
+            placingLayer()
+        }
         .cornerRadius(20)
     }
     
@@ -81,15 +84,14 @@ struct CanvasView: View {
                         onDraw()
                     }
             )
+            .onTapGesture { location in
+                model.tap(location)
+            }
             .background {
                 previousLayer()
             }
             .background {
                 canvasBackground()
-            }
-            .allowsHitTesting(model.placingStroke != nil)
-            .overlay {
-                placingLayer()
             }
         }
     }

@@ -53,6 +53,16 @@ final class LayerManager {
         layer.strokes[layer.strokes.count - 1].path.addLine(to: point)
     }
     
+    func tap(_ point: CGPoint, tool: DrawingTool, toolColor: CGColor) {
+        let path = Path( {
+            $0.move(to: point)
+            $0.addLine(to: point)
+        })
+        
+        let newStroke = Stroke(path: path, color: toolColor, tool: tool)
+        layer.strokes.append(newStroke)
+    }
+    
     func addStroke(_ stroke: Stroke) {
         layer.strokes.append(stroke)
     }

@@ -41,7 +41,7 @@ final class EditorViewModelImpl: EditorViewModel {
     
     private enum Static {
         static let initialTool: DrawingTool = .default(.pencil)
-        static let initialColor: CGColor = UIColor.Assets.solidRed.cgColor
+        static let initialColor: CGColor = UIColor.Assets.solidBlue.cgColor
     }
     
     private let studio: DrawingStudio = DrawingStudioImpl(tool: Static.initialTool, color: Static.initialColor)

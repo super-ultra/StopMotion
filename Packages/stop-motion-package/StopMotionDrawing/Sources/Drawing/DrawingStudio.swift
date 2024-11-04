@@ -23,6 +23,7 @@ public protocol DrawingStudio: AnyObject, Observable {
     func getAllLayers() -> [Layer]
     func drag(_ point: CGPoint)
     func endDragging(_ point: CGPoint)
+    func tap(_ point: CGPoint)
     func addStoke(_ stroke: Stroke)
     func undo()
     func redo()
