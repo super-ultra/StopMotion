@@ -109,26 +109,7 @@ struct ControlView: View {
                 }
             ))
             
-            ControlButton(model: ControlButtonModel(
-                icon: .Assets.controlGenerateLayers,
-                action: {
-                    isGenerateLayersCountPresented.toggle()
-                }
-            ))
-            .alert(Strings.ControlView.generateLayersTitle, isPresented: $isGenerateLayersCountPresented) {
-                TextField("", text: $generateLayersCountText)
-                    .keyboardType(.numberPad)
-                
-                Button(Strings.Common.ok) {
-                    if let count = Int(generateLayersCountText), count > 0 {
-                        model.generateLayers(count: count)
-                    }
-                }.disabled(generateLayersCountText.isEmpty)
-                
-                Button(Strings.Common.cancel, role: .cancel) {}
-            } message: {
-                Text(Strings.ControlView.generateLayersMessage)
-            }
+            generateLayerControl()
             
             ControlButton(model: ControlButtonModel(
                 icon: .Assets.controlLayers,
@@ -172,7 +153,37 @@ struct ControlView: View {
                 }
             ))
         case .loading:
-            ProgressView()
+            progressView()
+        }
+        
+    }
+    
+    @ViewBuilder
+    private func generateLayerControl() -> some View {
+        switch model.generateState {
+        case .available:
+            ControlButton(model: ControlButtonModel(
+                icon: .Assets.controlGenerateLayers,
+                action: {
+                    isGenerateLayersCountPresented.toggle()
+                }
+            ))
+            .alert(Strings.ControlView.generateLayersTitle, isPresented: $isGenerateLayersCountPresented) {
+                TextField("", text: $generateLayersCountText)
+                    .keyboardType(.numberPad)
+                
+                Button(Strings.Common.ok) {
+                    if let count = Int(generateLayersCountText), count > 0 {
+                        model.generateLayers(count: count)
+                    }
+                }.disabled(generateLayersCountText.isEmpty)
+                
+                Button(Strings.Common.cancel, role: .cancel) {}
+            } message: {
+                Text(Strings.ControlView.generateLayersMessage)
+            }
+        case .loading:
+            progressView()
         }
         
     }
@@ -184,6 +195,12 @@ struct ControlView: View {
             .fontWeight(.medium)
             .foregroundStyle(.secondary)
             .opacity(model.isPlaying ? 0.0 : 1.0)
+    }
+    
+    @ViewBuilder
+    private func progressView() -> some View {
+        ProgressView()
+            .frame(width: ControlViewGuides.buttonSize.width, height: ControlViewGuides.buttonSize.height)
     }
     
 }

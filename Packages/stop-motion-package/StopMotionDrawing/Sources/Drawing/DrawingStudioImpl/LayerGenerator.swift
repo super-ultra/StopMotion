@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LayerGenerator {
     
-    func generateLayers(basedOn layers: [Layer], fromIndex index: Int, count: Int, canvasSize: CGSize) -> [Layer] {
+    func generateLayers(basedOn layers: [Layer], fromIndex index: Int, count: Int, canvasSize: CGSize) async -> [Layer] {
         guard count > 0 else { return [] }
         
         if layers.isEmpty {

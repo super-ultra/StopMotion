@@ -19,6 +19,7 @@ enum Strings {
         static let generateLayersTitle = String(localized: "Generate layers", bundle: .module)
         static let generateLayersMessage = String(localized: "Enter the number of layers to generate.", bundle: .module)
         static let sharingErrorMessage = String(localized: "Failed to generate GIF.", bundle: .module)
+        static let sharingCancelledMessage = String(localized: "GIF generation has been cancelled.", bundle: .module)
     }
     
     enum DeleteAllLayersAlert {

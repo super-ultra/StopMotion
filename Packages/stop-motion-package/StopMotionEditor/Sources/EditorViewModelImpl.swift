@@ -17,17 +17,29 @@ final class EditorViewModelImpl: EditorViewModel {
     
     init() {
         router = EditorViewRouterImpl(studio: studio)
-        controlModel = ControlViewModelImpl(studio: studio, settings: settings, router: router)
+        
+        controlModel = ControlViewModelImpl(
+            studio: studio,
+            settings: settings,
+            router: router
+        )
+        
         canvasModel = CanvasViewModelImpl(studio: studio, settings: settings)
+        
         toolModel = ToolViewModelImpl(studio: studio, onSelectShape: { [canvasModel] shape in
             canvasModel.placeShape(shape)
         })
+        
         playbackSettingsModel = PlaybackSettingsViewModelImpl(settings: settings)
     }
     
     // MARK: - EditorModel
     
     var router: EditorViewRouter
+    
+    var isLoading: Bool {
+        studio.isLayersGenerating
+    }
     
     let controlModel: ControlViewModel
     

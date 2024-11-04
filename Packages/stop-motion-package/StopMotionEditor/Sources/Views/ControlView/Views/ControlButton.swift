@@ -40,7 +40,7 @@ struct ControlButton: View {
         )
         .buttonStyle(.scale)
         .font(.system(size: 24))
-        .frame(width: 32, height: 32)
+        .frame(width: ControlViewGuides.buttonSize.width, height: ControlViewGuides.buttonSize.height)
         .foregroundStyle(
             Color.Assets.tintPrimary
                 .opacity(model.isAvailable ? 1.0 : 0.3)

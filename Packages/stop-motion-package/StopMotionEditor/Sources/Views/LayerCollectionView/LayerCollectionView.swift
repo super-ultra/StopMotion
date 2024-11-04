@@ -33,7 +33,9 @@ struct LayerCollectionView: View {
                 }
                 .padding()
                 .onAppear {
-                    proxy.scrollTo(model.selectedItemIndex)
+                    if model.itemsCount < 100 {
+                        proxy.scrollTo(model.selectedItemIndex)
+                    }
                 }
             }
         }

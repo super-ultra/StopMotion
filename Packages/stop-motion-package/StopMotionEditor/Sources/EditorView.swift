@@ -39,6 +39,8 @@ public struct EditorView: View {
                     .opacity(model.controlModel.isPlaying ? 0.0 : 1.0)
             }
         }
+        .allowsHitTesting(!model.isLoading)
+        .opacity(model.isLoading ? 0.75 : 1.0)
         .safeAreaBottomPadding()
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .sheet(item: $model.router.destination) { destination in

@@ -43,6 +43,8 @@ public struct GifCreator {
         }
         
         for layer in layers {
+            try Task.checkCancellation()
+            
             bitmapContext.saveGState()
             bitmapContext.draw(layer, size: size, background: background)
             bitmapContext.restoreGState()

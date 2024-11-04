@@ -21,6 +21,8 @@ public protocol DrawingStudio: AnyObject, Observable {
     var isUndoAvailable: Bool { get }
     var isRedoAvailable: Bool { get }
     
+    var isLayersGenerating: Bool { get }
+    
     func layer(at index: Int) -> Layer
     func getAllLayers() -> [Layer]
     func drag(_ point: CGPoint)

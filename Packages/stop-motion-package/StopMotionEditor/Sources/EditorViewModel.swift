@@ -8,6 +8,7 @@
 @MainActor
 protocol EditorViewModel: AnyObject {
     var router: EditorViewRouter { get }
+    var isLoading: Bool { get }
     
     var controlModel: ControlViewModel { get }
     var toolModel: ToolViewModel { get }

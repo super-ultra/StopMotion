@@ -37,7 +37,11 @@ final class ControlViewModelImpl: ControlViewModel {
         return "\(studio.currentLayerIndex + 1) / \(studio.layersCount)"
     }
     
-    private(set) var sharingState: ControlViewSharingState = .available
+    private(set) var sharingState: ControlButtonState = .available
+    
+    var generateState: ControlButtonState {
+        return studio.isLayersGenerating ? .loading : .available
+    }
     
     private(set) var errorState: ControlViewErrorState? = nil
     
@@ -85,6 +89,9 @@ final class ControlViewModelImpl: ControlViewModel {
             return
         }
         isPlaying = false
+        
+        sharingTask?.cancel()
+        sharingTask = nil
     }
     
     func share() {
@@ -95,7 +102,7 @@ final class ControlViewModelImpl: ControlViewModel {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd--HH-mm-ss"
             
-        Task {
+        sharingTask = Task {
             do {
                 let url = try await generator.generateGif(
                     for: studio.getAllLayers(),
@@ -108,8 +115,10 @@ final class ControlViewModelImpl: ControlViewModel {
                 
                 sharingState = .available
             } catch {
+                let message = Task.isCancelled ? Strings.ControlView.sharingCancelledMessage : Strings.ControlView.sharingErrorMessage
+                
                 errorState = ControlViewErrorState(
-                    message: Strings.ControlView.sharingErrorMessage,
+                    message: message,
                     onDismiss: { [weak self] in
                         self?.errorState = nil
                         self?.sharingState = .available
@@ -124,4 +133,5 @@ final class ControlViewModelImpl: ControlViewModel {
     private let studio: DrawingStudio
     private let settings: EditorSettings
     private let router: ControlViewRouter
+    private var sharingTask: Task<Void, Never>?
 }
