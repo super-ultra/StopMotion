@@ -19,7 +19,11 @@ public struct Layer: Sendable {
 extension Layer {
     
     public func appending(_ stroke: Stroke) -> Layer {
-        return Layer(strokes: strokes + [stroke])
+        return Layer(strokes: self.strokes + [stroke])
+    }
+    
+    public func appending(_ strokes: [Stroke]) -> Layer {
+        return Layer(strokes: self.strokes + strokes)
     }
     
     public func normalized() -> Layer {

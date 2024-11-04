@@ -19,12 +19,22 @@ struct LayerGenerator {
         
         guard index >= 0, index < layers.count else { return [] }
         
-        return generate(basedOn: layers[index], count: count, canvasSize: canvasSize, appendingNewStrokes: true)
+        return generateLayers(basedOn: layers[index], count: count, canvasSize: canvasSize, appendingNewStrokes: true)
     }
     
     // MARK: - Private
     
-    private func generate(basedOn baseLayer: Layer, count: Int, canvasSize: CGSize, appendingNewStrokes: Bool = false) -> [Layer] {
+    private func generateNew(count: Int, canvasSize: CGSize) -> [Layer] {
+        let initialLayer: Layer = .random(canvasSize: canvasSize)
+        
+        if count == 1 {
+            return [initialLayer]
+        } else {
+            return [initialLayer] + generateLayers(basedOn: initialLayer, count: count - 1, canvasSize: canvasSize)
+        }
+    }
+    
+    private func generateLayers(basedOn baseLayer: Layer, count: Int, canvasSize: CGSize, appendingNewStrokes: Bool = false) -> [Layer] {
         guard count > 0 else {
             return []
         }
@@ -44,11 +54,11 @@ struct LayerGenerator {
         
         // Add stroke if needed
         let updatedBaseLayer = appendingNewStrokes
-            ? normalizedBaseLayer.appending(.randomSmall(canvasSize: canvasSize))
+            ? normalizedBaseLayer.appendingRandomStrokes(count: .random(in: 0...2), canvasSize: canvasSize)
             : normalizedBaseLayer
         
         // Steps for random trajectory
-        let stepThreshold = 16
+        let stepThreshold = 20
         let stepsCount = (count + stepThreshold - 1) / stepThreshold + 1
         let singleStep = count / stepsCount
         
@@ -77,21 +87,19 @@ struct LayerGenerator {
         for i in 0..<count {
             let base = result.last ?? baseLayer
             let step = CGFloat(count - i)
+            
             let newLayer = Layer(
                 strokes: base.strokes.enumerated().map { offset, stroke in
-//                    let noiseX = 10 * sin(stroke.transform.tx * perlin(x: CGFloat(i) / CGFloat(count)))
-//                    let noiseY = 10 * cos(stroke.transform.ty * perlin(x: CGFloat(i) / CGFloat(count)))
-                    
-                    var x = stroke.transform.tx // + .random(in: -10...10)
-                    var y = stroke.transform.ty // + .random(in: -10...10)
+                    var x = stroke.transform.tx + .random(in: -5...5)
+                    var y = stroke.transform.ty + .random(in: -5...5)
                     x += (destinations[offset].tx - x) / step
                     y += (destinations[offset].ty - y) / step
                     
-                    var rotation = stroke.transform.rotation // + .random(in: -0.1...0.1)
+                    var rotation = stroke.transform.rotation + .random(in: (-.pi / 32)...(.pi / 32))
                     rotation += (destinations[offset].rotation - rotation) / step
                     
-                    var scaleX = stroke.transform.scaleX // * .random(in: 0.9...1.1)
-                    var scaleY = stroke.transform.scaleY // * .random(in: 0.9...1.1)
+                    var scaleX = stroke.transform.scaleX * .random(in: 0.95...1.05)
+                    var scaleY = stroke.transform.scaleY * .random(in: 0.95...1.05)
                     scaleX += (destinations[offset].scaleX - scaleX) / step
                     scaleY += (destinations[offset].scaleY - scaleY) / step
                     
@@ -110,16 +118,6 @@ struct LayerGenerator {
         return result
     }
     
-    private func generateNew(count: Int, canvasSize: CGSize) -> [Layer] {
-        let initialLayer: Layer = .random(canvasSize: canvasSize)
-        
-        if count == 1 {
-            return [initialLayer]
-        } else {
-            return [initialLayer] + generate(basedOn: initialLayer, count: count - 1, canvasSize: canvasSize)
-        }
-    }
-    
 }
 
 // MARK: - Utils
@@ -132,7 +130,7 @@ extension CGColor {
 
 extension DrawingTool {
     fileprivate static func random() -> DrawingTool {
-        DrawingTool(type: Bool.random() ? .brush : .pencil, size: .random(in: 2...32))
+        DrawingTool(type: Bool.random() ? .brush : .pencil, size: .random(in: 8...32))
     }
 }
     
@@ -212,6 +210,10 @@ extension Layer {
     fileprivate static func random(canvasSize: CGSize) -> Layer {
         let count: Int = .random(in: 2...4)
         return Layer(strokes: (0..<count).map { _ in .random(canvasSize: canvasSize) })
+    }
+    
+    fileprivate func appendingRandomStrokes(count: Int, canvasSize: CGSize) -> Layer {
+        return self.appending((0..<count).map { _ in .randomSmall(canvasSize: canvasSize) })
     }
     
 }

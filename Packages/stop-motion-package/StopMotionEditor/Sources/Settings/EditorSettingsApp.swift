@@ -26,6 +26,6 @@ final class EditorSettingsApp: EditorSettings {
     
     @AppStorage("EditorSettings.animationFPS")
     @ObservationIgnored
-    private var animationFPSStore: Int = 10
+    private var animationFPSStore: Int = 30
     
 }

@@ -5,6 +5,7 @@
 //  Created by Ilya Lobanov on 03.11.2024.
 //
 
+import CoreGraphics
 import SwiftUI
 
 extension Path {
