@@ -35,11 +35,7 @@ struct SizeSliderView: View {
             .frame(width: model.sliderModel.range.upperBound, height: model.sliderModel.range.upperBound)
             .padding(.horizontal, 8)
         }
-        .padding(16)
-        .background(
-            .ultraThinMaterial,
-            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
-        )
+        .overlayControlBackground()
     }
     
     // MARK: - Private

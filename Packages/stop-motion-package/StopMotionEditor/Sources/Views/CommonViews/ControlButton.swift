@@ -12,6 +12,7 @@ import StopMotionAssets
 struct ControlButtonModel {
     var icon: Image
     var isAvailable: Bool = true
+    var isSelected: Bool = false
     var action: () -> Void
     var longPressAction: (() -> Void)? = nil
 }
@@ -42,9 +43,18 @@ struct ControlButton: View {
         .font(.system(size: 24))
         .frame(width: ControlViewGuides.buttonSize.width, height: ControlViewGuides.buttonSize.height)
         .foregroundStyle(
-            Color.Assets.tintPrimary
-                .opacity(model.isAvailable ? 1.0 : 0.3)
+            foregroundColor()
         )
         .disabled(!model.isAvailable)
+    }
+    
+    // MARK: - Private
+    
+    private func foregroundColor() -> Color {
+        if model.isAvailable {
+            return model.isSelected ? .Assets.tintAccent : .Assets.tintPrimary
+        } else {
+            return .Assets.tintPrimary.opacity(0.3)
+        }
     }
 }

@@ -23,25 +23,25 @@ struct ToolView: View {
             pickerViews()
             
             HStack(spacing: 16) {
-                ToolViewButton(model: ToolViewButtonModel(
+                ControlButton(model: ControlButtonModel(
                     icon: .Assets.toolPencil,
                     isSelected: model.isToolSelected(.pencil),
                     action: { model.selectTool(.pencil) }
                 ))
                 
-                ToolViewButton(model: ToolViewButtonModel(
+                ControlButton(model: ControlButtonModel(
                     icon: .Assets.toolBrush,
                     isSelected: model.isToolSelected(.brush),
                     action: { model.selectTool(.brush) }
                 ))
                 
-                ToolViewButton(model: ToolViewButtonModel(
+                ControlButton(model: ControlButtonModel(
                     icon: .Assets.toolErase,
                     isSelected: model.isToolSelected(.eraser),
                     action: { model.selectTool(.eraser) }
                 ))
                 
-                ToolViewButton(model: ToolViewButtonModel(
+                ControlButton(model: ControlButtonModel(
                     icon: .Assets.systemShapeStar,
                     isSelected: model.isShapePicking,
                     action: { model.pickShape() }

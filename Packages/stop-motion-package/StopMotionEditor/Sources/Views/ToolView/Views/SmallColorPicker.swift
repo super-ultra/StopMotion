@@ -39,11 +39,7 @@ struct SmallColorPicker: View {
                 )
             }
         }
-        .padding(16)
-        .background(
-            .ultraThinMaterial,
-            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
-        )
+        .overlayControlBackground()
     }
     
     // MARK: - Private

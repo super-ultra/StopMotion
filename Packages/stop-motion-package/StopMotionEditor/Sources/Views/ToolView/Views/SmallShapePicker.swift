@@ -23,7 +23,7 @@ struct SmallShapePicker: View {
     var body: some View {
         HStack(spacing: 16) {
             ForEach(model.shapes, id: \.self) { shape in
-                ToolViewButton(model: ToolViewButtonModel(
+                ControlButton(model: ControlButtonModel(
                     icon: image(for: shape),
                     action: {
                         model.onSelect(shape)
@@ -31,11 +31,7 @@ struct SmallShapePicker: View {
                 ))
             }
         }
-        .padding(16)
-        .background(
-            .ultraThinMaterial,
-            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
-        )
+        .overlayControlBackground()
     }
     
     // MARK: - Private
