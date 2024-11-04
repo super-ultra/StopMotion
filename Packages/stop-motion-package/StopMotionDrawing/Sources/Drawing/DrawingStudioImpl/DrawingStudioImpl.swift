@@ -100,6 +100,7 @@ public final class DrawingStudioImpl: DrawingStudio {
         let fromIndex: Int
 
         var newManagers = layerManagers
+        
         if newManagers[currentIndex].layer.strokes.isEmpty {
             newManagers.remove(at: currentIndex)
             fromIndex = max(currentIndex - 1, 0)
@@ -113,7 +114,7 @@ public final class DrawingStudioImpl: DrawingStudio {
                 .map { LayerManager(layer: $0) }
             
             if !generatedManagers.isEmpty {
-                newManagers.insert(contentsOf: generatedManagers, at: fromIndex)
+                newManagers.insert(contentsOf: generatedManagers, at: fromIndex + 1)
                 layerManagers = newManagers
                 currentLayerIndex = (fromIndex + generatedManagers.count).clamped(to: 0...newManagers.count - 1)
             }
