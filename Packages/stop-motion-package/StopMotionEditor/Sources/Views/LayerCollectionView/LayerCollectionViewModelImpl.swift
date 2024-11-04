@@ -26,9 +26,16 @@ final class LayerCollectionViewModelImpl: LayerCollectionViewModel {
         return studio.canvasSize.width / studio.canvasSize.height
     }
     
+    var selectedItemIndex: Int {
+        return studio.currentLayerIndex
+    }
+    
     func item(at index: Int) -> LayerCollectionItemModel {
         LayerCollectionItemModel(
-            layer: studio.layer(at: index), index: "\(index + 1)", isSelected: index == studio.currentLayerIndex
+            layer: studio.layer(at: index),
+            index: "\(index + 1)",
+            isSelected: index == studio.currentLayerIndex,
+            originalCanvasSize: studio.canvasSize
         )
     }
     

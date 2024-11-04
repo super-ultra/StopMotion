@@ -17,20 +17,25 @@ struct LayerCollectionView: View {
         ScrollView {
             let columns = [GridItem](repeating: GridItem(.flexible(), spacing: Static.spacing), count: LayerCollectionGuides.columns)
             
-            LazyVGrid(columns: columns, spacing: Static.spacing) {
-                ForEach(0..<model.itemsCount, id: \.self) { index in
-                    Button(
-                        action: {
-                            model.selectItem(at: index)
-                            presentationMode.wrappedValue.dismiss()
+            ScrollViewReader { proxy in
+                LazyVGrid(columns: columns, spacing: Static.spacing) {
+                    ForEach(0..<model.itemsCount, id: \.self) { index in
+                        Button(
+                            action: {
+                                model.selectItem(at: index)
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        ) {
+                            LayerCollectionItem(model: model.item(at: index))
+                                .aspectRatio(model.itemAspectRatio, contentMode: .fill)
                         }
-                    ) {
-                        LayerCollectionItem(model: model.item(at: index))
-                            .aspectRatio(model.itemAspectRatio, contentMode: .fill)
                     }
                 }
+                .padding()
+                .onAppear {
+                    proxy.scrollTo(model.selectedItemIndex)
+                }
             }
-            .padding()
         }
         .navigationTitle(Strings.LayersCollectionView.allLayers)
         .navigationBarTitleDisplayMode(.inline)

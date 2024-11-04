@@ -12,6 +12,7 @@ import StopMotionDrawing
 protocol LayerCollectionViewModel {
     var itemsCount: Int { get }
     var itemAspectRatio: CGFloat { get }
+    var selectedItemIndex: Int { get }
     func item(at index: Int) -> LayerCollectionItemModel
     func selectItem(at index: Int)
 }
@@ -23,6 +24,8 @@ struct LayerCollectionViewModelMock: LayerCollectionViewModel {
     var itemsCount: Int { items.count }
     
     var itemAspectRatio: CGFloat = 0.55
+    
+    var selectedItemIndex: Int = 0
     
     func item(at index: Int) -> LayerCollectionItemModel {
         items[index]

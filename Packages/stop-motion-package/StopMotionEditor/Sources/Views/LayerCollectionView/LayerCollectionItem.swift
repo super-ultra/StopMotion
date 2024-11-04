@@ -13,6 +13,7 @@ struct LayerCollectionItemModel {
     let layer: Layer
     let index: String
     let isSelected: Bool
+    let originalCanvasSize: CGSize
 }
 
 
@@ -23,8 +24,8 @@ struct LayerCollectionItem: View {
     var body: some View {
         Canvas { context, size in
             context.scaleBy(
-                x: 1.0 / CGFloat(LayerCollectionGuides.columns),
-                y: 1.0 / CGFloat(LayerCollectionGuides.columns)
+                x: size.width / model.originalCanvasSize.width,
+                y: size.height / model.originalCanvasSize.height
             )
             
             context.draw(model.layer)
@@ -79,8 +80,9 @@ struct LayerCollectionItem: View {
                 ]
             ),
             index: "1",
-            isSelected: false)
-        )
+            isSelected: false,
+            originalCanvasSize: CGSize(width: 400, height: 750)
+        ))
         .frame(width: 100, height: 150)
         
         LayerCollectionItem(model: LayerCollectionItemModel(
@@ -94,8 +96,9 @@ struct LayerCollectionItem: View {
                 ]
             ),
             index: "900",
-            isSelected: true)
-        )
+            isSelected: true,
+            originalCanvasSize: CGSize(width: 400, height: 750)
+        ))
         .frame(width: 100, height: 150)
     }
 }

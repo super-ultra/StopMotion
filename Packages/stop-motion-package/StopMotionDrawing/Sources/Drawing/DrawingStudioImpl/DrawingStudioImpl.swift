@@ -116,7 +116,7 @@ public final class DrawingStudioImpl: DrawingStudio {
     
     public func deleteCurrentLayer() {
         layerManagers.remove(at: currentLayerIndex)
-        currentLayerIndex -= 1
+        currentLayerIndex = max(currentLayerIndex - 1, 0)
         
         if layerManagers.isEmpty {
             resetState()

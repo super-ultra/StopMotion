@@ -123,7 +123,7 @@ struct ControlView: View {
                     if let count = Int(generateLayersCountText), count > 0 {
                         model.generateLayers(count: count)
                     }
-                }
+                }.disabled(generateLayersCountText.isEmpty)
                 
                 Button(Strings.Common.cancel, role: .cancel) {}
             } message: {

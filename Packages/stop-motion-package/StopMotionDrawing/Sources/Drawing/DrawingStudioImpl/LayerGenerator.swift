@@ -35,7 +35,7 @@ struct LayerGenerator {
     private func generate(basedOn baseLayer: Layer, count: Int, canvasSize: CGSize) -> [Layer] {
         var result: [Layer] = [baseLayer]
         
-        for i in 0..<count {
+        for _ in 0..<count {
             guard let base = result.last else { break }
             let newLayer = Layer(
                 strokes: base.strokes.map { stroke in
