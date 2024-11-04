@@ -37,7 +37,8 @@ struct ControlView: View {
         }
         .alert(isPresented: .constant(model.errorState != nil)) {
             Alert(
-                title: Text(model.errorState?.message ?? ""),
+                title: Text(""),
+                message: Text(model.errorState?.message ?? ""),
                 dismissButton: .default(Text(Strings.Common.ok)) {
                     model.errorState?.onDismiss()
                 }
