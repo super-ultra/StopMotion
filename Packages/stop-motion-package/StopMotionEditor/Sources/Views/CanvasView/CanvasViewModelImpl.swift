@@ -19,6 +19,8 @@ final class CanvasViewModelImpl: CanvasViewModel {
     init(studio: DrawingStudio, settings: EditorSettings) {
         self.studio = studio
         self.settings = settings
+        
+        subscribeOnStudio()
     }
     
     // MARK: - CanvasViewModel
@@ -116,6 +118,20 @@ final class CanvasViewModelImpl: CanvasViewModel {
             return Path(triangleIn: rect)
         case .star:
             return Path(starIn: rect, sides: 5, pointiness: 2.2)
+        }
+    }
+    
+    private func subscribeOnStudio() {
+        withObservationTracking {
+            _ = studio.layersCount
+            _ = studio.currentLayerIndex
+        } onChange: { [weak self] in
+            Task {
+                await MainActor.run { [weak self] in
+                    self?.placingStroke = nil
+                    self?.subscribeOnStudio()
+                }
+            }
         }
     }
 }

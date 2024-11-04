@@ -143,7 +143,7 @@ struct CanvasView: View {
     
     @ViewBuilder
     private func placingLayer() -> some View {
-        if let stroke = model.placingStroke {
+        if let stroke = model.placingStroke, !isAnimating {
             StrokePlacementView(stroke: stroke, onSubmit: { transform in
                 model.submitStrokePlacement(transform: transform.concatenating(zoomTransform))
             })
