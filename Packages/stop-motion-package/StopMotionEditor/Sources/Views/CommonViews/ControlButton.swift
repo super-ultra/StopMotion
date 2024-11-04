@@ -31,11 +31,17 @@ struct ControlButton: View {
         )
         .simultaneousGesture(
             LongPressGesture().onEnded { _ in
+                UIImpactFeedbackGenerator(style: .light)
+                    .impactOccurred()
+                
                 model.longPressAction?()
             }
         )
         .simultaneousGesture(
             TapGesture().onEnded {
+                UIImpactFeedbackGenerator(style: .light)
+                    .impactOccurred()
+                
                 model.action()
             }
         )

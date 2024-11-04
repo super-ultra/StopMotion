@@ -20,7 +20,12 @@ struct ToolViewColorButton: View {
     
     var body: some View {
         Button(
-            action: model.action,
+            action: {
+                UIImpactFeedbackGenerator(style: .light)
+                    .impactOccurred()
+                
+                model.action()
+            },
             label: {
                 Circle()
                     .stroke(model.isSelected ? Color.Assets.tintAccent : Color.Assets.solidGrey, lineWidth: 1.5)
