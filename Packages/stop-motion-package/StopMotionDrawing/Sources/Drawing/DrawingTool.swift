@@ -21,6 +21,9 @@ public struct DrawingTool: Sendable, Equatable {
         self.type = type
         self.size = size
     }
+}
+
+extension DrawingTool {
     
     public static func `default`(_ type: DrawingToolType) -> DrawingTool {
         switch type {
@@ -35,6 +38,15 @@ public struct DrawingTool: Sendable, Equatable {
     
     public static var defaultSizeRange: ClosedRange<CGFloat> {
         1...48
+    }
+    
+}
+
+
+extension DrawingTool {
+ 
+    public func scalingSize(with scale: CGFloat) -> DrawingTool {
+        DrawingTool(type: type, size: size * scale)
     }
     
 }

@@ -16,6 +16,7 @@ public final class DrawingStudioImpl: DrawingStudio {
         self.currentLayerIndex = 0
         self.tool = tool
         self.toolColor = color
+        self.toolScale = 1
     }
     
     // MARK: - Studio
@@ -34,6 +35,8 @@ public final class DrawingStudioImpl: DrawingStudio {
     
     public var toolColor: CGColor
     
+    public var toolScale: CGFloat
+    
     public var isUndoAvailable: Bool {
         currentLayerManager.isUndoAvailable
     }
@@ -51,7 +54,7 @@ public final class DrawingStudioImpl: DrawingStudio {
     }
     
     public func drag(_ point: CGPoint) {
-        currentLayerManager.drag(point, tool: tool, toolColor: toolColor)
+        currentLayerManager.drag(point, tool: tool.scalingSize(with: toolScale), toolColor: toolColor)
     }
     
     public func endDragging(_ point: CGPoint) {
@@ -59,7 +62,7 @@ public final class DrawingStudioImpl: DrawingStudio {
     }
     
     public func tap(_ point: CGPoint) {
-        currentLayerManager.tap(point, tool: tool, toolColor: toolColor)
+        currentLayerManager.tap(point, tool: tool.scalingSize(with: toolScale), toolColor: toolColor)
     }
     
     public func addStoke(_ stroke: Stroke) {

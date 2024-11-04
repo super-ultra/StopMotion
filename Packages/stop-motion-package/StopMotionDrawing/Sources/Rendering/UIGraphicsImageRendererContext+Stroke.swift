@@ -25,6 +25,11 @@ extension CGContext {
     }
     
     public func draw(_ stroke: Stroke) {
+        saveGState()
+        defer {
+            restoreGState()
+        }
+        
         switch stroke.tool.type {
         case .eraser:
             setBlendMode(.clear)
@@ -39,6 +44,8 @@ extension CGContext {
             setLineJoin(.bevel)
             setStrokeColor(stroke.color)
         }
+        
+        concatenate(stroke.transform)
         
         setLineCap(.round)
         setLineWidth(stroke.tool.size)

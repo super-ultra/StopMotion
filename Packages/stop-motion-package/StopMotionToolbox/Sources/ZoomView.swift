@@ -15,12 +15,16 @@ public struct ZoomView<Content: View>: UIViewRepresentable {
         maxZoom: CGFloat,
         bounces: Bool = true,
         onGesture: (() -> Void)? = nil,
+        scale: Binding<CGFloat>,
+        offset: Binding<CGPoint>,
         @ViewBuilder content: () -> Content
     ) {
         self.minZoom = minZoom
         self.maxZoom = maxZoom
         self.bounces = bounces
         self.onGesture = onGesture
+        self.scale = scale
+        self.offset = offset
         self.content = content()
     }
     
@@ -44,7 +48,12 @@ public struct ZoomView<Content: View>: UIViewRepresentable {
     }
     
     public func makeCoordinator() -> Coordinator {
-        return Coordinator(hostingController: UIHostingController(rootView: content), onGesture: onGesture)
+        return Coordinator(
+            hostingController: UIHostingController(rootView: content),
+            onGesture: onGesture,
+            scale: scale,
+            offset: offset
+        )
     }
     
     public func updateUIView(_ uiView: UIScrollView, context: Context) {
@@ -56,11 +65,20 @@ public struct ZoomView<Content: View>: UIViewRepresentable {
     
     public final class Coordinator: NSObject, UIScrollViewDelegate {
         fileprivate let hostingController: UIHostingController<Content>
-        fileprivate let onGesture: (() -> Void)?
+        private let onGesture: (() -> Void)?
+        private let scale: Binding<CGFloat>
+        private let offset: Binding<CGPoint>
         
-        fileprivate init(hostingController: UIHostingController<Content>, onGesture: (() -> Void)?) {
+        fileprivate init(
+            hostingController: UIHostingController<Content>,
+            onGesture: (() -> Void)?,
+            scale: Binding<CGFloat>,
+            offset: Binding<CGPoint>
+        ) {
             self.hostingController = hostingController
             self.onGesture = onGesture
+            self.scale = scale
+            self.offset = offset
         }
         
         // MARK: - UIScrollViewDelegate
@@ -72,6 +90,14 @@ public struct ZoomView<Content: View>: UIViewRepresentable {
         public func scrollViewDidZoom(_ scrollView: UIScrollView) {
             onGesture?()
         }
+        
+        public func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+            self.scale.wrappedValue = scale
+        }
+        
+        public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            self.offset.wrappedValue = scrollView.contentOffset
+        }
     }
     
     // MARK: - Private
@@ -81,4 +107,6 @@ public struct ZoomView<Content: View>: UIViewRepresentable {
     private let maxZoom: CGFloat
     private let bounces: Bool
     private let onGesture: (() -> Void)?
+    private let scale: Binding<CGFloat>
+    private let offset: Binding<CGPoint>
 }

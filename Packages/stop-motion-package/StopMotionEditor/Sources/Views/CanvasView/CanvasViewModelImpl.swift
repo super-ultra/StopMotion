@@ -47,6 +47,15 @@ final class CanvasViewModelImpl: CanvasViewModel {
         Color(studio.toolColor)
     }
     
+    var toolScale: CGFloat {
+        get {
+            studio.toolScale
+        }
+        set {
+            studio.toolScale = newValue
+        }
+    }
+    
     var animationFPS: Int {
         settings.animationFPS
     }

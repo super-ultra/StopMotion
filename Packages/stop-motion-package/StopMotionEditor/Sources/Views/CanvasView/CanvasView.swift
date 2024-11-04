@@ -37,6 +37,17 @@ struct CanvasView: View {
     
     @State
     private var cursorLocation: CGPoint? = nil
+    
+    @State
+    private var zoomViewScale: CGFloat = 1
+    
+    @State
+    private var zoomViewOffset: CGPoint = .zero
+    
+    private var zoomTransform: CGAffineTransform {
+        CGAffineTransform(translationX: zoomViewOffset.x, y: zoomViewOffset.y)
+            .concatenating(CGAffineTransform(scaleX: 1.0 / zoomViewScale, y: 1.0 / zoomViewScale))
+    }
 
     @ViewBuilder
     private func animatingCanvas() -> some View {
@@ -62,29 +73,39 @@ struct CanvasView: View {
             bounces: false,
             onGesture: {
                 cursorLocation = nil
-            }
+            },
+            scale: $zoomViewScale,
+            offset: $zoomViewOffset
         ) {
             Canvas { context, size in
                 context.draw(model.currentLayer)
                 
                 if let cursorLocation {
-                    context.drawCursor(for: model.tool, color: model.toolColor, location: cursorLocation)
+                    context.drawCursor(
+                        for: model.tool,
+                        color: model.toolColor,
+                        location: cursorLocation,
+                        scale: zoomViewScale
+                    )
                 }
             }
             .highPriorityGesture(
                 DragGesture(minimumDistance: 2)
                     .onChanged { value in
                         cursorLocation = value.location
+                        model.toolScale = 1 / zoomViewScale
                         model.drag(value.location)
                         onDraw()
                     }
                     .onEnded { value in
                         cursorLocation = nil
+                        model.toolScale = 1 / zoomViewScale
                         model.endDragging(value.location)
                         onDraw()
                     }
             )
             .onTapGesture { location in
+                model.toolScale = 1 / zoomViewScale
                 model.tap(location)
             }
             .background {
@@ -110,10 +131,9 @@ struct CanvasView: View {
     private func placingLayer() -> some View {
         if let stroke = model.placingStroke {
             StrokePlacementView(stroke: stroke, onSubmit: { transform in
-                model.submitStrokePlacement(transform: transform)
+                model.submitStrokePlacement(transform: transform.concatenating(zoomTransform))
             })
         }
-        
     }
     
     @ViewBuilder

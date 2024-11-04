@@ -20,6 +20,7 @@ protocol CanvasViewModel: Observable {
         
     var tool: DrawingTool { get }
     var toolColor: Color { get }
+    var toolScale: CGFloat { get set }
     
     var animationFPS: Int { get }
     
