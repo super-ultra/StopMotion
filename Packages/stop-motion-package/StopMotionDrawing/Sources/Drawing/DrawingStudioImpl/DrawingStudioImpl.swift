@@ -98,14 +98,17 @@ public final class DrawingStudioImpl: DrawingStudio {
         
         let currentIndex = currentLayerIndex
         let fromIndex: Int
+        let insertIndex: Int
 
         var newManagers = layerManagers
         
         if newManagers[currentIndex].layer.strokes.isEmpty {
             newManagers.remove(at: currentIndex)
             fromIndex = max(currentIndex - 1, 0)
+            insertIndex = newManagers.isEmpty ? 0 : fromIndex + 1
         } else {
             fromIndex = currentIndex
+            insertIndex = fromIndex + 1
         }
         
         Task {
@@ -115,7 +118,7 @@ public final class DrawingStudioImpl: DrawingStudio {
             
             await MainActor.run {
                 if !generatedManagers.isEmpty {
-                    newManagers.insert(contentsOf: generatedManagers, at: fromIndex + 1)
+                    newManagers.insert(contentsOf: generatedManagers, at: insertIndex)
                     layerManagers = newManagers
                     currentLayerIndex = (fromIndex + generatedManagers.count).clamped(to: 0...newManagers.count - 1)
                 }
