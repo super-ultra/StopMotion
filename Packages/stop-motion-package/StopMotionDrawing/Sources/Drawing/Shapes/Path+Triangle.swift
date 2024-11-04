@@ -14,5 +14,6 @@ extension Path {
         addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
         addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
         addLine(to: CGPoint(x: rect.midX, y: rect.minY))
+        closeSubpath()
     }
 }
