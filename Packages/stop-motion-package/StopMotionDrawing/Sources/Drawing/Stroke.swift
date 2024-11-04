@@ -25,4 +25,8 @@ extension Stroke {
     public func applying(_ transform: CGAffineTransform) -> Stroke {
         Stroke(path: path, color: color, tool: tool, transform: self.transform.concatenating(transform))
     }
+    
+    public func updating(_ transform: CGAffineTransform) -> Stroke {
+        Stroke(path: path, color: color, tool: tool, transform: transform)
+    }
 }

@@ -33,21 +33,54 @@ struct LayerGenerator {
     }
     
     private func generate(basedOn baseLayer: Layer, count: Int, canvasSize: CGSize) -> [Layer] {
-        var result: [Layer] = [baseLayer]
+        guard count > 0 else { return [] }
         
-        for _ in 0..<count {
-            guard let base = result.last else { break }
+        var result: [Layer] = []
+        
+        let initialTransforms: [CGAffineTransform] = baseLayer.strokes.map {
+            $0.transform
+        }
+        
+        let middleTransforms: [CGAffineTransform] = baseLayer.strokes.map { _ in
+            .random(canvasSize: canvasSize)
+        }
+                
+        result += generateLayers(basedOn: result.last ?? baseLayer, count: count / 2, destinations: middleTransforms)
+        result += generateLayers(basedOn: result.last ?? baseLayer, count: count - count / 2, destinations: initialTransforms)
+        
+        return result
+    }
+    
+    private func generateLayers(basedOn baseLayer: Layer, count: Int, destinations: [CGAffineTransform]) -> [Layer] {
+        var result: [Layer] = []
+        
+        for i in 0..<count {
+            let base = result.last ?? baseLayer
+            let step = CGFloat(count - i)
             let newLayer = Layer(
-                strokes: base.strokes.map { stroke in
-                    stroke
-                        .applying(
-                            CGAffineTransform(scaleX: .random(in: 0.9...1.1), y: .random(in: 0.9...1.1))
-                        )
-                        .applying(
-                            CGAffineTransform(rotationAngle: .random(in: -(.pi/16)...(.pi/16)))
-                        )
-                        .applying(
-                            CGAffineTransform(translationX: .random(in: -16...16), y: .random(in: -16...16))
+                strokes: base.strokes.enumerated().map { offset, stroke in
+                    
+//                    let noiseX = 10 * sin(stroke.transform.tx * perlin(x: CGFloat(i) / CGFloat(count)))
+//                    let noiseY = 10 * cos(stroke.transform.ty * perlin(x: CGFloat(i) / CGFloat(count)))
+                    
+                    var x = stroke.transform.tx // + .random(in: -10...10)
+                    var y = stroke.transform.tx // + .random(in: -10...10)
+                    x += (destinations[offset].tx - x) / step
+                    y += (destinations[offset].ty - y) / step
+                    
+                    var rotation = stroke.transform.rotation
+                    rotation += (destinations[offset].rotation - rotation) / step
+                    
+                    var scaleX = stroke.transform.scaleX // + .random(in: -10...10)
+                    var scaleY = stroke.transform.scaleY // + .random(in: -10...10)
+                    scaleX += (destinations[offset].scaleX - scaleX) / step
+                    scaleY += (destinations[offset].scaleY - scaleY) / step
+                    
+                    return stroke
+                        .updating(
+                            CGAffineTransform(scaleX: scaleX, y: scaleY)
+                                .concatenating(CGAffineTransform(rotationAngle: rotation))
+                                .concatenating(CGAffineTransform(translationX: x, y: y))
                         )
                 }
             )
@@ -64,7 +97,7 @@ struct LayerGenerator {
         if count == 1 {
             return [initialLayer]
         } else {
-            return generate(basedOn: initialLayer, count: count - 1, canvasSize: canvasSize)
+            return [initialLayer] + generate(basedOn: initialLayer, count: count - 1, canvasSize: canvasSize)
         }
     }
     
@@ -114,10 +147,10 @@ extension Path {
 extension CGAffineTransform {
     
     fileprivate static func random(canvasSize: CGSize) -> CGAffineTransform {
+        let anchor = CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2)
         let scaleValue: CGFloat = .random(in: 0.8...1.5)
-        let scale = CGAffineTransform(scaleX: scaleValue, y: scaleValue)
-        
-        let rotation = CGAffineTransform(rotationAngle: .random(in: 0...2 * CGFloat.pi))
+        let scale = CGAffineTransform.anchoredScale(scale: scaleValue, anchor: anchor)
+        let rotation = CGAffineTransform.anchoredRotation(radians: .random(in: 0...2 * CGFloat.pi), anchor: anchor)
         
         let translation = CGAffineTransform(
             translationX: .random(in: 0...canvasSize.width),

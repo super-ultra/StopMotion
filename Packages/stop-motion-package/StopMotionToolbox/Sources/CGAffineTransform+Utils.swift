@@ -17,9 +17,17 @@ extension CGAffineTransform {
         sqrt(b * b + d * d)
     }
     
+    public var rotation: CGFloat {
+        atan2(b, a)
+    }
+
     public static func anchoredScale(scale: CGFloat, anchor: CGPoint) -> CGAffineTransform {
+        .anchoredScale(x: scale, y: scale, anchor: anchor)
+    }
+    
+    public static func anchoredScale(x: CGFloat, y: CGFloat, anchor: CGPoint) -> CGAffineTransform {
         CGAffineTransform(translationX: anchor.x, y: anchor.y)
-            .scaledBy(x: scale, y: scale)
+            .scaledBy(x: x, y: y)
             .translatedBy(x: -anchor.x, y: -anchor.y)
     }
     
