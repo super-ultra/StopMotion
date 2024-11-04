@@ -31,7 +31,7 @@ struct CanvasView: View {
             .onAppear {
                 model.updateCanvasSize(geometry.size)
             }
-            .onChange(of: geometry.size) { _ in
+            .onChange(of: geometry.size) { _, _ in
                 model.updateCanvasSize(geometry.size)
             }
         }

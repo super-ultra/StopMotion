@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct StopMotionApp: App {
-    var body: some Scene { 
+    var body: some Scene {
         WindowGroup {
             MainView()
         }

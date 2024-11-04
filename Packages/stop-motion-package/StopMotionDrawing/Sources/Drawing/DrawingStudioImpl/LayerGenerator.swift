@@ -169,8 +169,6 @@ extension Path {
 extension CGAffineTransform {
     
     fileprivate static func random(pathBounds: CGRect, canvasSize: CGSize) -> CGAffineTransform {
-        let anchor = pathBounds.mid
-        
         let scaleValue: CGFloat = .random(in: 0.8...1.2)
         let scale = CGAffineTransform(scaleX: scaleValue, y: scaleValue)
         
