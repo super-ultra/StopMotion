@@ -10,38 +10,38 @@ import SwiftUI
 
 struct LayerGenerator {
     
-    func generateLayers(basedOn layers: [Layer], fromIndex index: Int, count: Int) -> [Layer] {
+    func generateLayers(basedOn layers: [Layer], fromIndex index: Int, count: Int, canvasSize: CGSize) -> [Layer] {
         guard count > 0 else { return [] }
         
         if layers.isEmpty {
-            return generateNew(count: count)
+            return generateNew(count: count, canvasSize: canvasSize)
         }
         
         guard index >= 0, index < layers.count else { return [] }
         
         if layers.count > 1, index < layers.count - 1 {
-            return interpolate(from: layers[index], to: layers[index + 1], count: count)
+            return interpolate(from: layers[index], to: layers[index + 1], count: count, canvasSize: canvasSize)
         } else {
-            return generate(basedOn: layers[index], count: count)
+            return generate(basedOn: layers[index], count: count, canvasSize: canvasSize)
         }
     }
     
     // MARK: - Private
     
-    private func interpolate(from: Layer, to: Layer, count: Int) -> [Layer] {
+    private func interpolate(from: Layer, to: Layer, count: Int, canvasSize: CGSize) -> [Layer] {
         return [from, to]
     }
     
-    private func generate(basedOn layer: Layer, count: Int) -> [Layer] {
+    private func generate(basedOn layer: Layer, count: Int, canvasSize: CGSize) -> [Layer] {
         return [Layer](repeating: layer, count: count)
     }
     
-    private func generateNew(count: Int) -> [Layer] {
+    private func generateNew(count: Int, canvasSize: CGSize) -> [Layer] {
         let initialLayer = Layer(strokes: [generateStroke()])
         if count == 1 {
             return [initialLayer]
         } else {
-            return generate(basedOn: initialLayer, count: count - 1)
+            return generate(basedOn: initialLayer, count: count - 1, canvasSize: canvasSize)
         }
     }
     

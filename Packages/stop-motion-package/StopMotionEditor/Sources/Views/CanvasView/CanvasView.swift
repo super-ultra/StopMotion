@@ -116,6 +116,7 @@ struct CanvasView: View {
             .onTapGesture { location in
                 model.toolScale = toolScale
                 model.tap(location)
+                onDraw()
             }
             .background {
                 previousLayer()

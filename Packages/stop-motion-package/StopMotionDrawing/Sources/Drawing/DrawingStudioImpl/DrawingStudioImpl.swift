@@ -104,7 +104,7 @@ public final class DrawingStudioImpl: DrawingStudio {
         }
         
         let generatedManagers = generator
-            .generateLayers(basedOn: newManagers.map { $0.layer }, fromIndex: fromIndex, count: count)
+            .generateLayers(basedOn: newManagers.map { $0.layer }, fromIndex: fromIndex, count: count, canvasSize: canvasSize)
             .map { LayerManager(layer: $0) }
         
         if !generatedManagers.isEmpty {

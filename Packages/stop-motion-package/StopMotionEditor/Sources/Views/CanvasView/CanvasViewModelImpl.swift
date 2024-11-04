@@ -111,7 +111,8 @@ final class CanvasViewModelImpl: CanvasViewModel {
         case .triangle:
             return Path(triangleIn: rect)
         case .star:
-            return .star(x: rect.midX, y: rect.midY, radius: size.width / 2, sides: 5, pointiness: 2)
+            let pointiness: CGFloat = 2.2
+            return .star(x: rect.midX, y: rect.midY, radius: size.width / 2 / pointiness, sides: 5, pointiness: pointiness)
         }
     }
 }
