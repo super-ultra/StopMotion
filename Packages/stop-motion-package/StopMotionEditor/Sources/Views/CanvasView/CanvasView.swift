@@ -41,10 +41,15 @@ struct CanvasView: View {
         .onChange(of: zoomViewScale) { _, newValue in
             model.toolScale = zoomViewScale > 0 ? 1 / zoomViewScale : 1
         }
-        .cornerRadius(20)
+        .clipShape(RoundedRectangle(cornerRadius: Static.cornerRadius))
+        .contentShape(RoundedRectangle(cornerRadius: Static.cornerRadius))
     }
     
     // MARK: - Private
+    
+    private enum Static {
+        static let cornerRadius: CGFloat = 20
+    }
     
     @State
     private var cursorLocation: CGPoint? = nil
