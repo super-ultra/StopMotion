@@ -30,6 +30,9 @@ struct StrokePlacementView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onTapGesture {
+            UIImpactFeedbackGenerator(style: .light)
+                .impactOccurred()
+            
             onSubmit(transform)
         }
         .simultaneousGesture(

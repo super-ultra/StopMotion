@@ -29,15 +29,16 @@ extension Layer {
     public func normalized() -> Layer {
         return Layer(
             strokes: strokes.map { stroke in
-                let translationX = -stroke.path.boundingRect.midX
-                let translationY = -stroke.path.boundingRect.midY
+                let path = stroke.path.applying(stroke.transform)
+                let translationX = -path.boundingRect.midX
+                let translationY = -path.boundingRect.midY
                 let transition = CGAffineTransform(translationX: translationX, y: translationY)
                 
                 return Stroke(
-                    path: stroke.path.applying(transition),
+                    path: path.applying(transition),
                     color: stroke.color,
-                    tool: stroke.tool,
-                    transform: stroke.transform.concatenating(transition.inverted())
+                    tool: stroke.tool.scalingSize(with: stroke.transform.decomposed().scale.width),
+                    transform: transition.inverted()
                 )
             }
         )

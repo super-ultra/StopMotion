@@ -23,10 +23,29 @@ public struct Stroke: Sendable {
 
 extension Stroke {
     public func applying(_ transform: CGAffineTransform) -> Stroke {
-        Stroke(path: path, color: color, tool: tool, transform: self.transform.concatenating(transform))
+        Stroke(
+            path: self.path,
+            color: self.color,
+            tool: self.tool,
+            transform: self.transform.concatenating(transform)
+        )
     }
     
     public func updating(_ transform: CGAffineTransform) -> Stroke {
-        Stroke(path: path, color: color, tool: tool, transform: transform)
+        Stroke(
+            path: self.path,
+            color: self.color,
+            tool: self.tool,
+            transform: transform
+        )
+    }
+    
+    public func updating(_ tool: DrawingTool) -> Stroke {
+        Stroke(
+            path: self.path,
+            color: self.color,
+            tool: tool,
+            transform: self.transform
+        )
     }
 }

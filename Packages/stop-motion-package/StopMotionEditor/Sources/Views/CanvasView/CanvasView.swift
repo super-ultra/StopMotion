@@ -31,12 +31,15 @@ struct CanvasView: View {
             .onAppear {
                 model.updateCanvasSize(geometry.size)
             }
-            .onChange(of: geometry.size) { _, _ in
-                model.updateCanvasSize(geometry.size)
+            .onChange(of: geometry.size) { _, newValue in
+                model.updateCanvasSize(newValue)
             }
         }
         .overlay {
             placingLayer()
+        }
+        .onChange(of: zoomViewScale) { _, newValue in
+            model.toolScale = zoomViewScale > 0 ? 1 / zoomViewScale : 1
         }
         .cornerRadius(20)
     }
@@ -55,10 +58,6 @@ struct CanvasView: View {
     private var zoomTransform: CGAffineTransform {
         CGAffineTransform(translationX: zoomViewOffset.x, y: zoomViewOffset.y)
             .concatenating(CGAffineTransform(scaleX: zoomViewScale, y: zoomViewScale).inverted())
-    }
-    
-    private var toolScale: CGFloat {
-        zoomViewScale > 0 ? 1 / zoomViewScale : 1
     }
 
     @ViewBuilder
@@ -105,19 +104,16 @@ struct CanvasView: View {
                 DragGesture(minimumDistance: 2)
                     .onChanged { value in
                         cursorLocation = value.location
-                        model.toolScale = toolScale
                         model.drag(value.location)
                         onDraw()
                     }
                     .onEnded { value in
                         cursorLocation = nil
-                        model.toolScale = toolScale
                         model.endDragging(value.location)
                         onDraw()
                     }
             )
             .onTapGesture { location in
-                model.toolScale = toolScale
                 model.tap(location)
                 onDraw()
             }
