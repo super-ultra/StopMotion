@@ -91,16 +91,18 @@ struct LayerGenerator {
             let newLayer = Layer(
                 strokes: base.strokes.enumerated().map { offset, stroke in
                     var x = stroke.transform.tx + .random(in: -5...5)
-                    var y = stroke.transform.ty + .random(in: -5...5)
                     x += (destinations[offset].tx - x) / step
+                    
+                    var y = stroke.transform.ty + .random(in: -5...5)
                     y += (destinations[offset].ty - y) / step
                     
                     var rotation = stroke.transform.rotation + .random(in: (-.pi / 32)...(.pi / 32))
                     rotation += (destinations[offset].rotation - rotation) / step
                     
                     var scaleX = stroke.transform.scaleX * .random(in: 0.95...1.05)
-                    var scaleY = stroke.transform.scaleY * .random(in: 0.95...1.05)
                     scaleX += (destinations[offset].scaleX - scaleX) / step
+                    
+                    var scaleY = stroke.transform.scaleY * .random(in: 0.95...1.05)
                     scaleY += (destinations[offset].scaleY - scaleY) / step
                     
                     return stroke
